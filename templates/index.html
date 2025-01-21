@@ -1,7 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
-<section class="bg-darkest-gray">
-    <h1 class="text-3xl font-bold text-black dark:text-white">Welcome to My Portfolio</h1>
-    <p>Website is under construction. To see the old version of this site, check out my GitHub Page at <a href="https://cshapard26.github.io">https://cshapard26/cshapard26.github.io</a></p>
+<section class="text-white">
+    <div class="max-w-screen-xl px-4 py-8 mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <!-- Text Section (Title on the left) -->
+            <div class="text-left">
+                <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight text-gray-900 dark:text-gray-300">
+                    Welcome to CoopShap
+                </h1>
+                <h2 class="text-2xl sm:text-3xl mt-4 font-light text-gray-900 dark:text-gray-100">
+                    Portfolio and More, v2.1.0
+                </h2>
+            </div>
+
+            <!-- Image Section (On the right) -->
+            <div class="flex justify-center">
+                <img src="/static/images/coopshaplogo-deep.png" alt="Main Image" class="w-full max-w-xl rounded-none shadow-none">
+            </div>
+        </div>
+    </div>
 </section>
+
 {% endblock %}

@@ -9,7 +9,7 @@ module.exports = {
       colors: {
         'dark-gray': '#111111', // Custom dark gray color
         'light-gray': '#f0f0f0', // Custom light gray color
-        'cs-blue' : '#7C9E9E',
+        'cs-blue' : '#7D9EA0',
         'cs-green' : '#A6A95E',
       },
     },
