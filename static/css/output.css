@@ -1080,6 +1080,66 @@ a {
   /* Optional: ensures the image flips around its center */
 }
 
+.blueclearseperator {
+  background-image: url('/static/images/transitions/blue-clear.png');
+  /* Replace with the path to your JPG */
+  background-repeat: repeat;
+  /* Ensures the image repeats across the whole element */
+  height: 80px;
+  /* Adjust the height as needed */
+  width: 100%;
+  /* Ensures it spans the full width of the container */
+  background-size: 160px 80px;
+  /* Adjust if needed */
+}
+
+.ublueclearseperator {
+  background-image: url('/static/images/transitions/blue-clear.png');
+  /* Replace with the path to your JPG */
+  background-repeat: repeat;
+  /* Ensures the image repeats across the whole element */
+  height: 80px;
+  /* Adjust the height as needed */
+  width: 100%;
+  /* Ensures it spans the full width of the container */
+  background-size: 160px 80px;
+  /* Adjust if needed */
+  transform: rotate(180deg);
+  /* Flips the image upside down */
+  transform-origin: center;
+  /* Optional: ensures the image flips around its center */
+}
+
+.greenclearseperator {
+  background-image: url('/static/images/transitions/green-clear.png');
+  /* Replace with the path to your JPG */
+  background-repeat: repeat;
+  /* Ensures the image repeats across the whole element */
+  height: 80px;
+  /* Adjust the height as needed */
+  width: 100%;
+  /* Ensures it spans the full width of the container */
+  background-size: 160px 80px;
+  /* Adjust if needed */
+}
+
+.ugreenclearseperator {
+  background-image: url('/static/images/transitions/green-clear.png');
+  /* Replace with the path to your JPG */
+  background-repeat: repeat;
+  /* Ensures the image repeats across the whole element */
+  height: 80px;
+  /* Adjust the height as needed */
+  width: 100%;
+  /* Ensures it spans the full width of the container */
+  background-size: 160px 80px;
+  /* Adjust if needed */
+  transform: rotate(180deg);
+  /* Flips the image upside down */
+  transform-origin: center;
+  /* Optional: ensures the image flips around its center */
+}
+
 .hover\:bg-\[\#333333\]:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(51 51 51 / var(--tw-bg-opacity, 1));
@@ -1213,6 +1273,7 @@ a {
     text-align: left;
   }
 }
+
 
 
 
