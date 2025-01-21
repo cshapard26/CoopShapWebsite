@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for the header */
+header {
+    background-color: #1f2937; /* Tailwind's gray-800 */
+}
+
+/* Dropdown styles */
+.dropdown {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown.hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+/* Button styles */
+button {
+    transition: background-color 0.3s ease;
+}
+
+/* Custom styles for the theme toggle button */
+#theme-toggle {
+    transition: background-color 0.3s ease;
+}
+
+/* Additional styles for links */
+a {
+    transition: color 0.3s ease;
+}
