@@ -741,9 +741,9 @@ video {
   background-color: rgb(68 68 68 / var(--tw-bg-opacity, 1));
 }
 
-.bg-light-gray {
+.bg-\[\#EEEEEE\] {
   --tw-bg-opacity: 1;
-  background-color: rgb(240 240 240 / var(--tw-bg-opacity, 1));
+  background-color: rgb(238 238 238 / var(--tw-bg-opacity, 1));
 }
 
 .p-4 {
@@ -937,9 +937,9 @@ a {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
-.dark\:bg-dark-gray:is(.dark *) {
+.dark\:bg-\[\#222222\]:is(.dark *) {
   --tw-bg-opacity: 1;
-  background-color: rgb(17 17 17 / var(--tw-bg-opacity, 1));
+  background-color: rgb(34 34 34 / var(--tw-bg-opacity, 1));
 }
 
 .dark\:text-white:is(.dark *) {
