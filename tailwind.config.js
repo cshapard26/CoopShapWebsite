@@ -11,6 +11,7 @@ module.exports = {
         'light-gray': '#f0f0f0', // Custom light gray color
         'cs-blue' : '#7D9EA0',
         'cs-green' : '#A6A95E',
+        'steel' : '#EBEEF6',
       },
     },
   },
