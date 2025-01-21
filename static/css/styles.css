@@ -31,3 +31,135 @@ button {
 a {
     transition: color 0.3s ease;
 }
+
+.outer-headings {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .inner-headings {
+    border: 0px solid #ddd;
+    height: 60px;
+    line-height: 60px;
+    overflow: hidden;
+  }
+  
+  .inner-headings span {
+    position: relative;
+    color: #A6A952;
+    animation: animation 30s ease infinite;
+  }
+  
+  @keyframes animation {
+    0%,
+    100% {
+      top: -10px;
+    }
+    10% {
+      top: -10px;
+    }
+    12.5% {
+      top: -70px;
+    }
+    22.5% {
+      top: -70px;
+    }
+    25% {
+      top: -130px;
+    }
+    35% {
+      top: -130px;
+    }
+    37.5% {
+      top: -190px;
+    }
+    47.5% {
+      top: -190px;
+    }
+    50% {
+      top: -250px;
+    }
+    60% {
+      top: -250px;
+    }
+    62.5% {
+      top: -310px;
+    }
+    72.5% {
+      top: -310px;
+    }
+    75% {
+      top: -370px;
+    }
+    85% {
+      top: -370px;
+    }
+    87.5% {
+      top: -430px;
+    }
+    97.5% {
+      top: -430px;
+    }
+  }
+
+  .grayclearseperator {
+    background-image: url('/static/images/transitions/light-gray-clear.png'); /* Replace with the path to your JPG */
+    background-repeat: repeat; /* Ensures the image repeats across the whole element */
+    height: 80px; /* Adjust the height as needed */
+    width: 100%; /* Ensures it spans the full width of the container */
+    background-size: 160px 80px; /* Adjust if needed */
+  }
+
+  .ugrayclearseperator {
+    background-image: url('/static/images/transitions/light-gray-clear.png'); /* Replace with the path to your JPG */
+    background-repeat: repeat; /* Ensures the image repeats across the whole element */
+    height: 80px; /* Adjust the height as needed */
+    width: 100%; /* Ensures it spans the full width of the container */
+    background-size: 160px 80px; /* Adjust if needed */
+    transform: rotate(180deg); /* Flips the image upside down */
+    transform-origin: center; /* Optional: ensures the image flips around its center */
+  }
+
+  .blueclearseperator {
+    background-image: url('/static/images/transitions/blue-clear.png'); /* Replace with the path to your JPG */
+    background-repeat: repeat; /* Ensures the image repeats across the whole element */
+    height: 80px; /* Adjust the height as needed */
+    width: 100%; /* Ensures it spans the full width of the container */
+    background-size: 160px 80px; /* Adjust if needed */
+  }
+
+  .ublueclearseperator {
+    background-image: url('/static/images/transitions/blue-clear.png'); /* Replace with the path to your JPG */
+    background-repeat: repeat; /* Ensures the image repeats across the whole element */
+    height: 80px; /* Adjust the height as needed */
+    width: 100%; /* Ensures it spans the full width of the container */
+    background-size: 160px 80px; /* Adjust if needed */
+    transform: rotate(180deg); /* Flips the image upside down */
+    transform-origin: center; /* Optional: ensures the image flips around its center */
+  }
+
+  .greenclearseperator {
+    background-image: url('/static/images/transitions/green-clear.png'); /* Replace with the path to your JPG */
+    background-repeat: repeat; /* Ensures the image repeats across the whole element */
+    height: 80px; /* Adjust the height as needed */
+    width: 100%; /* Ensures it spans the full width of the container */
+    background-size: 160px 80px; /* Adjust if needed */
+  }
+
+  .ugreenclearseperator {
+    background-image: url('/static/images/transitions/green-clear.png'); /* Replace with the path to your JPG */
+    background-repeat: repeat; /* Ensures the image repeats across the whole element */
+    height: 80px; /* Adjust the height as needed */
+    width: 100%; /* Ensures it spans the full width of the container */
+    background-size: 160px 80px; /* Adjust if needed */
+    transform: rotate(180deg); /* Flips the image upside down */
+    transform-origin: center; /* Optional: ensures the image flips around its center */
+  }
+
+
+
+
+  
