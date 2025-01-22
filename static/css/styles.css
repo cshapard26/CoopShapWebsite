@@ -171,11 +171,11 @@ a {
 
   /* Scrolling animations */
   .scroll-up {
-    animation: scroll-up 150s infinite linear;
+    animation: scroll-up 90s infinite linear;
   }
 
   .scroll-down {
-    animation: scroll-down 150s infinite linear;
+    animation: scroll-down 90s infinite linear;
   }
 
   /* Scroll upwards */
@@ -183,8 +183,8 @@ a {
     0% {
         transform: translateY(0%);
     }
-    95% {
-        transform: translateY(-80%);
+    98% {
+        transform: translateY(-70%);
     }
     100% {
       transform: translateY(0%);
@@ -194,13 +194,13 @@ a {
   /* Scroll downwards */
   @keyframes scroll-down {
     0% {
-        transform: translateY(-80%)
+        transform: translateY(-70%)
     }
-    95% {
+    98% {
         transform: translateY(0%);
     }
     100% {
-      transform: translateY(-80%);
+      transform: translateY(-70%);
   }
   }
 
