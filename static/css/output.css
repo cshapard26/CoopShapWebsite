@@ -1491,8 +1491,4 @@ a {
   .lg\:flex {
     display: flex;
   }
-
-  .lg\:hidden {
-    display: none;
-  }
 }
