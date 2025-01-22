@@ -119,6 +119,25 @@
   const themeToggle = document.getElementById('theme-toggle');
   const themeIcon = document.getElementById('theme-icon');
 
+  // Function to check and set the initial theme
+  function setInitialTheme() {
+    const userPrefersDark = localStorage.getItem('theme') === 'dark';
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    // If user has a preference saved, use it, else default to dark mode
+    if (userPrefersDark || (!localStorage.getItem('theme') && systemPrefersDark)) {
+      document.documentElement.classList.add('dark');
+      themeIcon.innerHTML = '<path d="M12 3v1m0 16v1m9-9h1M3 12H2m16.24-7.76l-.707.707M5.636 18.364l-.707.707M18.364 18.364l-.707-.707M5.636 5.636l-.707-.707M12 6a6 6 0 100 12 6 6 0 000-12z" />';
+    } else {
+      document.documentElement.classList.remove('dark');
+      themeIcon.innerHTML = '<path d="M3.32031 11.6835C3.32031 16.6541 7.34975 20.6835 12.3203 20.6835C16.1075 20.6835 19.3483 18.3443 20.6768 15.032C19.6402 15.4486 18.5059 15.6834 17.3203 15.6834C12.3497 15.6834 8.32031 11.654 8.32031 6.68342C8.32031 5.50338 8.55165 4.36259 8.96453 3.32996C5.65605 4.66028 3.32031 7.89912 3.32031 11.6835Z"></path>';
+    }
+  }
+
+  // Call the function to set the initial theme when the page loads
+  setInitialTheme();
+
+  // Theme toggle functionality on button click
   themeToggle?.addEventListener('click', () => {
     document.documentElement.classList.toggle('dark');
     if (document.documentElement.classList.contains('dark')) {
@@ -129,9 +148,4 @@
       themeIcon.innerHTML = '<path d="M3.32031 11.6835C3.32031 16.6541 7.34975 20.6835 12.3203 20.6835C16.1075 20.6835 19.3483 18.3443 20.6768 15.032C19.6402 15.4486 18.5059 15.6834 17.3203 15.6834C12.3497 15.6834 8.32031 11.654 8.32031 6.68342C8.32031 5.50338 8.55165 4.36259 8.96453 3.32996C5.65605 4.66028 3.32031 7.89912 3.32031 11.6835Z"></path>';
     }
   });
-
-  if (localStorage.getItem('theme') === 'dark') {
-    document.documentElement.classList.add('dark');
-    themeIcon.innerHTML = '<path d="M12 3v1m0 16v1m9-9h1M3 12H2m16.24-7.76l-.707.707M5.636 18.364l-.707.707M18.364 18.364l-.707-.707M5.636 5.636l-.707-.707M12 6a6 6 0 100 12 6 6 0 000-12z" />';
-  }
 </script>

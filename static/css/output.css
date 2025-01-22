@@ -904,6 +904,11 @@ video {
   padding-bottom: 2rem;
 }
 
+.py-\[10vh\] {
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+}
+
 .pb-0 {
   padding-bottom: 0px;
 }
@@ -929,6 +934,11 @@ video {
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
+}
+
+.text-8xl {
+  font-size: 6rem;
+  line-height: 1;
 }
 
 .text-lg {
