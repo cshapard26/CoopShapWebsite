@@ -160,52 +160,57 @@ a {
     transform-origin: center; /* Optional: ensures the image flips around its center */
   }
 
-  /* Keyframes for scrolling upwards */
-@keyframes scroll-up {
-  0% {
-      transform: translateY(0);
+  /* Ensure consistent styling for the columns */
+  .scroll-column {
+    display: flex;
+    flex-direction: column;
+    animation-timing-function: linear;
+    height: 100%; /* Fit to the height of the container */
+    overflow: hidden; /* Prevent images from spilling out */
   }
-  100% {
-      transform: translateY(calc(-100% + 24rem)); /* Adjusted for full looping */
+
+  /* Scrolling animations */
+  .scroll-up {
+    animation: scroll-up 150s infinite linear;
   }
-}
 
-/* Keyframes for scrolling downwards */
-@keyframes scroll-down {
-  0% {
-      transform: translateY(calc(-100% + 24rem)); /* Starts from the bottom */
+  .scroll-down {
+    animation: scroll-down 150s infinite linear;
   }
-  100% {
-      transform: translateY(0);
+
+  /* Scroll upwards */
+  @keyframes scroll-up {x
+    0% {
+        transform: translateY(0%);
+    }
+    95% {
+        transform: translateY(-80%);
+    }
+    100% {
+      transform: translateY(0%);
   }
-}
+  }
 
-/* Animate the scrolling - updated */
-.animate-scroll-up {
-  animation: scroll-up linear infinite;
-  animation-duration: calc(3s * var(--image-count)); /* Dynamically adjusts duration based on image count */
-}
+  /* Scroll downwards */
+  @keyframes scroll-down {
+    0% {
+        transform: translateY(-80%)
+    }
+    95% {
+        transform: translateY(0%);
+    }
+    100% {
+      transform: translateY(-80%);
+  }
+  }
 
-.animate-scroll-down {
-  animation: scroll-down linear infinite;
-  animation-duration: calc(3s * var(--image-count)); /* Dynamically adjusts duration based on image count */
-}
+  /* Hover effect: pause animation */
+  .group:hover .scroll-column {
+    animation-play-state: paused;
+  }
 
-/* Pause animation on hover - fixed */
-.group:hover .animate-scroll-up,
-.group:hover .animate-scroll-down {
-  animation-play-state: paused;
-}
-
-/* General styles */
-.object-cover {
-  object-fit: cover;
-}
-
-.flex {
-  display: flex;
-}
-
-.flex-none {
-  flex: none;
-}
+  /* Restrict section height to one image's height */
+  .section-container {
+    max-height: 800px; /* Replace with the height of one image */ 
+    overflow: hidden; /* Ensure content doesn't overflow */
+  }

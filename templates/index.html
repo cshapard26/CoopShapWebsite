@@ -42,7 +42,7 @@
         <div class="max-w-screen-xl px-4 mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <!-- Clickable Image Section -->
             <a href="https://github.com/cshapard26/steno-anki-engine" class="order-2 md:order-1 flex justify-center">
-                <img src="/static/images/featured/steno-anki-title.png" alt="Clickable Image" class="w-3/4 sm:w-1/2 md:w-full max-w-lg rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+                <img src="/static/images/featured/steno-anki-title.webp" alt="Clickable Image" class="w-3/4 sm:w-1/2 md:w-full max-w-lg rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
             </a>
     
             <!-- Text Section -->
@@ -81,49 +81,47 @@
         </p>
 
         <!-- Rotating Image Columns -->
-        <div class="flex justify-center space-x-4">
-            <!-- Left Column -->
-            <div class="flex-none overflow-hidden rounded-lg shadow-lg" style="width: 30%; height: 24rem; position: relative;">
-                <div class="absolute inset-0 flex flex-col animate-scroll-up group-hover:pause-animation">
-                    <!-- Duplicate images for seamless looping -->
-                    <img src="/static/images/featured/crumbook.jpg" alt="Image 1" class="w-full h-auto object-cover">
-                    <img src="/static/images/featured/jontebook.jpg" alt="Image 2" class="w-full h-auto object-cover">
-                    <img src="/static/images/featured/booker.jpg" alt="Image 3" class="w-full h-auto object-cover">
-                    <img src="/static/images/featured/crumbook.jpg" alt="Image 1 Duplicate" class="w-full h-auto object-cover">
+        <div class="max-w-screen-xl px-4 py-8 mx-auto text-center section-container">
+            <h1 class="text-4xl font-bold mb-4">Book Folding Commissions</h1>
+            <p class="text-lg mb-8">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut consectetur nunc ac tincidunt commodo.
+            </p>
+            <div class="flex justify-center gap-4">
+                <!-- Left Column -->
+                <div class="group overflow-hidden rounded-lg">
+                    <div class="scroll-column scroll-up">
+                        <img src="/static/images/featured/books/risnerbook.webp" alt="Book Fold">
+                        <img src="/static/images/featured/books/denmanbook.webp" alt="Book Fold">
+                        <img src="/static/images/featured/books/jonesbook.webp" alt="Book Fold">
+                        <img src="/static/images/featured/books/crumbook.webp" alt="Book Fold">
+                        <img src="/static/images/featured/books/brownbook.webp" alt="Book Fold">
+                        <img src="/static/images/featured/books/risnerbook.webp" alt="Book Fold">
+                    </div>
                 </div>
-            </div>
-
-            <!-- Middle Column -->
-            <div class="flex-none overflow-hidden rounded-lg shadow-lg" style="width: 30%; height: 24rem; position: relative;">
-                <div class="absolute inset-0 flex flex-col animate-scroll-down group-hover:pause-animation">
-                    <!-- Duplicate images for seamless looping -->
-                    <img src="/static/images/featured/crumbook.jpg" alt="Image 1" class="w-full h-auto object-cover">
-                    <img src="/static/images/featured/jontebook.jpg" alt="Image 2" class="w-full h-auto object-cover">
-                    <img src="/static/images/featured/booker.jpg" alt="Image 3" class="w-full h-auto object-cover">
-                    <img src="/static/images/featured/crumbook.jpg" alt="Image 1 Duplicate" class="w-full h-auto object-cover">
+                <!-- Middle Column -->
+                <div class="group overflow-hidden rounded-lg">
+                    <div class="scroll-column scroll-down">
+                        <img src="/static/images/featured/books/gmabook.webp" alt="Book Fold">
+                        <img src="/static/images/featured/books/rockclimbbook.webp" alt="Book Fold">
+                        <img src="/static/images/featured/books/belabook.webp" alt="Book Fold">
+                        <img src="/static/images/featured/books/papabook.webp" alt="Book Fold">
+                        <img src="/static/images/featured/books/jontebook.webp" alt="Book Fold">
+                        <img src="/static/images/featured/books/gmabook.webp" alt="Book Fold">
+                    </div>
                 </div>
-            </div>
-
-            <!-- Right Column -->
-            <div class="flex-none overflow-hidden rounded-lg shadow-lg" style="width: 30%; height: 24rem; position: relative;">
-                <div class="absolute inset-0 flex flex-col animate-scroll-up group-hover:pause-animation">
-                    <!-- Duplicate images for seamless looping -->
-                    <img src="/static/images/featured/crumbook.jpg" alt="Image 1" class="w-full h-auto object-cover">
-                    <img src="/static/images/featured/jontebook.jpg" alt="Image 2" class="w-full h-auto object-cover">
-                    <img src="/static/images/featured/booker.jpg" alt="Image 3" class="w-full h-auto object-cover">
-                    <img src="/static/images/featured/crumbook.jpg" alt="Image 1 Duplicate" class="w-full h-auto object-cover">
+                <!-- Right Column -->
+                <div class="group overflow-hidden rounded-lg">
+                    <div class="scroll-column scroll-up">
+                        <img src="/static/images/featured/books/hennekebook.webp" alt="Book Fold">
+                        <img src="/static/images/featured/books/bookerbook.webp" alt="Book Fold">
+                        <img src="/static/images/featured/books/willinghambook.webp" alt="Book Fold">
+                        <img src="/static/images/featured/books/rolandobook.webp" alt="Book Fold">
+                        <img src="/static/images/featured/books/malfoybook.webp" alt="Book Fold">
+                        <img src="/static/images/featured/books/hennekebook.webp" alt="Book Fold">
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- Script to dynamically calculate image count 
-        <script>
-            // Dynamically calculate the number of images and update CSS variables
-            document.querySelectorAll('.animate-scroll-up, .animate-scroll-down').forEach((column) => {
-                const images = column.querySelectorAll('img').length;
-                column.style.setProperty('--image-count', images);
-            });
-        </script> -->
     
     </div>
 

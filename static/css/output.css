@@ -600,10 +600,6 @@ video {
   position: relative;
 }
 
-.inset-0 {
-  inset: 0px;
-}
-
 .left-1\/2 {
   left: 50%;
 }
@@ -677,10 +673,6 @@ video {
   height: 2rem;
 }
 
-.h-auto {
-  height: auto;
-}
-
 .max-h-\[50px\] {
   max-height: 50px;
 }
@@ -725,10 +717,6 @@ video {
   max-width: 36rem;
 }
 
-.flex-none {
-  flex: none;
-}
-
 .flex-grow {
   flex-grow: 1;
 }
@@ -760,6 +748,10 @@ video {
 
 .justify-between {
   justify-content: space-between;
+}
+
+.gap-4 {
+  gap: 1rem;
 }
 
 .gap-8 {
@@ -845,11 +837,6 @@ video {
 .bg-steel {
   --tw-bg-opacity: 1;
   background-color: rgb(235 238 246 / var(--tw-bg-opacity, 1));
-}
-
-.object-cover {
-  -o-object-fit: cover;
-     object-fit: cover;
 }
 
 .p-4 {
@@ -1235,66 +1222,74 @@ a {
   /* Optional: ensures the image flips around its center */
 }
 
-/* Keyframes for scrolling upwards */
+/* Ensure consistent styling for the columns */
+
+.scroll-column {
+  display: flex;
+  flex-direction: column;
+  animation-timing-function: linear;
+  height: 100%;
+  /* Fit to the height of the container */
+  overflow: hidden;
+  /* Prevent images from spilling out */
+}
+
+/* Scrolling animations */
+
+.scroll-up {
+  animation: scroll-up 150s infinite linear;
+}
+
+.scroll-down {
+  animation: scroll-down 150s infinite linear;
+}
+
+/* Scroll upwards */
 
 @keyframes scroll-up {
-  0% {
-    transform: translateY(0);
+  x
+    0% {
+    transform: translateY(0%);
+  }
+
+  95% {
+    transform: translateY(-80%);
   }
 
   100% {
-    transform: translateY(calc(-100% + 24rem));
-    /* Adjusted for full looping */
+    transform: translateY(0%);
   }
 }
 
-/* Keyframes for scrolling downwards */
+/* Scroll downwards */
 
 @keyframes scroll-down {
   0% {
-    transform: translateY(calc(-100% + 24rem));
-    /* Starts from the bottom */
+    transform: translateY(-80%)
+  }
+
+  95% {
+    transform: translateY(0%);
   }
 
   100% {
-    transform: translateY(0);
+    transform: translateY(-80%);
   }
 }
 
-/* Animate the scrolling - updated */
+/* Hover effect: pause animation */
 
-.animate-scroll-up {
-  animation: scroll-up linear infinite;
-  animation-duration: calc(3s * var(--image-count));
-  /* Dynamically adjusts duration based on image count */
-}
-
-.animate-scroll-down {
-  animation: scroll-down linear infinite;
-  animation-duration: calc(3s * var(--image-count));
-  /* Dynamically adjusts duration based on image count */
-}
-
-/* Pause animation on hover - fixed */
-
-.group:hover .animate-scroll-up,
-.group:hover .animate-scroll-down {
+.group:hover .scroll-column {
   animation-play-state: paused;
 }
 
-/* General styles */
+/* Restrict section height to one image's height */
 
-.object-cover {
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-
-.flex {
-  display: flex;
-}
-
-.flex-none {
-  flex: none;
+.section-container {
+  max-height: 800px;
+  /* Replace with the height of one image */
+  overflow: hidden;
+  /* Ensure content doesn't overflow */
 }
 
 .hover\:scale-105:hover {
