@@ -160,5 +160,52 @@ a {
     transform-origin: center; /* Optional: ensures the image flips around its center */
   }
 
+  /* Keyframes for scrolling upwards */
+@keyframes scroll-up {
+  0% {
+      transform: translateY(0);
+  }
+  100% {
+      transform: translateY(calc(-100% + 24rem)); /* Adjusted for full looping */
+  }
+}
 
-  
+/* Keyframes for scrolling downwards */
+@keyframes scroll-down {
+  0% {
+      transform: translateY(calc(-100% + 24rem)); /* Starts from the bottom */
+  }
+  100% {
+      transform: translateY(0);
+  }
+}
+
+/* Animate the scrolling - updated */
+.animate-scroll-up {
+  animation: scroll-up linear infinite;
+  animation-duration: calc(3s * var(--image-count)); /* Dynamically adjusts duration based on image count */
+}
+
+.animate-scroll-down {
+  animation: scroll-down linear infinite;
+  animation-duration: calc(3s * var(--image-count)); /* Dynamically adjusts duration based on image count */
+}
+
+/* Pause animation on hover - fixed */
+.group:hover .animate-scroll-up,
+.group:hover .animate-scroll-down {
+  animation-play-state: paused;
+}
+
+/* General styles */
+.object-cover {
+  object-fit: cover;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-none {
+  flex: none;
+}

@@ -22,6 +22,11 @@ def projects():
 def contact():
     return render_template("contact.html", title_extention="Contact - ")
 
+# Labs Page
+@app.route("/labs")
+def labs():
+    return render_template("labs/index.html", title_extention="Labs - ")
+
 # 404 Error Handler
 @app.errorhandler(404)
 def page_not_found(e):
