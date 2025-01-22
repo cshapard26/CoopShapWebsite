@@ -174,12 +174,20 @@ a {
     animation: scroll-up 90s infinite linear;
   }
 
+  .scroll-up-fast {
+    animation: scroll-up 30s infinite linear;
+  }
+
   .scroll-down {
     animation: scroll-down 90s infinite linear;
   }
 
+  .scroll-down-fast {
+    animation: scroll-up 30s infinite linear;
+  }
+
   /* Scroll upwards */
-  @keyframes scroll-up {x
+  @keyframes scroll-up {
     0% {
         transform: translateY(0%);
     }

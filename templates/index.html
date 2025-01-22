@@ -70,43 +70,49 @@
      <div class="ublueclearseperator"></div>
 
    <!-- Third Section -->
-    <div class="max-w-screen-xl px-4 py-8 mx-auto text-center section-container">
-            <h1 class="text-4xl font-bold mb-4">Book Folding Commissions</h1>
-            <p class="text-lg mb-8">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut consectetur nunc ac tincidunt commodo.
-            </p>
-            <div class="flex justify-center gap-4">
-                <!-- Left Column -->
-                <div class="group overflow-hidden rounded-lg">
-                    <div class="scroll-column scroll-up">
-                        <img src="/static/images/featured/books/risnerbook.webp" alt="Book Fold">
-                        <img src="/static/images/featured/books/crumbook.webp" alt="Book Fold">
-                        <img src="/static/images/featured/books/denmanbook.webp" alt="Book Fold">
-                        <img src="/static/images/featured/books/jonesbook.webp" alt="Book Fold">
-                        <img src="/static/images/featured/books/brownbook.webp" alt="Book Fold">
-                    </div>
-                </div>
-                <!-- Middle Column -->
-                <div class="group overflow-hidden rounded-lg">
-                    <div class="scroll-column scroll-down">
-                        <img src="/static/images/featured/books/gmabook.webp" alt="Book Fold">
-                        <img src="/static/images/featured/books/rockclimbbook.webp" alt="Book Fold">
-                        <img src="/static/images/featured/books/belabook.webp" alt="Book Fold">
-                        <img src="/static/images/featured/books/papabook.webp" alt="Book Fold">
-                        <img src="/static/images/featured/books/jontebook.webp" alt="Book Fold">
-                    </div>
-                </div>
-                <!-- Right Column -->
-                <div class="group overflow-hidden rounded-lg">
-                    <div class="scroll-column scroll-up">
-                        <img src="/static/images/featured/books/hennekebook.webp" alt="Book Fold">
-                        <img src="/static/images/featured/books/rolandobook.webp" alt="Book Fold">
-                        <img src="/static/images/featured/books/willinghambook.webp" alt="Book Fold">
-                        <img src="/static/images/featured/books/bookerbook.webp" alt="Book Fold">
-                        <img src="/static/images/featured/books/malfoybook.webp" alt="Book Fold">
-                    </div>
+    <div class="max-w-screen-xl px-4 py-4 sm:py-8 mx-auto text-center section-container">
+        <h1 class="text-4xl font-bold mb-4">Book Folding Commissions</h1>
+        <p class="text-lg mb-4 sm:mb-8">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut consectetur nunc ac tincidunt commodo.
+        </p>
+
+        <!-- Scrolling arrangement for large screens -->
+        <div class="hidden lg:flex justify-center gap-2 sm:gap-4">
+            <!-- Left Column -->
+            <div class="group overflow-hidden rounded-lg max-h-80 sm:max-h-full">
+                <div class="scroll-column scroll-up overflow-y-auto">
+                    <img src="/static/images/featured/books/risnerbook.webp" alt="Book Fold" class="max-h-40 sm:max-h-full object-contain">
+                    <img src="/static/images/featured/books/crumbook.webp" alt="Book Fold" class="max-h-40 sm:max-h-full object-contain">
+                    <img src="/static/images/featured/books/denmanbook.webp" alt="Book Fold" class="max-h-40 sm:max-h-full object-contain">
+                    <img src="/static/images/featured/books/jonesbook.webp" alt="Book Fold" class="max-h-40 sm:max-h-full object-contain">
+                    <img src="/static/images/featured/books/brownbook.webp" alt="Book Fold" class="max-h-40 sm:max-h-full object-contain">
                 </div>
             </div>
+            <!-- Middle Column -->
+            <div class="group overflow-hidden rounded-lg max-h-80 sm:max-h-full">
+                <div class="scroll-column scroll-down overflow-y-auto">
+                    <img src="/static/images/featured/books/gmabook.webp" alt="Book Fold" class="max-h-40 sm:max-h-full object-contain">
+                    <img src="/static/images/featured/books/rockclimbbook.webp" alt="Book Fold" class="max-h-40 sm:max-h-full object-contain">
+                    <img src="/static/images/featured/books/belabook.webp" alt="Book Fold" class="max-h-40 sm:max-h-full object-contain">
+                    <img src="/static/images/featured/books/papabook.webp" alt="Book Fold" class="max-h-40 sm:max-h-full object-contain">
+                    <img src="/static/images/featured/books/jontebook.webp" alt="Book Fold" class="max-h-40 sm:max-h-full object-contain">
+                </div>
+            </div>
+            <!-- Right Column -->
+            <div class="group overflow-hidden rounded-lg max-h-80 sm:max-h-full">
+                <div class="scroll-column scroll-up overflow-y-auto">
+                    <img src="/static/images/featured/books/hennekebook.webp" alt="Book Fold" class="max-h-40 sm:max-h-full object-contain">
+                    <img src="/static/images/featured/books/rolandobook.webp" alt="Book Fold" class="max-h-40 sm:max-h-full object-contain">
+                    <img src="/static/images/featured/books/willinghambook.webp" alt="Book Fold" class="max-h-40 sm:max-h-full object-contain">
+                    <img src="/static/images/featured/books/bookerbook.webp" alt="Book Fold" class="max-h-40 sm:max-h-full object-contain">
+                    <img src="/static/images/featured/books/malfoybook.webp" alt="Book Fold" class="max-h-40 sm:max-h-full object-contain">
+                </div>
+            </div>
+        </div>
+
+        <!-- Still image for small screens -->
+        <div class="lg:hidden rounded-lg">
+            <img src="/static/images/featured/books/crumbook.webp" alt="Book Fold Still Image" class="w-full">
         </div>
     </div>
 
