@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="ugrayclearseperator"></div>
-<section class="text-white">
+<section class="text-steel">
     <div class="max-w-screen-xl px-4 py-8 mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <!-- Text Section (Title on the left for large screens, centered for small screens) -->
@@ -25,16 +24,105 @@
                 </h2>
                 <h3 class="text-xl sm:text-lg mt-4 font-light text-gray-900 dark:text-gray-100">
                     Site Under Construction. <br><a href="https://cshapard26.github.io" class="hover:underline text-blue-500">Click for old version of site (coloring issues apply).</a>
-                </h2>
+                </h3>
             </div>
-
+    
             <!-- Image Section (Logo on the right for large screens, centered and smaller for small screens) -->
             <div class="flex justify-center md:justify-end">
                 <img src="/static/images/coopshaplogo-deep.png" alt="Main Image" class="w-3/4 sm:w-1/2 md:w-full max-w-xl rounded-none shadow-none">
             </div>
         </div>
     </div>
+    
+    <!-- Seperator -->
+    <div class="blueclearseperator"></div>
+    
+    <!-- Second Section -->
+    <div class="bg-cs-blue text-steel py-8">
+        <div class="max-w-screen-xl px-4 mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <!-- Clickable Image Section -->
+            <a href="https://github.com/cshapard26/steno-anki-engine" class="order-2 md:order-1 flex justify-center">
+                <img src="/static/images/featured/steno-anki-title.png" alt="Clickable Image" class="w-3/4 sm:w-1/2 md:w-full max-w-lg rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+            </a>
+    
+            <!-- Text Section -->
+            <div class="order-1 md:order-2 text-center md:text-left space-y-4">
+                <h1 class="text-3xl sm:text-4xl font-bold">
+                    Steno-Anki Engine
+                </h1>
+                <p class="text-lg sm:text-xl font-light">
+                    <br/>
+                    Steno-Anki engine is a CLI tool that efficiently parses, decodes, and creates stenographic briefs to export in a format that Anki natively supports.
+                    <br/><br/>
+                    Originally built to manage Clippy2 files for Plover, it was later extended to support custom dictionaries, phoneticize results, and use a fine-tuned GPT model to generate custom briefs.
+                    <br/><br/>
+                    Useful for both beginning and advanced stenographers to help improve speed and reduce the toil of brief creation and memorization.
+                    <br/><br/>
+                </p>
+                <a href="https://github.com/cshapard26/steno-anki-engine" class="inline-block text-steel bg-cs-green hover:bg-blue-700 px-6 py-3 rounded-lg font-medium transition-all duration-300">
+                    Go give it a ⭐ on GitHub! →
+                </a>
+            </div>
+        </div>
+    </div>
+
+     <!-- Seperator -->
+     <div class="ublueclearseperator"></div>
+
+     <!-- Third Section -->
+     <div class="max-w-screen-xl px-4 py-8 mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <!-- Text Section (Title on the left for large screens, centered for small screens) -->
+            <div class="text-center md:text-left">
+                <h1 class="text-4xl sm:text-6xl font-extrabold leading-tight text-gray-900 dark:text-gray-300">
+                    <div class="inner-headings">
+                        TO BE OR NOT TO BE
+                    </div>
+                </h1>
+                <h2 class="text-2xl sm:text-3xl mt-4 font-light text-gray-900 dark:text-gray-100">
+                    Portfolio and More, v2.1.0
+                </h2>
+                <h3 class="text-xl sm:text-lg mt-4 font-light text-gray-900 dark:text-gray-100">
+                    Site Under Construction. <br><a href="https://cshapard26.github.io" class="hover:underline text-blue-500">Click for old version of site (coloring issues apply).</a>
+                </h3>
+            </div>
+    
+            <!-- Image Section (Logo on the right for large screens, centered and smaller for small screens) -->
+            <div class="flex justify-center md:justify-end">
+                <img src="/static/images/coopshaplogo-deep.png" alt="Main Image" class="w-3/4 sm:w-1/2 md:w-full max-w-xl rounded-none shadow-none">
+            </div>
+        </div>
+    </div>
+
+    <!-- Seperator -->
+    <div class="greenclearseperator"></div>
+
+    <!-- Second Section -->
+    <div class="bg-cs-green text-steel py-8">
+        <div class="max-w-screen-xl px-4 mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <!-- Clickable Image Section -->
+            <a href="https://github.com/cshapard26/steno-anki-engine" class="order-2 md:order-1 flex justify-center">
+                <img src="/static/images/featured/steno-anki-title.png" alt="Clickable Image" class="w-3/4 sm:w-1/2 md:w-full max-w-lg rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+            </a>
+    
+            <!-- Text Section -->
+            <div class="order-1 md:order-2 text-center md:text-left space-y-4">
+                <h1 class="text-3xl sm:text-4xl font-bold">
+                    Welcome to the Labs Section
+                </h1>
+                <p class="text-lg sm:text-xl font-light">
+                    Explore our detailed projects, hands-on experiments, and comprehensive resources to dive deeper into computer science and innovation.
+                </p>
+                <a href="/labs" class="inline-block text-steel bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-medium transition-all duration-300">
+                    Explore Labs
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seperator -->
+    <div class="ugreenclearseperator"></div>
+
 </section>
-<div class="grayclearseperator"></div>
 
 {% endblock %}

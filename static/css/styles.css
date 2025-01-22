@@ -121,6 +121,7 @@ a {
     background-size: 160px 80px; /* Adjust if needed */
     transform: rotate(180deg); /* Flips the image upside down */
     transform-origin: center; /* Optional: ensures the image flips around its center */
+    z-index: 0;
   }
 
   .blueclearseperator {
@@ -158,8 +159,6 @@ a {
     transform: rotate(180deg); /* Flips the image upside down */
     transform-origin: center; /* Optional: ensures the image flips around its center */
   }
-
-
 
 
   
