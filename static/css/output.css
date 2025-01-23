@@ -670,6 +670,10 @@ video {
   display: grid;
 }
 
+.contents {
+  display: contents;
+}
+
 .hidden {
   display: none;
 }
@@ -1561,6 +1565,11 @@ a {
 .dark\:text-steel:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(235 238 246 / var(--tw-text-opacity, 1));
+}
+
+.dark\:shadow-cs-green:is(.dark *) {
+  --tw-shadow-color: #A6A95E;
+  --tw-shadow: var(--tw-shadow-colored);
 }
 
 .dark\:shadow-white:is(.dark *) {

@@ -23,19 +23,24 @@ def contact():
     return render_template("contact.html", title_extention="Contact - ")
 
 # Labs Page
-@app.route("/labs")
-def labs():
-    return render_template("labs/index.html", title_extention="Labs - ")
+@app.route("/courses")
+def courses():
+    return render_template("courses/index.html", title_extention="Labs - ")
 
 # ECE1181 Page
-@app.route("/labs/ECE1181")
+@app.route("/courses/ECE1181")
 def ece1181():
-    return render_template("labs/ECE1181/index.html", title_extention="ECE1181 - ")
+    return render_template("courses/ECE1181/index.html", title_extention="ECE1181 - ")
 
-# ECE1181 Page
-@app.route("/labs/ECE1181/Lab1GettingStarted")
+# Lab1 Page
+@app.route("/courses/ECE1181/Lab1GettingStarted")
 def ece1181lab1():
-    return render_template("labs/ECE1181/Lab1.html", title_extention="ECE1181 - ")
+    return render_template("courses/ECE1181/Lab1.html", title_extention="ECE1181 - ")
+
+# Terminal Page
+@app.route("/courses/conquering-the-terminal")
+def ctt():
+    return render_template("courses/ctt.html", title_extention="CtT - ")
 
 # 404 Error Handler
 @app.errorhandler(404)
