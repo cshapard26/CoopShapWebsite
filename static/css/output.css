@@ -642,6 +642,10 @@ video {
   margin-left: 4rem;
 }
 
+.ml-6 {
+  margin-left: 1.5rem;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -1058,6 +1062,11 @@ video {
 .text-blue-500 {
   --tw-text-opacity: 1;
   color: rgb(59 130 246 / var(--tw-text-opacity, 1));
+}
+
+.text-cs-blue {
+  --tw-text-opacity: 1;
+  color: rgb(125 158 160 / var(--tw-text-opacity, 1));
 }
 
 .text-cs-green {

@@ -27,30 +27,59 @@
 
                 <h1 class="text-4xl text-bold">Red Pitaya Setup</h1>
                 <br/>
-                <h1 class="text-2xl text-bold underline">Physical Setup</h1>
+                <h1 class="text-2xl text-bold underline text-cs-blue">Physical Setup</h1>
                 <p class="leading-relaxed text-lg">
                     For the physical red pitaya, make sure you have done these things:
                 </p>
+                <br/>
                 <ol class="list-decimal ml-16 text-lg">
                     <li>Place the microSD card into the slot, if it is not already in there.</li>
                     <li>Plug the ethernet cable from the pitaya to your computer (we will be passing out adapters at the beginning of the lab)</li>
                     <li>Provide power to the board with the microUSB port. There are 2 ports, so make sure you are using the PWR one (the one on the right).</li>
                 </ol>
+                <br/>
                 <p class="leading-relaxed text-lg">
                     If you have completed these steps, you should see the light on the pitaya blinking green and occasionally red. This is normal.
                 </p> 
                 <br/>
-                <h1 class="text-2xl text-bold underline">Virtual Setup</h1>
+                <h1 class="text-2xl text-bold underline text-cs-blue">Virtual Setup</h1>
                 <p class="leading-relaxed text-lg">
                     Now that your pitaya is all connected, we can make sure it is working digitally. To make sure you are connected properly, visit <code class="bg-gray-600 px-1 rounded text-base">http://rp-xxxxxx.local</code>  (replace the x's with the six digits on your red pitaya. It will be on your case, or the sticker with the QR code if the other one fell off). If you are connected properly, you should be brought to a website with a Red Pitaya logo in the background and some buttons. If the website times out, then something went wrong. See below for some troubleshooting tips.
                 </p>
                 <br/>
-                <h1 class="text-2xl text-bold underline">Troubleshooting</h1>
-                <ol class="list-decimal ml-16 text-lg">
+                <h1 class="text-2xl text-bold underline text-cs-blue">Troubleshooting</h1>
+                <ol class="list-decimal ml-6 text-lg">
                     <li>Double check the website name. It is case insensitive. You may also need to add a "/" at the end to connect (i.e. http://rp-xxxxxx.local/), but try it with and without the slash.</li>
                     <li>If you are using a VPN, you may need to disconnect from it to interact with the red pitaya.</li>
                     <li>Try flipping around the ethernet cord and/or the adapter. If you have a nearby friend who's device is working, try using their adapter and see if that is the issue.</li>
                     <li>If none of the above works, contact the nearest TA for assistance.</li>
+                </ol>
+                <br/>
+                <h1 class="text-2xl text-bold underline text-cs-blue">Connecting and Editing</h1>
+                <p class="leading-relaxed text-lg">
+                    To edit and create files on your red pitaya, we will be using something called Nano (or vim, if you choose to use that). We used to use VSCode to manage files on the pitaya, but recent updates have presented interfacing issues. Nano is also a good skill to learn, so consider it part of your learning experience.
+                </p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    If you are new to the terminal (which I expect most of you to be), I highly suggest you read through my Conquering the Terminal guide [here]. It is a short read and will teach you the basics of using the terminal and the 7 commands that you will need to be able to use in this class.
+                </p>
+                <br/>
+                <ol class="list-decimal ml-6 text-lg">
+                    <li>Open "Terminal" if you are on Mac and "Powershell" if you are on Windows.</li>
+                    <li>When it opens, type <code class="bg-gray-600 px-1 rounded text-base">ssh root@rp-xxxxxx.local</code> where "xxxxxx" is your pitaya number, and click enter.</li>
+                    <li>It should prompt you for a password. It is <code class="bg-gray-600 px-1 rounded text-base">root</code>. <u> You won't see the letters you are typing in the command line. This is normal. Just type "root" and click enter.</u></li>
+                    <li>You should now be connected to your red pitaya (you can check this by seeing what the beginning of the line in the terminal says. It should say "root:~ $" or something similar instead of your laptop name).</li>
+                    <li>To create a file, type <code class="bg-gray-600 px-1 rounded text-base">touch main.s</code>. This creates a file called "main.s" in the current directory (a.k.a folder).</li>
+                    <li>Type <code class="bg-gray-600 px-1 rounded text-base">nano main.s</code> to start editing an empty file named main.s. This is the Nano window. It is VERY confusing, even to experienced users. Here is a general overview of what you need to know:</li>
+                </ol>
+                <ol class="list-decimal ml-16 text-lg">
+                    <li>You can type to enter text into a file and delete with the backspace key just like in a text editor.</li>
+                    
+                    <li>Some helpful commands are listed at the bottom. The "M-" means 'modifier', which varies depending on Mac vs Windows. I believe you can also hold down ESC and press the listed key for M- commands. You can also look up Nano commands if there is something specific you want to do.</li>
+                    <li>You cannot use your mouse to select an area or move your cursor. You need to use arrow keys to move around.</li>
+                    <li> To save, press Control+O (it is still Control on Mac, not Command). It will ask you for a file name, which should be filled as 'main.s' from your previous command. </li>
+                    <li> When you are done editing, press Control+X to exit the editor. It may ask if you want to "save the modified buffer", which just means Save. Click Y to save.</li>
+                    <li>Nano can be very confusing and overwhelming. If you get stuck or have questions, ask a TA. </li>
                 </ol>
                 
                 <!-- Separator -->
@@ -65,33 +94,20 @@
 
 <!--
 
-## Virtual Setup
-### Connection
-Now that your pitaya is all connected, we can make sure it is working digitally. To make sure you are connected properly, visit  http://rp-xxxxxx.local (replace the x's with the six digits on your red pitaya. It will be on your case, or the sticker with the QR code if the other one fell off). If you are connected properly, you should be brought to a website with a Red Pitaya logo in the background and some buttons. If the website times out, then something went wrong. See below for some troubleshooting tips.
 
-### Troubleshooting
+### Connecting and Editing
+
 1. 
 2. 
 3. 
 4. 
-
-### Editing
-Now, to edit and create files on your red pitaya, we will be using something called Nano (or vim, if you choose to use that). We used to use VSCode to manage files on the pitaya, but recent updates have presented interfacing issues. Nano is also a good skill to learn, so consider it part of your learning experience.
-
-### Connecting and Editing
-If you are new to the terminal (which I expect most of you to be), I highly suggest you read through my Conquering the Terminal guide [here]. It is a short read and will teach you the basics of using the terminal and the 7 commands that you will need to be able to use in this class.
-
-1. Open "Terminal" if you are on Mac and "Powershell" if you are on Windows.
-2. When it opens, type `ssh root@rp-xxxxxx.local` where "xxxxxx" is your pitaya number, and click enter.
-3. It should prompt you for a password. It is `root`. **You won't see the letters you are typing in the command line. This is normal. Just type "root" and click enter.**
-4. You should now be connected to your red pitaya (you can check this by seeing what the beginning of the line in the terminal says. It should say "root $" or something similar instead of your laptop name).
-5. To create a file, type `touch main.s`. This creates a file called "main.s" in the current directory (a.k.a folder).
-6. Type `nano main.s` to start editing an empty file named main.s. This is the Nano window. It is VERY confusing, even to experienced users. Here is a general overview of what you need to know:
-   1. You can type to enter text into a file and delete with the backspace key just like in a text editor. 
-   2. Some helpful commands are listed at the bottom. The "M-" means 'modifier', which varies depending on Mac vs Windows. I believe you can also hold down ESC and press the listed key for M- commands.
-   3. You cannot use your mouse to select an area or move your cursor. You need to use arrow keys to move around.
-   4. When you are done typing, press Control+O (it is still Control on Mac, not Command) to save. It will ask you for a file name, which should be filled as 'main.s' from your previous command. Next, press Control+X to exit the editor. It may ask if you want to "save the modified buffer", which just means Save. Click Y to save.
-   6. Nano can be very confusing and overwhelming. If you get stuck or have questions, ask a TA. 
+6. 
+   1. 
+   2. 
+   3. 
+   4.
+   5.
+   6. 
 
 This should be everything you need to know to setup the Red Pitaya. If you encounter difficulty at any step, let the nearest TA know and we can help you through the process. **For the first lab, we will be prioritizing getting people's pitayas working. Please be patient if you have a coding question, as hardware errors are our primary concern.**
 
