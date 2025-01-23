@@ -17,11 +17,6 @@ def about():
 def projects():
     return render_template("projects.html", title_extention="Projects - ")
 
-# Contact Page
-@app.route("/contact")
-def contact():
-    return render_template("contact.html", title_extention="Contact - ")
-
 # Labs Page
 @app.route("/courses")
 def courses():
