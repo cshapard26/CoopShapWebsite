@@ -28,7 +28,7 @@ def ece1181():
     return render_template("courses/ECE1181/index.html", title_extention="ECE1181 - ")
 
 # Lab1 Page
-@app.route("/courses/ECE1181/Lab1GettingStarted")
+@app.route("/courses/ECE1181/lab-1-getting-started")
 def ece1181lab1():
     return render_template("courses/ECE1181/Lab1.html", title_extention="ECE1181 - ")
 

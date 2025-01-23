@@ -6,10 +6,10 @@
         <section class="text-center py-8">
             <div class="max-w-screen-xl px-4 mx-auto">
                 <h1 class="text-5xl sm:text-7xl font-extrabold leading-tight text-gray-900 dark:text-steel mb-4">
-                    ECE1181 Lander Page
+                    Welcome to ECE1181
                 </h1>
                 <p class="text-xl text-gray-600 dark:text-gray-300">
-                    Your gateway to ECE1181 resources and instructions
+                    Enjoy your first lab!
                 </p>
             </div>
         </section>
@@ -17,61 +17,56 @@
         <!-- Button Section -->
         <section class="text-center py-8">
             <div class="max-w-screen-xl px-4 mx-auto flex flex-col items-center space-y-6">
-                <a href="/courses/ECE1181/Lab1GettingStarted" class="relative bg-gradient-to-br from-cs-green to-cs-blue hover:scale-105 transform transition duration-300 text-white font-bold py-6 px-12 rounded-lg shadow-lg text-4xl">
-                    To Lab 1 >>
-                    <span class="absolute inset-0 rounded-lg bg-cs-green blur-md opacity-50"></span>
-                </a>
+                <div class="relative inline-block mb-6">
+                    <span class="absolute -inset-2 rounded-lg bg-gradient-to-tl from-cs-green to-cs-blue blur-lg opacity-100 -z-10"></span>
+                    <a href="/courses/ECE1181/lab-1-getting-started" class="relative block bg-gradient-to-br from-cs-green to-cs-blue hover:scale-105 transform transition duration-300 text-white font-bold py-6 px-12 rounded-lg shadow-lg text-4xl">
+                        To Lab 1 >>
+                    </a>
+                </div>
                 
                 <!-- Dropdown Button Section -->
-                <div class="relative inline-block w-full sm:w-auto">
-                    <button class="bg-gray-700 text-white text-lg font-semibold py-3 px-8 rounded hover:bg-gray-800 focus:outline-none w-full sm:w-auto" id="dropdownToggle">
+                <div class="relative inline-block w-auto sm:w-full">
+                    <a href="/courses/ECE1181/previous-labs" class="bg-[#444444] text-white text-lg font-semibold py-3 px-8 rounded hover:bg-[#333333] focus:outline-none w-full sm:w-auto" id="dropdownToggle">
                         Previous Lab Pages
-                    </button>
-                    <div id="dropdownMenu" class="hidden absolute bg-white border rounded shadow-lg mt-2 py-2 w-48">
-                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Lab 0: Setup</a>
-                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Lab 1: Basics</a>
-                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Lab 2: Advanced Topics</a>
-                    </div>
+                    </a>
+                    
                 </div>
             </div>
         </section>
 
         <!-- Divider -->
-        <div class="border-t border-gray-300 my-8"></div>
+        <div class="blueclearseperator"></div>
 
         <!-- Post Section -->
         <section class="bg-cs-blue py-12">
             <div class="max-w-screen-xl px-4 mx-auto">
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                     <!-- Post 1 -->
-                    <a href="/troubleshooting" class="bg-white rounded-lg shadow-lg p-6 transform hover:scale-105 transition duration-300">
-                        <h3 class="text-2xl font-bold mb-4">Troubleshooting</h3>
-                        <p class="text-gray-700">Find solutions to common problems and errors encountered during labs.</p>
+                    <a href="/courses/ECE1181/troubleshooting" class="bg-[#555555] rounded-lg shadow-lg p-6 transform hover:scale-105 transition duration-300">
+                        <h3 class="text-2xl font-bold text-center mb-4">Troubleshooting</h3>
+                        <p class="text-steel text-center">Yet to be implemented.</p>
                     </a>
 
                     <!-- Post 2 -->
-                    <a href="/eli5" class="bg-white rounded-lg shadow-lg p-6 transform hover:scale-105 transition duration-300">
-                        <h3 class="text-2xl font-bold mb-4">ELI5</h3>
-                        <p class="text-gray-700">Explained Like I'm 5: Simplified explanations of lab concepts.</p>
+                    <a href="/courses/ECE1181/eli5" class="bg-[#555555] rounded-lg shadow-lg p-6 transform hover:scale-105 transition duration-300">
+                        <h3 class="text-2xl font-bold text-center  mb-4">ELI5</h3>
+                        <p class="text-steel text-center">Yet to be implemented.</p>
                     </a>
 
                     <!-- Post 3 -->
-                    <a href="/qa" class="bg-white rounded-lg shadow-lg p-6 transform hover:scale-105 transition duration-300">
-                        <h3 class="text-2xl font-bold mb-4">Q&A</h3>
-                        <p class="text-gray-700">Get answers to frequently asked questions about the course.</p>
+                    <a href="/courses/ECE1181/qa" class="bg-[#555555] rounded-lg shadow-lg p-6 transform hover:scale-105 transition duration-300">
+                        <h3 class="text-2xl font-bold text-center mb-4">Q&A</h3>
+                        <p class="text-steel text-center">Yet to be implemented.</p>
                     </a>
                 </div>
             </div>
         </section>
+
+        <!-- Divider -->
+        <div class="ublueclearseperator"></div>
+
+        <div class="max-w-screen-xl px-4 py-[10vh]"></div>
     </body>
 </section>
-
-<script>
-    // Dropdown toggle logic
-    document.getElementById('dropdownToggle').addEventListener('click', function() {
-        const menu = document.getElementById('dropdownMenu');
-        menu.classList.toggle('hidden');
-    });
-</script>
 
 {% endblock %}
