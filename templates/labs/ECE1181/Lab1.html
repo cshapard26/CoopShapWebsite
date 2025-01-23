@@ -4,7 +4,7 @@
     <!-- Blog Post Wrapper -->
     <div class="max-w-screen-md px-4 py-8 mx-auto">
         <!-- Thinner Centered Bar -->
-        <div class="bg-[#666666] rounded-lg shadow-md p-6 mx-auto">
+        <div class="bg-[#444444] rounded-lg shadow-md p-6 mx-auto">
             <!-- Title Section -->
             <div class="text-center">
                 <h1 class="text-6xl font-extrabold leading-tight text-cs-green">
@@ -27,7 +27,7 @@
 
                 <h1 class="text-4xl text-bold">Red Pitaya Setup</h1>
                 <br/>
-                <h1 class="text-2xl text-bold underline text-cs-blue">Physical Setup</h1>
+                <h1 class="text-2xl text-bold underline text-cs-green">Physical Setup</h1>
                 <p class="leading-relaxed text-lg">
                     For the physical red pitaya, make sure you have done these things:
                 </p>
@@ -42,12 +42,12 @@
                     If you have completed these steps, you should see the light on the pitaya blinking green and occasionally red. This is normal.
                 </p> 
                 <br/>
-                <h1 class="text-2xl text-bold underline text-cs-blue">Virtual Setup</h1>
+                <h1 class="text-2xl text-bold underline text-cs-green">Virtual Setup</h1>
                 <p class="leading-relaxed text-lg">
-                    Now that your pitaya is all connected, we can make sure it is working digitally. To make sure you are connected properly, visit <code class="bg-gray-600 px-1 rounded text-base">http://rp-xxxxxx.local</code>  (replace the x's with the six digits on your red pitaya. It will be on your case, or the sticker with the QR code if the other one fell off). If you are connected properly, you should be brought to a website with a Red Pitaya logo in the background and some buttons. If the website times out, then something went wrong. See below for some troubleshooting tips.
+                    Now that your pitaya is all connected, we can make sure it is working digitally. To make sure you are connected properly, visit <code class="bg-cs-blue px-1 rounded text-base">http://rp-xxxxxx.local</code>  (replace the x's with the six digits on your red pitaya. It will be on your case, or the sticker with the QR code if the other one fell off). If you are connected properly, you should be brought to a website with a Red Pitaya logo in the background and some buttons. If the website times out, then something went wrong. See below for some troubleshooting tips.
                 </p>
                 <br/>
-                <h1 class="text-2xl text-bold underline text-cs-blue">Troubleshooting</h1>
+                <h1 class="text-2xl text-bold underline text-cs-green">Troubleshooting</h1>
                 <ol class="list-decimal ml-6 text-lg">
                     <li>Double check the website name. It is case insensitive. You may also need to add a "/" at the end to connect (i.e. http://rp-xxxxxx.local/), but try it with and without the slash.</li>
                     <li>If you are using a VPN, you may need to disconnect from it to interact with the red pitaya.</li>
@@ -55,24 +55,25 @@
                     <li>If none of the above works, contact the nearest TA for assistance.</li>
                 </ol>
                 <br/>
-                <h1 class="text-2xl text-bold underline text-cs-blue">Connecting and Editing</h1>
+                <h1 class="text-2xl text-bold underline text-cs-green">Connecting and Editing</h1>
                 <p class="leading-relaxed text-lg">
                     To edit and create files on your red pitaya, we will be using something called Nano (or vim, if you choose to use that). We used to use VSCode to manage files on the pitaya, but recent updates have presented interfacing issues. Nano is also a good skill to learn, so consider it part of your learning experience.
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    If you are new to the terminal (which I expect most of you to be), I highly suggest you read through my Conquering the Terminal guide [here]. It is a short read and will teach you the basics of using the terminal and the 7 commands that you will need to be able to use in this class.
+                    If you are new to the terminal (which I expect most of you to be), I <u>highly</u> suggest you read through my Conquering the Terminal guide [here]. It is a short read and will teach you the basics of using the terminal and the 7 commands that you will need to be able to use in this class.
                 </p>
                 <br/>
-                <ol class="list-decimal ml-6 text-lg">
+                <ol class="list-decimal ml-6 text-lg space-y-2">
                     <li>Open "Terminal" if you are on Mac and "Powershell" if you are on Windows.</li>
-                    <li>When it opens, type <code class="bg-gray-600 px-1 rounded text-base">ssh root@rp-xxxxxx.local</code> where "xxxxxx" is your pitaya number, and click enter.</li>
-                    <li>It should prompt you for a password. It is <code class="bg-gray-600 px-1 rounded text-base">root</code>. <u> You won't see the letters you are typing in the command line. This is normal. Just type "root" and click enter.</u></li>
+                    <li>When it opens, type <code class="bg-cs-blue px-1 rounded text-base">ssh root@rp-xxxxxx.local</code> where "xxxxxx" is your pitaya number, and click enter.</li>
+                    <li>It should prompt you for a password. It is <code class="bg-cs-blue0 px-1 rounded text-base">root</code>. <u> You won't see the letters you are typing in the command line. This is normal. Just type "root" and click enter.</u></li>
                     <li>You should now be connected to your red pitaya (you can check this by seeing what the beginning of the line in the terminal says. It should say "root:~ $" or something similar instead of your laptop name).</li>
-                    <li>To create a file, type <code class="bg-gray-600 px-1 rounded text-base">touch main.s</code>. This creates a file called "main.s" in the current directory (a.k.a folder).</li>
-                    <li>Type <code class="bg-gray-600 px-1 rounded text-base">nano main.s</code> to start editing an empty file named main.s. This is the Nano window. It is VERY confusing, even to experienced users. Here is a general overview of what you need to know:</li>
+                    <li>To create a file, type <code class="bg-cs-blue px-1 rounded text-base">touch main.s</code>. This creates a file called "main.s" in the current directory (a.k.a folder).</li>
+                    <li>Type <code class="bg-cs-blue px-1 rounded text-base">nano main.s</code> to start editing an empty file named main.s. This is the Nano window. It is VERY confusing, even to experienced users. Here is a general overview of what you need to know:</li>
                 </ol>
-                <ol class="list-decimal ml-16 text-lg">
+                <br/>
+                <ol class="list-decimal ml-16 text-lg leading-relaxed space-y-2">
                     <li>You can type to enter text into a file and delete with the backspace key just like in a text editor.</li>
                     
                     <li>Some helpful commands are listed at the bottom. The "M-" means 'modifier', which varies depending on Mac vs Windows. I believe you can also hold down ESC and press the listed key for M- commands. You can also look up Nano commands if there is something specific you want to do.</li>
@@ -81,6 +82,10 @@
                     <li> When you are done editing, press Control+X to exit the editor. It may ask if you want to "save the modified buffer", which just means Save. Click Y to save.</li>
                     <li>Nano can be very confusing and overwhelming. If you get stuck or have questions, ask a TA. </li>
                 </ol>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    This should be everything you need to know to setup the Red Pitaya. If you encounter difficulty at any step, let the nearest TA know and we can help you through the process. <b>For the first lab, we will be prioritizing getting people's pitayas working. Please be patient if you have a coding question, as hardware errors are our primary concern.</b>
+                </p>
                 
                 <!-- Separator -->
                 <div class="h-px bg-cs-green my-6"></div>
@@ -95,21 +100,7 @@
 <!--
 
 
-### Connecting and Editing
 
-1. 
-2. 
-3. 
-4. 
-6. 
-   1. 
-   2. 
-   3. 
-   4.
-   5.
-   6. 
-
-This should be everything you need to know to setup the Red Pitaya. If you encounter difficulty at any step, let the nearest TA know and we can help you through the process. **For the first lab, we will be prioritizing getting people's pitayas working. Please be patient if you have a coding question, as hardware errors are our primary concern.**
 
 # Explanations
 For this lab, you will need the Smith book, which is required for this class. You need a copy of the book, either digital or physical. You can get the book for free on Pearson if you log in with your SMU email.
