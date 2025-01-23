@@ -21,11 +21,14 @@
                 <a href="#terminology" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300">
                     Terminology
                 </a> >>
+                <a href="#entering-terminal" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300">
+                    Entering the Terminal
+                </a> >>
                 <a href="#viewing-df" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300">
                     Viewing D&F
                 </a> >>
                 <a href="#creating-df" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300">
-                    Creating DF
+                    Creating D&F
                 </a> >>
                 <a href="#conclusion" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300">
                     Conclusion
@@ -50,118 +53,96 @@
                 <!-- Separator -->
                 <div class="h-px bg-cs-green my-6"></div>
 
-                <h1 id="setup" class="text-4xl font-extrabold">Red Pitaya Setup</h1>
+                <h1 id="terminology" class="text-4xl font-extrabold">Terminology</h1>
                 <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">Physical Setup</h1>
                 <p class="leading-relaxed text-lg">
-                    For the physical red pitaya, make sure you have done these things:
+                    Before we dive into the exact commands, it is important to know what the Command Line is, and how it differs from the Terminal, Shell, and Console.
+                </p>
+                <p class="leading-relaxed text-lg">
+                    Most people use these four terms interchangeably. And, to be fair, they are very similar. If you confuse them, don't worry, people will still know what you are talking about, and they all refer to the same thing. So here is the layman definitions of these interfaces:
                 </p>
                 <br/>
-                <ol class="list-decimal ml-16 text-lg">
-                    <li>Place the microSD card into the slot, if it is not already in there.</li>
-                    <li>Plug the ethernet cable from the pitaya to your computer (we will be passing out adapters at the beginning of the lab)</li>
-                    <li>Provide power to the board with the microUSB port. There are 2 ports, so make sure you are using the PWR one (the one on the right).</li>
+                <ol class="list ml-6 text-lg">
+                    <b class="text-cs-green">Console:</b> <li>The console was originally the only way to access a computer. It refers to the physical components that let you interact with the device. Technically, your keyboard and mouse are part of the console, since you use them to interact with your screen. Nowadays, people usually refer to the console like a Terminal or a way for the computer to show you information (like the console in VSCode).</li>
+                    <br/><b class="text-cs-green">Terminal:</b> <li>The terminal is an app on your computer that gives you access to the Shell. All computers have a Terminal app installed by default.</li>
+                    <br/><b class="text-cs-green">Shell:</b> <li>The shell is the actual computer part of the console. It is what reads, processes, and executes commands. It is generally considered the "core" of the console/terminal/command-line system.</li>
+                    <br/><b class="text-cs-green">Command Line/CLI:</b> <li>The Command Line, or CLI (for Command Line Interface) is the place in the shell where you input commands. It generally has the character `>` or `$` preceding it to show where to type, as well as listing the current directory. You will often hear that a piece of software has "Command Line Interface/CLI", which just means you can interact with the app through the command line.</li>
+                    <br/><b class="text-cs-green">WSL:</b> <li>Most popular commands originally stem from the Linux operating system. Mac uses these commands, which simplifies the Terminal quite a bit. However, Windows computers don't use these same commands (besides a few of the most basic ones, including the ones below). Thus, to streamline the process, it is highly suggested that you download <a href="https://learn.microsoft.com/en-us/windows/wsl/install" class="text-lg text-cs-blue hover:text-blue-700 underline">WSL here</a>. This is a new terminal for your computer that runs on a Linux system so you can use all the native Linux commands. When you want to use it, be sure to launch the "WSL" app and not the "PowerShell" or "Terminal" apps.</li>
                 </ol>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    If you have completed these steps, you should see the light on the pitaya blinking green and occasionally red. This is normal.
-                </p> 
-                <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">Virtual Setup</h1>
-                <p class="leading-relaxed text-lg">
-                    Now that your pitaya is all connected, we can make sure it is working digitally. To make sure you are connected properly, visit <code class="bg-cs-blue px-1 rounded shadow-lg text-base">http://rp-xxxxxx.local</code>  (replace the x's with the six digits on your red pitaya. It will be on your case, or the sticker with the QR code if the other one fell off). If you are connected properly, you should be brought to a website with a Red Pitaya logo in the background and some buttons. If the website times out, then something went wrong. See below for some troubleshooting tips.
-                </p>
-                <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">Troubleshooting</h1>
-                <ol class="list-decimal ml-6 text-lg">
-                    <li>Double check the website name. It is case insensitive. You may also need to add a "/" at the end to connect (i.e. http://rp-xxxxxx.local/), but try it with and without the slash.</li>
-                    <li>If you are using a VPN, you may need to disconnect from it to interact with the red pitaya.</li>
-                    <li>Try flipping around the ethernet cord and/or the adapter. If you have a nearby friend who's device is working, try using their adapter and see if that is the issue.</li>
-                    <li>If none of the above works, contact the nearest TA for assistance.</li>
-                </ol>
-                <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">Connecting and Editing</h1>
-                <p class="leading-relaxed text-lg">
-                    To edit and create files on your red pitaya, we will be using something called Nano (or vim, if you choose to use that). We used to use VSCode to manage files on the pitaya, but recent updates have presented interfacing issues. Nano is also a good skill to learn, so consider it part of your learning experience.
-                </p>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    If you are new to the terminal (which I expect most of you to be), I <b><u>highly</u></b> suggest you read through my <a href="/courses/conquering-the-terminal" class="text-lg text-cs-blue hover:text-blue-700 underline">Conquering the Terminal</a> guide. It is a short read and will teach you the basics of using the terminal and the 7 commands that you will need to be able to use in this class.
-                </p>
-                <br/>
-                <ol class="list-decimal ml-6 text-lg space-y-2">
-                    <li>Open "Terminal" if you are on Mac and "Powershell" if you are on Windows.</li>
-                    <li>When it opens, type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ssh root@rp-xxxxxx.local</code> where "xxxxxx" is your pitaya number, and click enter.</li>
-                    <li>It should prompt you for a password. It is <code class="bg-cs-blue0 px-1 rounded text-base">root</code>. <u> You won't see the letters you are typing in the command line. This is normal. Just type "root" and click enter.</u></li>
-                    <li>You should now be connected to your red pitaya (you can check this by seeing what the beginning of the line in the terminal says. It should say "root:~ $" or something similar instead of your laptop name).</li>
-                    <li>To create a file, type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">touch main.s</code>. This creates a file called "main.s" in the current directory (a.k.a folder).</li>
-                    <li>Type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">nano main.s</code> to start editing an empty file named main.s. This is the Nano window. It is VERY confusing, even to experienced users. Here is a general overview of what you need to know:</li>
-                </ol>
-                <br/>
-                <ol class="list-decimal ml-16 text-lg leading-relaxed space-y-2">
-                    <li>You can type to enter text into a file and delete with the backspace key just like in a text editor.</li>
-                    
-                    <li>Some helpful commands are listed at the bottom. The "M-" means 'modifier', which varies depending on Mac vs Windows. I believe you can also hold down ESC and press the listed key for M- commands. You can also look up Nano commands if there is something specific you want to do.</li>
-                    <li>You cannot use your mouse to select an area or move your cursor. You need to use arrow keys to move around.</li>
-                    <li> To save, press Control+O (it is still Control on Mac, not Command). It will ask you for a file name, which should be filled as 'main.s' from your previous command. </li>
-                    <li> When you are done editing, press Control+X to exit the editor. It may ask if you want to "save the modified buffer", which just means Save. Click Y to save.</li>
-                    <li>Nano can be very confusing and overwhelming. If you get stuck or have questions, ask a TA. </li>
-                </ol>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    This should be everything you need to know to setup the Red Pitaya. If you encounter difficulty at any step, let the nearest TA know and we can help you through the process. <b>For the first lab, we will be prioritizing getting people's pitayas working. Please be patient if you have a coding question, as hardware errors are our primary concern.</b>
-                </p>
                 <!-- Separator -->
                 <div class="h-px bg-cs-green my-6"></div>
 
-                <h1 id="instructions" class="text-4xl font-extrabold">Lab Instructions</h1>
+                <h1 id="entering-terminal" class="text-4xl font-extrabold">Entering the Terminal</h1>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    Welcome to Lab 1! Here, you will learn how to set up your red pitaya, connect to it using your laptop, and start writing some code. Luckily for you, this year all the red-pitayas will be given to you pre-assembled, which cuts down on the time-commitment of this lab.
+                    So, now that you know what the Command Line is, let's move on to how to use it.</p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    For the first interactive part of this lab, go ahead and open up `Terminal` if you are on Mac, or `Windows PowerShell` if you are on Windows. These come preinstalled on your computer, and they can be found with the search bar.
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    This is out first semester using this website as a replacement for an pdf lab document (we made this update after 100% of previous students said they prefer the website instructions over the pdf). If you find any errors in this guide—whether logic, spelling, or grammar—please let TA Cooper know so he can get it fixed up ASAP. Expect new features to be added to this site in upcoming labs. I am writing this as of 8:33PM on Jan 22, 2025 for context.
+                    You should see a line that looks like this if you are on Windows (it will look similarly, but not exactly the same on Mac):
+                </p>
+                <br/>
+                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+C:\Users\YourName></pre>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    where YourName is the name of your computer.
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    For this lab, you will need "Raspberry Pi Assembly Language Programming by Stephen Smith" (referred to as the "Smith book"), which is required for this class. You need a copy of the book, either digital or physical. You can get the book for free on Pearson if you log in with your SMU email.
+                    This line is called the "prompt." It will show up before every line that you type (sometimes it will show different text, and that's okay! It just means you are in a different place). If the command line does not have a prompt, then that means it is loading or processing a big command. Give it a few seconds and it should pop up again. To cancel a process that is loading too long, use Control+C (it is Control+C on Mac too, not Command).
+                </p>
+                <!-- Separator -->
+                <div class="h-px bg-cs-green my-6"></div>
+                <h1 id="viewing-df" class="text-4xl font-extrabold">Viewing Directories and Files</h1>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    When you open up the command line, you are placed in something called a <b>directory</b>. <u>A directory is just a fancy name for a folder.</u> You usually start in the Home directory, which you can find on your computer in the File Explorer (or Finder on Mac). The home directory is the base folder your computer uses as reference. It is the directory your computer opens when first opening the Command Line. 
+                </p>
+                <br/>
+                <h1 class="text-2xl text-bold underline text-cs-green">Viewing Directories</h1>
+                <p class="leading-relaxed text-lg">
+                    To see what directory you are in, type out <code class="bg-cs-blue px-1 rounded shadow-lg text-base">pwd</code> and click Enter.</p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    <blockquote class="border-l-4 border-cs-blue italic pl-4 text-cs-green text-xl">
+                        pwd — Displays the name of the current directory. It stands for Print Working Directory.
+                    </blockquote>
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    Now, read through chapter 1. You can skim until page 17, where you will be getting instructions for this lab.
+                    Congratulations! You just executed your first Linux command! You should see something that looks like this (may look slightly different for Mac):
                 </p>
                 <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">Step 1</h1>
-                <p class="leading-relaxed text-lg italic">
-                    Code from the book can be found in the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">Code Given</a> section at the bottom of this guide.
+                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+PS C:\Users\YourName> pwd
+
+Path
+----
+C:\Users\YourName
+
+
+PS C:\Users\YourName></pre>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    If you get a red error message instead, don't worry. Odds are you are just using a command line without Linux commands installed. If you are on Windows, make sure you are in POWERSHELL, not TERMINAL. If that still doesn't work, check out the WSL (Windows Subsystem Linux) description in the <a href="#terminology" class="text-lg text-cs-blue hover:text-blue-700 underline">Terminology</a> section for more info.
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    Type the code from the book into a new file called "HelloWorld.s" using Nano, as described above. Next, add the two lines from the book/Code Given into a file called "build". It should NOT have a filetype (i.e. .txt, .s, etc.). You can check to make sure all the files were created properly by typing <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ls</code> into the terminal. This will list all the files in the current folder on your Red Pitaya. If you don't see "HelloWorld.s" and "build", ask a TA for assistance.
+                    So, what just happened? Basically, you used the Command Line to tell the computer that you wanted the name of your current directory/folder. The computer processed your request (the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">pwd</code> command), and printed out the result. Then, it opened up the command line again and waited for a new command (which is why you see the PS C:\Users\YourName> line at the bottom). 
                 </p>
                 <br/>
+                <h1 class="text-2xl text-bold underline text-cs-green">Viewing Files</h1>
                 <p class="leading-relaxed text-lg">
-                    In your terminal (not in the Nano editor) type this command: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">chmod +x build</code>. This command basically just tells the computer to transform the file "build" into an executeable, or a file the computer can run. We can finally start executeing some code. 
+                    Now, let's see what is inside the current directory (you can always check what the "current directory" is using the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">pwd</code> command). To list the files in the current directory, use the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ls</code> command.
                 </p>
-                <br/>
                 <p class="leading-relaxed text-lg">
-                    To compile your code, run <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./build</code> in your terminal. This with create a new file called "HelloWorld" (namely different than "HelloWorld.s"). This is the code your computer can run. To run it, type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./HelloWorld</code> into your terminal. This should output the phrase "Hello World!" in the next line of your terminal. If it does not, ask a TA for asissistance.
-                </p>
-                <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">Step 2</h1>
-                <p class="leading-relaxed text-lg">
-                    Here, you need to edit the code using Nano to make it more personal. To do this, change the string at the bottom of "HelloWorld.s" (Not "HelloWorld" or "HelloWorld.o") to "Hello [Your Name Here]!". Remember that the red pitaya needs to know how many characters to write on the screen, so you will need to update the line <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mov R2, #13   @ length of our string</code> to the new length of the string. Remember to include spaces, special characters, and the "\n" as a single character when counting.
-                </p>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    To check that your program works, you will need to run it again. It is important to note that you must recompile your code <u>every time you make a change</u>. You can recompile using the command <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./build</code>. Run your program again using <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./HelloWorld</code>, which should output "Hello [Your Name]!"into the terminal. <u>Take a screenshot of the output, as well as your code, and make sure to include it in your lab report.</u>
-                </p>
-                <br/>
-                <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">Step 3</h1>
-                <p class="leading-relaxed text-lg">
-                    This next step is pretty simple. Go into HelloWorld.s and change the LAST <code class="bg-cs-blue px-1 rounded shadow-lg text-base">svc 0</code> to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">svc AnyOtherNumber</code>. Where "AnyOtherNumber" is a number other than 0. Recompile your code and rerun it. What happened? <u>Take a screenshot of the output and write out what you saw happen in your own words.</u> If nothing happened, take note of that as well.
+                    <blockquote class="border-l-4 border-cs-blue italic pl-4 text-cs-green text-xl">
+                        ls — Displays the contents of the current directory. It is short for "LiSt" (as in "list" the files).
+                    </blockquote>
                 </p>
                 <!-- Separator -->
                 <div class="h-px bg-cs-green my-6"></div>
@@ -224,72 +205,6 @@ helloworld: .ascii "Hello World!\n"</pre>
 
 
 <!--
-# Overview
-If you have never worked with the Command Line before, it can seem very daunting at first. Even if you have been coding for years, your first experience with the Command Line can be a shocking reality check into just how deep the CS Iceberg goes.
-
-Right now, everything may seem like a jumble of letters, commands, and confusing sequences, but the Command Line is made to be logical. You don't need to memorize everything. In fact, **you will only need to know about 5-6 commands to be successful in most classes.** Any additional commands will probably need to be looked up in the moment, as many have very specific input parameters.
-
-# Terminology
-Before we dive into the exact commands, it is important to know what the Command Line is, and how it differs from the Terminal, Shell, and Console.
-
-Most people use these four terms interchangeably. And, to be fair, they are very similar. If you confuse them, don't worry, people will still know what you are talking about, and they all refer to the same thing. So here is the layman definitions of these interfaces:
-### Console
-The console was originally the only way to access a computer. It refers to the physical components that let you interact with the device. Technically, your keyboard and mouse are part of the console, since you use them to interact with your screen. Nowadays, people usually refer to the console like a Terminal or a way for the computer to show you information (like the console in VSCode).
-### Terminal
-The terminal is an app on your computer that gives you access to the Shell. All computers have a Terminal app installed by default.
-### Shell
-The shell is the actual computer part of the console. It is what reads, processes, and executes commands. It is generally considered the "core" of the console/terminal/command-line system.
-### Command Line / CLI
-The Command Line, or CLI (for Command Line Interface) is the place in the shell where you input commands. It generally has the character `>` or `$` preceding it to show where to type, as well as listing the current directory. You will often hear that a piece of software has "Command Line Interface/CLI", which just means you can interact with the app through the command line.
-### WSL (Windows Subsystem Linux)
-Most popular commands originally stem from the Linux operating system. Mac uses these commands, which simplifies the Terminal quite a bit. However, Windows computers don't use these same commands (besides a few of the most basic ones, including the ones below). Thus, to streamline the process, it is highly suggested that you download [WSL](https://learn.microsoft.com/en-us/windows/wsl/install). This is a new terminal for your computer that runs on a Linux system so you can use all the native Linux commands. When you want to use it, be sure to launch the "WSL" app and not the "PowerShell" or "Terminal" apps.
-
-
-# Entering the Terminal
-So, now that you know what the Command Line is, let's move on to how to use it. 
-
-For the first interactive part of this lab, go ahead and open up `Terminal` if you are on Mac, or `Windows PowerShell` if you are on Windows. These come preinstalled on your computer, and they can be found with the search bar.
-
-You should see a line that looks like this if you are on Windows (it will look similarly, but not exactly the same on Mac):
-
-```
-C:\Users\YourName>
-```
-
-where `YourName` is the name of your computer.
-
-This line is called the "prompt." It will show up before every line that you type (sometimes it will show different text, and that's okay! It just means you are in a different place). If the command line does not have a prompt, then that means it is loading or processing a big command. Give it a few seconds and it should pop up again.
-
-# Viewing Directories and Files
-When you open up the command line, you are placed in something called a **directory**. <u>A directory is just a fancy name for a folder.</u> You usually start in the Home directory, which you can find on your computer in the File Explorer (or Finder on Mac). The home directory is the base folder your computer uses as reference. It is the directory your computer opens when first opening the Command Line. 
-
-## Viewing Directories
-
-To see what directory you are in, type out `pwd` and click Enter.
-
----
-### Command
-`pwd` — Displays the name of the current directory. It stands for Print Working Directory.
-
----
-
-Congratulations! You just executed your first Linux command! You should see something that looks like this (may look slightly different for Mac):
-```
-PS C:\Users\YourName> pwd
-
-Path
-----
-C:\Users\YourName
-
-
-PS C:\Users\YourName>
-```
-If you get a red error message instead, don't worry. Odds are you are just using a command line without Linux commands installed. If you are on Windows, make sure you are in POWERSHELL, not TERMINAL. If that still doesn't work, check out the [WSL (Windows Subsystem Linux)](#wsl-windows-subsystem-linux) section for more info.
-
-So, what just happened? Basically, you used the Command Line to tell the computer that you wanted the name of your current directory/folder. The computer processed your request (the `pwd` command), and printed out the result. Then, it opened up the command line again and waited for a new command (which is why you see the C:\\\\ line at the bottom). 
-
-## Viewing Files
-Now, let's see what is inside the current directory (you can always check what the "current directory" is using the `pwd` command). To list the files in the current directory, use the `ls` command.
 
 ---
 ### Command
@@ -297,7 +212,7 @@ Now, let's see what is inside the current directory (you can always check what t
 
 ---
 
-You should see something like this (may vary slightly on Mac):
+On Mac/WSL, you will just see a list of folders and files in the current directory. On Windows, it will be the same, but formatted like this:
 
 ```
 Mode                 LastWriteTime         Length Name
