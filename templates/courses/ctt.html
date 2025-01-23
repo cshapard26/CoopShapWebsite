@@ -33,7 +33,7 @@
                 <a href="#conclusion" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300">
                     Conclusion
                 </a> >>
-                <a href="#next" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300">
+                <a href="#whats-next" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300">
                     What's Next?
                 </a>
             </div>
@@ -69,7 +69,7 @@
                     <b class="text-cs-green">Console:</b> <li>The console was originally the only way to access a computer. It refers to the physical components that let you interact with the device. Technically, your keyboard and mouse are part of the console, since you use them to interact with your screen. Nowadays, people usually refer to the console like a Terminal or a way for the computer to show you information (like the console in VSCode).</li>
                     <br/><b class="text-cs-green">Terminal:</b> <li>The terminal is an app on your computer that gives you access to the Shell. All computers have a Terminal app installed by default.</li>
                     <br/><b class="text-cs-green">Shell:</b> <li>The shell is the actual computer part of the console. It is what reads, processes, and executes commands. It is generally considered the "core" of the console/terminal/command-line system.</li>
-                    <br/><b class="text-cs-green">Command Line/CLI:</b> <li>The Command Line, or CLI (for Command Line Interface) is the place in the shell where you input commands. It generally has the character `>` or `$` preceding it to show where to type, as well as listing the current directory. You will often hear that a piece of software has "Command Line Interface/CLI", which just means you can interact with the app through the command line.</li>
+                    <br/><b class="text-cs-green">Command Line/CLI:</b> <li>The Command Line, or CLI (for Command Line Interface) is the place in the shell where you input commands. It generally has the character > or $ preceding it to show where to type, as well as listing the current directory. You will often hear that a piece of software has "Command Line Interface/CLI", which just means you can interact with the app through the command line.</li>
                     <br/><b class="text-cs-green">WSL:</b> <li>Most popular commands originally stem from the Linux operating system. Mac uses these commands, which simplifies the Terminal quite a bit. However, Windows computers don't use these same commands (besides a few of the most basic ones, including the ones below). Thus, to streamline the process, it is highly suggested that you download <a href="https://learn.microsoft.com/en-us/windows/wsl/install" class="text-lg text-cs-blue hover:text-blue-700 underline">WSL here</a>. This is a new terminal for your computer that runs on a Linux system so you can use all the native Linux commands. When you want to use it, be sure to launch the "WSL" app and not the "PowerShell" or "Terminal" apps.</li>
                 </ol>
                 <!-- Separator -->
@@ -81,7 +81,7 @@
                     So, now that you know what the Command Line is, let's move on to how to use it.</p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    For the first interactive part of this lab, go ahead and open up `Terminal` if you are on Mac, or `Windows PowerShell` if you are on Windows. These come preinstalled on your computer, and they can be found with the search bar.
+                    For the first interactive part of this lab, go ahead and open up Terminal if you are on Mac, or Windows PowerShell if you are on Windows. These come preinstalled on your computer, and they can be found with the search bar.
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
@@ -196,7 +196,7 @@ d-r---          3/2/2023   6:49 PM                Favorites</pre>
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    So, if you want to go to the `Downloads` folder, you would type the command:
+                    So, if you want to go to the 'Downloads' folder, you would type the command:
                 </p>
                 <br/>
                 <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
@@ -266,126 +266,57 @@ C:\Users\YourName\Downloads</pre>
                     Beautiful! Go ahead and list the contents one more time to make sure your new file is in there (it should be in White text. If it's blue, you made a directory by mistake! Make sure to use <code class="bg-cs-blue px-1 rounded shadow-lg text-base">touch</code> and not <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mkdir</code>).
                 </p>
                 <br/>
-                
-
-
+                <h1 class="text-2xl text-bold underline text-cs-green">Leaving Directories</h1>
+                <p class="leading-relaxed text-lg">
+                    Now that you've finished making your own directory and file, let's learn how to go back up into the 'Downloads' directory. If you try to use <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cd Downloads</code>, you will see that you get an error. That's because 'Downloads' is the "parent" directory. Think of it as a set of Russian Nesting Dolls, with each directory inside of each other. Each doll/directory can only see what is inside of itself, not what's above it (the "parent" doll if you will). So, to go "up" a directory, we need a special command: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cd ..</code> (that's two periods, to be clear)
+                </p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    <blockquote class="border-l-4 border-cs-blue italic pl-4 text-cs-green text-xl">
+                        cd .. — Go "up" one directory (to the parent directory). '..' always stands for the parent of a directory.
+                    </blockquote>
+                </p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    You should be back in 'Downloads'! Try using the command again to get back to your Home directory ('C:\Users\YourName'). 
+                </p>
+                <br/>
                 <!-- Separator -->
                 <div class="h-px bg-cs-green my-6"></div>
                 <h1 id="conclusion" class="text-4xl font-extrabold">Conclusion</h1>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    Congrats! You just completed your first lab for ECE1181. All that's left to do now is to write your lab report and submit it sometime before your next lab session. Check the assignment on Canvas for more information about what to include in your lab report. Note that the first lab is often the longest of the semester, and you will often get out 1-2 hours early depending on how fast you work. 
+                    Congratulations! You just learned all of the basic Linux commands you need to Conquer the Terminal! There are a few more that you will learn later on in your coding journey (including <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ssh</code>), but these are the main ones and the ones you should know by heart. I'll leave you with just one more command, but this one is just for aesthetics. Entering <code class="bg-cs-blue px-1 rounded shadow-lg text-base">clear</code> will clear the terminal, leaving it nice and sparkly. Don't worry, this doesn't change which directory you are in, and it doesn't mess with your files. It just removes the clutter from the screen.
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    You may have felt a little overwhelmed during this first session. That's okay. It may take a minute to settle into these concepts, but know that there are plenty of resources available to you if you are confused. See either Dr. Camp's office hours or preferably the TA office hours for help with labs, homework, or general questions about the course. We hope you have a great rest of your day and look forward to the next lab!
+                    <blockquote class="border-l-4 border-cs-blue italic pl-4 text-cs-green text-xl">
+                        clear — Clear the old commands on the terminal screen. Useful to hide error messages and remove clutter.
+                    </blockquote>
+                </p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    That should be it for this section of "Lab 0." But before you move on to the next section, check the `Downloads` folder of your computer using Finder or File Explorer. See if you can find the directory and file that you made. Now you can see how to use the Command Line to affect real files on your computer!
                 </p>
                 <!-- Separator -->
                 <div class="h-px bg-cs-green my-6"></div>
-                <h1 id="code-given" class="text-4xl font-extrabold">Code Given</h1>
+                <h1 id="whats-next" class="text-4xl font-extrabold">What's next?</h1>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    Code is derived from Stephen Smith's Raspberry Pi Assembly Language Programming book, modified to fit the needs of this course. Credit belongs to the original author.
+                    Want to start putting your Command Line knowledge to good use? One of my favorite resources is <a href="https://overthewire.org/wargames/bandit/" class="text-lg text-cs-blue hover:text-blue-700 underline">OverTheWire's Bandit</a>, which is a game built around using the terminal. Though it is mainly used to train Red Team Cybersecurity hackers, the beginner stages are a great intro to the terminal. 
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    WARNING: I strongly recommend typing this into your Red Pitaya directly. The reason is that there are hidden symbols that may cause a high degree of frustration from copy/paste that would be spared by just typing it in. Also, you get a better feel for the code in doing so. You will likely not understand all that is happening in this code for now. That is okay. As the semester goes on, you will gain an understanding of everything you see below.
+                    I suggest working your way through at least level 8 to start feeling comfortable writing commands. You will start out with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ssh</code>, which lets you connect to computers other than your own. Each level has some handy resources with commands you might need. 
                 </p>
                 <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">build</h1>
-                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-as -o HelloWorld.o HelloWorld.s
-ld -o HelloWorld HelloWorld.o</pre>
+                <p class="leading-relaxed text-lg">
+                    The point of the game is finding information on your own like a real coder. This means Googling for information, testing things that may not work, and finding out how to use commands in practice. Though we encourage you to try and find solutions on your own, there are plenty of people who are able to help you and will work through it with you step by step!
+                </p>
                 <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">HelloWorld.s</h1>
-                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-@ Assembler program to print "Hello World!"
-@ to stdout.
-@ R0-R2 - parameters to linux function services
-@ R7 - linux function number
-
-.global _start  @ Provide program starting @ address to linker
-                @ Set up the parameters to print hello world
-                @ and then call Linux to do it.
-_start: 
-    mov R0, #1          @ 1 = StdOut
-    ldr R1, =helloworld @ string to print
-    mov R2, #13         @ length of our string
-    mov R7, #4          @ linux write system call
-    svc 0               @ Call linux to print
-                        @ Set up the parameters to exit the program
-                        @ and then call Linux to do it.
-.data
-    mov R0, #0  @ Use 0 return code
-    mov R7, #1  @ Service command code 1
-                @ terminates this program
-    svc 0       @ Call linux to terminate
-
-helloworld: .ascii "Hello World!\n"</pre>
+                
             </div>
         </div>
     </div>
 </body>
 {% endblock %}
-
-
-<!--
-
-Beautiful! Go ahead and list the contents one more time to make sure your new file is in there (it should be in White text. If it's blue, you made a directory by mistake! Make sure to use `touch` and not `mkdir`).
-
-## Leaving Directories
-Now that you've finished making your own directory and file, let's learn how to go back up into the `Downloads` directory. If you try to use `cd Downloads`, you will see that you get an error. That's because `Downloads` is the "parent" directory. Think of it as a set of Russian Nesting Dolls, with each directory inside of each other. Each doll/directory can only see what is inside of itself, not what's above it (the "parent" doll if you will). So, to go "up" a directory, we need a special command: `cd ..` (that's two periods, to be clear)
-
----
-### Command
-`cd ..` — Go "up" one directory (to the parent directory). `..` always stands for the parent of a directory.
-
----
-
-You should be back in `Downloads`! Try using the command again to get back to your Home directory (`C:\Users\YourName`). 
-
-# Conclusion
-Congratulations! You just learned all of the basic Linux commands you will need for this course! There are a few more that you will learn later on (including `ssh`), but these are the main ones and the ones you should know by heart. I'll leave you with just one more command, but this one is just for aesthetics. Entering `clear` will clear the terminal, leaving it nice and sparkly! Don't worry, this doesn't change which directory you are in, and it doesn't mess with your files. It just removes the clutter from the screen.
-
----
-### Command
-`clear` — Clear the old commands on the terminal screen. Useful to hide error messages and remove clutter.
-
----
-
-That should be it for this section of Lab 0. But before you move on to the next section, check the `Downloads` folder of your computer using Finder or File Explorer. See if you can find the directory and file that you made. Now you can see how to use the Command Line to affect real files on your computer!
-
-# What's Next?
-Want to start putting your Command Line knowledge to good use? One of my favorite resources is [OverTheWire](https://overthewire.org/wargames/bandit/), which is a game built around using the terminal. Though it is mainly used to train Red Team Cybersecurity hackers, the beginner stages are a great intro to the terminal. 
-
-I suggest working your way through at least level 8 to start feeling comfortable writing commands. You will start out with `ssh`, which lets you connect to computers other than your own. Each level has some handy resources with commands you might need. 
-
-The point of the game is finding information on your own like a real coder. This means Googling for information, testing things that may not work, and finding out how to use commands in practice. Though we encourage you to try and find solutions on your own, there are plenty of people who are able to help you and will work through it with you step by step!
-
-# Feedback
-Please give me some feedback on this course! Things you liked, things you didn't like, things you want to see in the next one. Shoot me an email at coopershapard@duck.com with any feedback you have!
-
-
-
-
-                <h2>Blockquote Example</h2>
-                <blockquote class="border-l-4 border-cs-blue italic pl-4 text-cs-green">
-                    "This is an example of a blockquote. It's perfect for highlighting important points or quotes."
-                </blockquote>
-
-                <h2>Code Snippet Example</h2>
-                <p>
-                    Below is an example of a simple Python function:
-                </p>
-                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-def greet(name):
-    return f"Hello, {name}!"
-
-print(greet("World"))
-                </pre>
-
-
-<code class="bg-cs-blue px-1 rounded shadow-lg text-base">
-
-</code>
--->
