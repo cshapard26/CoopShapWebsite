@@ -44,7 +44,7 @@
                 <br/>
                 <h1 class="text-2xl text-bold underline text-cs-green">Virtual Setup</h1>
                 <p class="leading-relaxed text-lg">
-                    Now that your pitaya is all connected, we can make sure it is working digitally. To make sure you are connected properly, visit <code class="bg-cs-blue px-1 rounded text-base">http://rp-xxxxxx.local</code>  (replace the x's with the six digits on your red pitaya. It will be on your case, or the sticker with the QR code if the other one fell off). If you are connected properly, you should be brought to a website with a Red Pitaya logo in the background and some buttons. If the website times out, then something went wrong. See below for some troubleshooting tips.
+                    Now that your pitaya is all connected, we can make sure it is working digitally. To make sure you are connected properly, visit <code class="bg-gray-600 px-1 rounded text-base">http://rp-xxxxxx.local</code>  (replace the x's with the six digits on your red pitaya. It will be on your case, or the sticker with the QR code if the other one fell off). If you are connected properly, you should be brought to a website with a Red Pitaya logo in the background and some buttons. If the website times out, then something went wrong. See below for some troubleshooting tips.
                 </p>
                 <br/>
                 <h1 class="text-2xl text-bold underline text-cs-green">Troubleshooting</h1>
@@ -66,11 +66,11 @@
                 <br/>
                 <ol class="list-decimal ml-6 text-lg space-y-2">
                     <li>Open "Terminal" if you are on Mac and "Powershell" if you are on Windows.</li>
-                    <li>When it opens, type <code class="bg-cs-blue px-1 rounded text-base">ssh root@rp-xxxxxx.local</code> where "xxxxxx" is your pitaya number, and click enter.</li>
-                    <li>It should prompt you for a password. It is <code class="bg-cs-blue0 px-1 rounded text-base">root</code>. <u> You won't see the letters you are typing in the command line. This is normal. Just type "root" and click enter.</u></li>
+                    <li>When it opens, type <code class="bg-gray-600 px-1 rounded text-base">ssh root@rp-xxxxxx.local</code> where "xxxxxx" is your pitaya number, and click enter.</li>
+                    <li>It should prompt you for a password. It is <code class="bg-gray-6000 px-1 rounded text-base">root</code>. <u> You won't see the letters you are typing in the command line. This is normal. Just type "root" and click enter.</u></li>
                     <li>You should now be connected to your red pitaya (you can check this by seeing what the beginning of the line in the terminal says. It should say "root:~ $" or something similar instead of your laptop name).</li>
-                    <li>To create a file, type <code class="bg-cs-blue px-1 rounded text-base">touch main.s</code>. This creates a file called "main.s" in the current directory (a.k.a folder).</li>
-                    <li>Type <code class="bg-cs-blue px-1 rounded text-base">nano main.s</code> to start editing an empty file named main.s. This is the Nano window. It is VERY confusing, even to experienced users. Here is a general overview of what you need to know:</li>
+                    <li>To create a file, type <code class="bg-gray-600 px-1 rounded text-base">touch main.s</code>. This creates a file called "main.s" in the current directory (a.k.a folder).</li>
+                    <li>Type <code class="bg-gray-600 px-1 rounded text-base">nano main.s</code> to start editing an empty file named main.s. This is the Nano window. It is VERY confusing, even to experienced users. Here is a general overview of what you need to know:</li>
                 </ol>
                 <br/>
                 <ol class="list-decimal ml-16 text-lg leading-relaxed space-y-2">
@@ -113,61 +113,61 @@
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    Type the code from the book into a new file called "HelloWorld.s" using Nano, as described above. Next, add the two lines from the book/Code Given into a file called "build". It should NOT have a filetype (i.e. .txt, .s, etc.). You can check to make sure all the files were created properly by typing <code class="bg-csblue px-1 rounded text-base">ls</code> into the terminal. This will list all the files in the current folder on your Red Pitaya. If you don't see "HelloWorld.s" and "build", ask a TA for assistance.
+                    Type the code from the book into a new file called "HelloWorld.s" using Nano, as described above. Next, add the two lines from the book/Code Given into a file called "build". It should NOT have a filetype (i.e. .txt, .s, etc.). You can check to make sure all the files were created properly by typing <code class="bg-gray-600 px-1 rounded text-base">ls</code> into the terminal. This will list all the files in the current folder on your Red Pitaya. If you don't see "HelloWorld.s" and "build", ask a TA for assistance.
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    In your terminal (not in the Nano editor) type this command: <code class="bg-csblue px-1 rounded text-base">chmod +x build</code>. This command basically just tells the computer to transform the file "build" into an executeable, or a file the computer can run. We can finally start executeing some code. 
+                    In your terminal (not in the Nano editor) type this command: <code class="bg-gray-600 px-1 rounded text-base">chmod +x build</code>. This command basically just tells the computer to transform the file "build" into an executeable, or a file the computer can run. We can finally start executeing some code. 
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    To compile your code, run <code class="bg-csblue px-1 rounded text-base">./build</code> in your terminal. This with create a new file called "HelloWorld" (namely different than "HelloWorld.s"). This is the code your computer can run. To run it, type <code class="bg-csblue px-1 rounded text-base">./HelloWorld</code> into your terminal. This should output the phrase "Hello World!" in the next line of your terminal. If it does not, ask a TA for asissistance.
+                    To compile your code, run <code class="bg-gray-600 px-1 rounded text-base">./build</code> in your terminal. This with create a new file called "HelloWorld" (namely different than "HelloWorld.s"). This is the code your computer can run. To run it, type <code class="bg-gray-600 px-1 rounded text-base">./HelloWorld</code> into your terminal. This should output the phrase "Hello World!" in the next line of your terminal. If it does not, ask a TA for asissistance.
                 </p>
                 <br/>
                 <h1 class="text-2xl text-bold underline text-cs-green">Step 2</h1>
                 <p class="leading-relaxed text-lg">
-                    Here, you need to edit the code using Nano to make it more personal. To do this, change the string at the bottom of "HelloWorld.s" (Not "HelloWorld" or "HelloWorld.o") to "Hello [Your Name Here]!". Remember that the red pitaya needs to know how many characters to write on the screen, so you will need to update the line <code class="bg-csblue px-1 rounded text-base">ov R2, #13   @ length of our string</code> to the new length of the string. Remember to include spaces, special characters, and the "\n" as a single character when counting.
+                    Here, you need to edit the code using Nano to make it more personal. To do this, change the string at the bottom of "HelloWorld.s" (Not "HelloWorld" or "HelloWorld.o") to "Hello [Your Name Here]!". Remember that the red pitaya needs to know how many characters to write on the screen, so you will need to update the line <code class="bg-gray-600 px-1 rounded text-base">mov R2, #13   @ length of our string</code> to the new length of the string. Remember to include spaces, special characters, and the "\n" as a single character when counting.
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    To check that your program works, you will need to run it again. It is important to note that you must recompile your code <u>every time you make a change</u>. You can recompile using the command <code class="bg-csblue px-1 rounded text-base">./build</code>. Run your program again using <code class="bg-csblue px-1 rounded text-base">./HelloWorld</code>, which should output "Hello [Your Name]!"into the terminal. <u>Take a screenshot of the output, as well as your code, and make sure to include it in your lab report.</u>
+                    To check that your program works, you will need to run it again. It is important to note that you must recompile your code <u>every time you make a change</u>. You can recompile using the command <code class="bg-gray-600 px-1 rounded text-base">./build</code>. Run your program again using <code class="bg-gray-600 px-1 rounded text-base">./HelloWorld</code>, which should output "Hello [Your Name]!"into the terminal. <u>Take a screenshot of the output, as well as your code, and make sure to include it in your lab report.</u>
                 </p>
                 <br/>
                 <br/>
                 <h1 class="text-2xl text-bold underline text-cs-green">Step 3</h1>
                 <p class="leading-relaxed text-lg">
-                    This next step is pretty simple. Go into HelloWorld.s and change the LAST <code class="bg-csblue px-1 rounded text-base">svc 0</code> to <code class="bg-csblue px-1 rounded text-base">svc AnyOtherNumber</code>. Where "AnyOtherNumber" is a number other than 0. Recompile your code and rerun it. What happened? <u>Take a screenshot of the output and write out what you saw happen in your own words.</u> If nothing happened, take note of that as well.
+                    This next step is pretty simple. Go into HelloWorld.s and change the LAST <code class="bg-gray-600 px-1 rounded text-base">svc 0</code> to <code class="bg-gray-600 px-1 rounded text-base">svc AnyOtherNumber</code>. Where "AnyOtherNumber" is a number other than 0. Recompile your code and rerun it. What happened? <u>Take a screenshot of the output and write out what you saw happen in your own words.</u> If nothing happened, take note of that as well.
                 </p>
                 <!-- Separator -->
                 <div class="h-px bg-cs-green my-6"></div>
-                <h1 class="text-4xl text-bold">Conclusion/h1>
+                <h1 class="text-4xl text-bold">Conclusion</h1>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    Welcome to Lab 1! Here, you will learn how to set up your red pitaya, connect to it using your laptop, and start writing some code. Luckily for you, this year all the red-pitayas will be given to you pre-assembled, which cuts down on the time-commitment of this lab.
+                    Congrats! You just completed your first lab for ECE1181. All that's left to do now is to write your lab report and submit it sometime before your next lab session. Check the assignment on Canvas for more information about what to include in your lab report. Note that the first lab is often the longest of the semester, and you will often get out 1-2 hours early depending on how fast you work. 
                 </p>
-                
-            </div>
-        </div>
-    </div>
-</body>
-{% endblock %}
-
-
-<!--
-
-# Conclusion
-Congrats! You just completed your first lab for ECE1181. All that's left to do now is to write your lab report and submit it sometime before your next lab session. Check the assignment on Canvas for more information about what to include in your lab report. Note that the first lab is often the longest of the semester, and you will often get out 1-2 hours early depending on how fast you work. 
-
-You may have felt a little overwhelmed during this first session. That's okay. It may take a minute to settle into these concepts, but know that there are plenty of resources available to you if you are confused. See either Dr. Camp's office hours or preferably the TA office hours for help with labs, homework, or general questions about the course. We hope you have a great rest of your day and look forward to the next lab!
-
-
-# Code Given
-Code is derived from Stephen Smith's Raspberry Pi Assembly Language Programming book, modified to fit the needs of this course. Credit belongs to the original author.
-
-WARNING: I strongly recommend typing this into your Red Pitaya directly – The reason is that there are hidden symbols that may cause a high degree of frustration from copy/paste that would be spared by just typing it in. Also, you get a better feel for the code in doing so. You will likely not understand all that is happening in this code for now. That is okay. As the semester goes on, you will gain an understanding of everything you see below.
-
-HelloWorld.s:
-```asm
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    You may have felt a little overwhelmed during this first session. That's okay. It may take a minute to settle into these concepts, but know that there are plenty of resources available to you if you are confused. See either Dr. Camp's office hours or preferably the TA office hours for help with labs, homework, or general questions about the course. We hope you have a great rest of your day and look forward to the next lab!
+                </p>
+                <!-- Separator -->
+                <div class="h-px bg-cs-green my-6"></div>
+                <h1 class="text-4xl text-bold">Code Given</h1>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    Code is derived from Stephen Smith's Raspberry Pi Assembly Language Programming book, modified to fit the needs of this course. Credit belongs to the original author.
+                </p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    WARNING: I strongly recommend typing this into your Red Pitaya directly. The reason is that there are hidden symbols that may cause a high degree of frustration from copy/paste that would be spared by just typing it in. Also, you get a better feel for the code in doing so. You will likely not understand all that is happening in this code for now. That is okay. As the semester goes on, you will gain an understanding of everything you see below.
+                </p>
+                <br/>
+                <h1 class="text-2xl text-bold underline text-cs-green">build</h1>
+                <pre class="bg-gray-600 text-steel rounded-lg p-4 overflow-auto">
+as -o HelloWorld.o HelloWorld.s
+ld -o HelloWorld HelloWorld.o</pre>
+                <br/>
+                <h1 class="text-2xl text-bold underline text-cs-green">HelloWorld.s</h1>
+                <pre class="bg-gray-600 text-steel rounded-lg p-4 overflow-auto">
 @ Assembler program to print "Hello World!"
 @ to stdout.
 @ R0-R2 - parameters to linux function services
@@ -190,18 +190,15 @@ _start:
                 @ terminates this program
     svc 0       @ Call linux to terminate
 
-helloworld: .ascii "Hello World!\n"
-```
-build:
-```build
-as -o HelloWorld.o HelloWorld.s
-ld -o HelloWorld HelloWorld.o
-```
+helloworld: .ascii "Hello World!\n"</pre>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}
 
 
-
-
-
+<!--
                 <h2>Blockquote Example</h2>
                 <blockquote class="border-l-4 border-cs-blue italic pl-4 text-cs-green">
                     "This is an example of a blockquote. It's perfect for highlighting important points or quotes."
@@ -212,16 +209,14 @@ ld -o HelloWorld HelloWorld.o
                     Below is an example of a simple Python function:
                 </p>
                 <pre class="bg-gray-600 text-steel rounded-lg p-4 overflow-auto">
-<code class="language-python">
 def greet(name):
     return f"Hello, {name}!"
 
 print(greet("World"))
-</code>
                 </pre>
 
 
-<code class="bg-csblue px-1 rounded text-base">
+<code class="bg-gray-600 px-1 rounded text-base">
 
 </code>
 -->
