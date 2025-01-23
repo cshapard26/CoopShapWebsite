@@ -1,23 +1,43 @@
 {% extends 'base.html' %}
 {% block content %}
-<body class="bg-gray-100 text-steel">
+<body class="bg-gray-100 dark:text-steel text-[#222222]">
     <!-- Blog Post Wrapper -->
     <div class="max-w-screen-md px-4 py-8 mx-auto">
         <!-- Thinner Centered Bar -->
-        <div class="bg-[#444444] rounded-lg shadow-md p-6 mx-auto">
+        <div class="dark:bg-[#444444] bg-[#CCCCCC] rounded-3xl shadow-2xl dark:shadow-white p-6 mx-auto">
             <!-- Title Section -->
             <div class="text-center">
                 <h1 class="text-6xl font-extrabold leading-tight text-cs-green">
                     Lab 1: Getting Started
                 </h1>
+                <h2 class="text-xl text-bold leading-tight text-cs-green">
+                    Lab 1: Getting Started
+                </h1>
+                 <!-- Separator -->
+                <div class="h-px bg-cs-green my-6"></div>
+                <a href="#overview" class="inline-block bg-cs-blue hover:bg-blue-700  hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300">
+                    Overview
+                </a> >>
+                <a href="#setup" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300">
+                    Setup
+                </a> >>
+                <a href="#instructions" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300">
+                    Instructions
+                </a> >>
+                <a href="#conclusion" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300">
+                    Conclusion
+                </a> >>
+                <a href="#code-given" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300">
+                    Code Given
+                </a>
             </div>
 
             <!-- Separator -->
             <div class="h-px bg-cs-green my-6"></div>
 
             <!-- Blog Content -->
-            <div class="prose prose-lg mx-auto text-steel">
-                <h1 class="text-4xl text-bold">Overview</h1>
+            <div class="prose prose-lg mx-auto dark:text-steel text-[#222222]">
+                <h1 id="overview" class="text-4xl font-extrabold">Overview</h1>
                 <br/>
                 <p class="leading-relaxed text-lg">
                     Welcome to Lab 1! Here, you will learn how to set up your red pitaya, connect to it using your laptop, and start writing some code. Luckily for you, this year all the red-pitayas will be given to you pre-assembled, which cuts down on the time-commitment of this lab. Remember that this online guide is for your convenience, but is not comprehensive and should not be used as a replacement for the official lab guide, which you can download above. If you find any errors in this guide—whether logic, spelling, or grammar—please let TA Cooper know so he can get it fixed up ASAP.
@@ -25,7 +45,7 @@
                 <!-- Separator -->
                 <div class="h-px bg-cs-green my-6"></div>
 
-                <h1 class="text-4xl text-bold">Red Pitaya Setup</h1>
+                <h1 id="setup" class="text-4xl font-extrabold">Red Pitaya Setup</h1>
                 <br/>
                 <h1 class="text-2xl text-bold underline text-cs-green">Physical Setup</h1>
                 <p class="leading-relaxed text-lg">
@@ -44,7 +64,7 @@
                 <br/>
                 <h1 class="text-2xl text-bold underline text-cs-green">Virtual Setup</h1>
                 <p class="leading-relaxed text-lg">
-                    Now that your pitaya is all connected, we can make sure it is working digitally. To make sure you are connected properly, visit <code class="bg-gray-600 px-1 rounded text-base">http://rp-xxxxxx.local</code>  (replace the x's with the six digits on your red pitaya. It will be on your case, or the sticker with the QR code if the other one fell off). If you are connected properly, you should be brought to a website with a Red Pitaya logo in the background and some buttons. If the website times out, then something went wrong. See below for some troubleshooting tips.
+                    Now that your pitaya is all connected, we can make sure it is working digitally. To make sure you are connected properly, visit <code class="bg-cs-blue px-1 rounded shadow-lg text-base">http://rp-xxxxxx.local</code>  (replace the x's with the six digits on your red pitaya. It will be on your case, or the sticker with the QR code if the other one fell off). If you are connected properly, you should be brought to a website with a Red Pitaya logo in the background and some buttons. If the website times out, then something went wrong. See below for some troubleshooting tips.
                 </p>
                 <br/>
                 <h1 class="text-2xl text-bold underline text-cs-green">Troubleshooting</h1>
@@ -66,11 +86,11 @@
                 <br/>
                 <ol class="list-decimal ml-6 text-lg space-y-2">
                     <li>Open "Terminal" if you are on Mac and "Powershell" if you are on Windows.</li>
-                    <li>When it opens, type <code class="bg-gray-600 px-1 rounded text-base">ssh root@rp-xxxxxx.local</code> where "xxxxxx" is your pitaya number, and click enter.</li>
-                    <li>It should prompt you for a password. It is <code class="bg-gray-6000 px-1 rounded text-base">root</code>. <u> You won't see the letters you are typing in the command line. This is normal. Just type "root" and click enter.</u></li>
+                    <li>When it opens, type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ssh root@rp-xxxxxx.local</code> where "xxxxxx" is your pitaya number, and click enter.</li>
+                    <li>It should prompt you for a password. It is <code class="bg-cs-blue0 px-1 rounded text-base">root</code>. <u> You won't see the letters you are typing in the command line. This is normal. Just type "root" and click enter.</u></li>
                     <li>You should now be connected to your red pitaya (you can check this by seeing what the beginning of the line in the terminal says. It should say "root:~ $" or something similar instead of your laptop name).</li>
-                    <li>To create a file, type <code class="bg-gray-600 px-1 rounded text-base">touch main.s</code>. This creates a file called "main.s" in the current directory (a.k.a folder).</li>
-                    <li>Type <code class="bg-gray-600 px-1 rounded text-base">nano main.s</code> to start editing an empty file named main.s. This is the Nano window. It is VERY confusing, even to experienced users. Here is a general overview of what you need to know:</li>
+                    <li>To create a file, type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">touch main.s</code>. This creates a file called "main.s" in the current directory (a.k.a folder).</li>
+                    <li>Type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">nano main.s</code> to start editing an empty file named main.s. This is the Nano window. It is VERY confusing, even to experienced users. Here is a general overview of what you need to know:</li>
                 </ol>
                 <br/>
                 <ol class="list-decimal ml-16 text-lg leading-relaxed space-y-2">
@@ -89,7 +109,7 @@
                 <!-- Separator -->
                 <div class="h-px bg-cs-green my-6"></div>
 
-                <h1 class="text-4xl text-bold">Lab Instructions</h1>
+                <h1 id="instructions" class="text-4xl font-extrabold">Lab Instructions</h1>
                 <br/>
                 <p class="leading-relaxed text-lg">
                     Welcome to Lab 1! Here, you will learn how to set up your red pitaya, connect to it using your laptop, and start writing some code. Luckily for you, this year all the red-pitayas will be given to you pre-assembled, which cuts down on the time-commitment of this lab.
@@ -109,38 +129,38 @@
                 <br/>
                 <h1 class="text-2xl text-bold underline text-cs-green">Step 1</h1>
                 <p class="leading-relaxed text-lg italic">
-                    Code from the book can be found in the Code Given section at the bottom of this guide.
+                    Code from the book can be found in the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">Code Given</a> section at the bottom of this guide.
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    Type the code from the book into a new file called "HelloWorld.s" using Nano, as described above. Next, add the two lines from the book/Code Given into a file called "build". It should NOT have a filetype (i.e. .txt, .s, etc.). You can check to make sure all the files were created properly by typing <code class="bg-gray-600 px-1 rounded text-base">ls</code> into the terminal. This will list all the files in the current folder on your Red Pitaya. If you don't see "HelloWorld.s" and "build", ask a TA for assistance.
+                    Type the code from the book into a new file called "HelloWorld.s" using Nano, as described above. Next, add the two lines from the book/Code Given into a file called "build". It should NOT have a filetype (i.e. .txt, .s, etc.). You can check to make sure all the files were created properly by typing <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ls</code> into the terminal. This will list all the files in the current folder on your Red Pitaya. If you don't see "HelloWorld.s" and "build", ask a TA for assistance.
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    In your terminal (not in the Nano editor) type this command: <code class="bg-gray-600 px-1 rounded text-base">chmod +x build</code>. This command basically just tells the computer to transform the file "build" into an executeable, or a file the computer can run. We can finally start executeing some code. 
+                    In your terminal (not in the Nano editor) type this command: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">chmod +x build</code>. This command basically just tells the computer to transform the file "build" into an executeable, or a file the computer can run. We can finally start executeing some code. 
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    To compile your code, run <code class="bg-gray-600 px-1 rounded text-base">./build</code> in your terminal. This with create a new file called "HelloWorld" (namely different than "HelloWorld.s"). This is the code your computer can run. To run it, type <code class="bg-gray-600 px-1 rounded text-base">./HelloWorld</code> into your terminal. This should output the phrase "Hello World!" in the next line of your terminal. If it does not, ask a TA for asissistance.
+                    To compile your code, run <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./build</code> in your terminal. This with create a new file called "HelloWorld" (namely different than "HelloWorld.s"). This is the code your computer can run. To run it, type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./HelloWorld</code> into your terminal. This should output the phrase "Hello World!" in the next line of your terminal. If it does not, ask a TA for asissistance.
                 </p>
                 <br/>
                 <h1 class="text-2xl text-bold underline text-cs-green">Step 2</h1>
                 <p class="leading-relaxed text-lg">
-                    Here, you need to edit the code using Nano to make it more personal. To do this, change the string at the bottom of "HelloWorld.s" (Not "HelloWorld" or "HelloWorld.o") to "Hello [Your Name Here]!". Remember that the red pitaya needs to know how many characters to write on the screen, so you will need to update the line <code class="bg-gray-600 px-1 rounded text-base">mov R2, #13   @ length of our string</code> to the new length of the string. Remember to include spaces, special characters, and the "\n" as a single character when counting.
+                    Here, you need to edit the code using Nano to make it more personal. To do this, change the string at the bottom of "HelloWorld.s" (Not "HelloWorld" or "HelloWorld.o") to "Hello [Your Name Here]!". Remember that the red pitaya needs to know how many characters to write on the screen, so you will need to update the line <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mov R2, #13   @ length of our string</code> to the new length of the string. Remember to include spaces, special characters, and the "\n" as a single character when counting.
                 </p>
                 <br/>
                 <p class="leading-relaxed text-lg">
-                    To check that your program works, you will need to run it again. It is important to note that you must recompile your code <u>every time you make a change</u>. You can recompile using the command <code class="bg-gray-600 px-1 rounded text-base">./build</code>. Run your program again using <code class="bg-gray-600 px-1 rounded text-base">./HelloWorld</code>, which should output "Hello [Your Name]!"into the terminal. <u>Take a screenshot of the output, as well as your code, and make sure to include it in your lab report.</u>
+                    To check that your program works, you will need to run it again. It is important to note that you must recompile your code <u>every time you make a change</u>. You can recompile using the command <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./build</code>. Run your program again using <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./HelloWorld</code>, which should output "Hello [Your Name]!"into the terminal. <u>Take a screenshot of the output, as well as your code, and make sure to include it in your lab report.</u>
                 </p>
                 <br/>
                 <br/>
                 <h1 class="text-2xl text-bold underline text-cs-green">Step 3</h1>
                 <p class="leading-relaxed text-lg">
-                    This next step is pretty simple. Go into HelloWorld.s and change the LAST <code class="bg-gray-600 px-1 rounded text-base">svc 0</code> to <code class="bg-gray-600 px-1 rounded text-base">svc AnyOtherNumber</code>. Where "AnyOtherNumber" is a number other than 0. Recompile your code and rerun it. What happened? <u>Take a screenshot of the output and write out what you saw happen in your own words.</u> If nothing happened, take note of that as well.
+                    This next step is pretty simple. Go into HelloWorld.s and change the LAST <code class="bg-cs-blue px-1 rounded shadow-lg text-base">svc 0</code> to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">svc AnyOtherNumber</code>. Where "AnyOtherNumber" is a number other than 0. Recompile your code and rerun it. What happened? <u>Take a screenshot of the output and write out what you saw happen in your own words.</u> If nothing happened, take note of that as well.
                 </p>
                 <!-- Separator -->
                 <div class="h-px bg-cs-green my-6"></div>
-                <h1 class="text-4xl text-bold">Conclusion</h1>
+                <h1 id="conclusion" class="text-4xl font-extrabold">Conclusion</h1>
                 <br/>
                 <p class="leading-relaxed text-lg">
                     Congrats! You just completed your first lab for ECE1181. All that's left to do now is to write your lab report and submit it sometime before your next lab session. Check the assignment on Canvas for more information about what to include in your lab report. Note that the first lab is often the longest of the semester, and you will often get out 1-2 hours early depending on how fast you work. 
@@ -151,7 +171,7 @@
                 </p>
                 <!-- Separator -->
                 <div class="h-px bg-cs-green my-6"></div>
-                <h1 class="text-4xl text-bold">Code Given</h1>
+                <h1 id="code-given" class="text-4xl font-extrabold">Code Given</h1>
                 <br/>
                 <p class="leading-relaxed text-lg">
                     Code is derived from Stephen Smith's Raspberry Pi Assembly Language Programming book, modified to fit the needs of this course. Credit belongs to the original author.
@@ -162,12 +182,12 @@
                 </p>
                 <br/>
                 <h1 class="text-2xl text-bold underline text-cs-green">build</h1>
-                <pre class="bg-gray-600 text-steel rounded-lg p-4 overflow-auto">
+                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
 as -o HelloWorld.o HelloWorld.s
 ld -o HelloWorld HelloWorld.o</pre>
                 <br/>
                 <h1 class="text-2xl text-bold underline text-cs-green">HelloWorld.s</h1>
-                <pre class="bg-gray-600 text-steel rounded-lg p-4 overflow-auto">
+                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
 @ Assembler program to print "Hello World!"
 @ to stdout.
 @ R0-R2 - parameters to linux function services
@@ -208,7 +228,7 @@ helloworld: .ascii "Hello World!\n"</pre>
                 <p>
                     Below is an example of a simple Python function:
                 </p>
-                <pre class="bg-gray-600 text-steel rounded-lg p-4 overflow-auto">
+                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
 def greet(name):
     return f"Hello, {name}!"
 
@@ -216,7 +236,7 @@ print(greet("World"))
                 </pre>
 
 
-<code class="bg-gray-600 px-1 rounded text-base">
+<code class="bg-cs-blue px-1 rounded shadow-lg text-base">
 
 </code>
 -->
