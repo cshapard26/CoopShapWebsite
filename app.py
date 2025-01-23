@@ -27,6 +27,16 @@ def contact():
 def labs():
     return render_template("labs/index.html", title_extention="Labs - ")
 
+# ECE1181 Page
+@app.route("/labs/ECE1181")
+def ece1181():
+    return render_template("labs/ECE1181/index.html", title_extention="ECE1181 - ")
+
+# ECE1181 Page
+@app.route("/labs/ECE1181/Lab1GettingStarted")
+def ece1181lab1():
+    return render_template("labs/ECE1181/Lab1.html", title_extention="ECE1181 - ")
+
 # 404 Error Handler
 @app.errorhandler(404)
 def page_not_found(e):

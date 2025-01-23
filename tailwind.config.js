@@ -12,6 +12,7 @@ module.exports = {
         'cs-blue' : '#7D9EA0',
         'cs-green' : '#A6A95E',
         'steel' : '#EBEEF6',
+        'steel-dim' : '#C9CCD4',
       },
     },
   },
