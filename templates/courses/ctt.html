@@ -32,6 +32,9 @@
                 </a> >>
                 <a href="#conclusion" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300">
                     Conclusion
+                </a> >>
+                <a href="#next" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300">
+                    What's Next?
                 </a>
             </div>
 
@@ -139,11 +142,133 @@ PS C:\Users\YourName></pre>
                 <p class="leading-relaxed text-lg">
                     Now, let's see what is inside the current directory (you can always check what the "current directory" is using the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">pwd</code> command). To list the files in the current directory, use the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ls</code> command.
                 </p>
+                <br/>
                 <p class="leading-relaxed text-lg">
                     <blockquote class="border-l-4 border-cs-blue italic pl-4 text-cs-green text-xl">
                         ls — Displays the contents of the current directory. It is short for "LiSt" (as in "list" the files).
                     </blockquote>
                 </p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    On Mac/WSL, you will just see a list of folders and files in the current directory. On Windows, it will be the same, but formatted like this:
+                </p>
+                <br/>
+                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+Mode                 LastWriteTime         Length Name
+\----                 -------------         ------ ----
+d-r---          3/2/2023   6:49 PM                Contacts
+d-r---         1/31/2024  12:26 AM                Desktop
+d-r---         1/24/2024   8:59 PM                Documents
+d-r---         2/11/2024   6:19 PM                Downloads
+d-r---          3/2/2023   6:49 PM                Favorites</pre>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    (But yours will likely include many more files)
+                </p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    The <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ls</code> command is going to be your favorite and most used command from now on. It will help you navigate through directories, find out where you are, and display useful information about files.
+                </p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    Here are some important things to note about using <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ls</code>. If you are using Windows PowerShell and not WSL, then some of these next notes won't apply to you. I highly suggest making the switch so you can practice seeing these things. Here are some important notes about how <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ls</code> displays files with color coding:
+                </p>
+                <br/>
+                <ol class="list ml-16 text-lg">
+                    <li>Blue — Directory</li>
+                    <li>White/Black — Code file</li>
+                    <li>Green — Executable</li>
+                </ol>
+                <br/>
+                <h1 class="text-2xl text-bold underline text-cs-green">Changing Directories</h1>
+                <p class="leading-relaxed text-lg">
+                    Odds are, when you used the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ls</code> command in your home directory, your Downloads file was displayed in blue text. That means that 'Downloads' is a directory! Just like the home directory, you can enter the 'Downloads' directory and see what's inside. To do that, we use the command <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cd</code>.
+                </p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    <blockquote class="border-l-4 border-cs-blue italic pl-4 text-cs-green text-xl">
+                        cd fileName — Changes the directory that you are in. It stands for "Change Directory."
+                    </blockquote>
+                </p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    There is something different about the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cd</code> command. Instead of just typing the command, you have to add something else to the line. This other part is called an "argument" (you may recognize the term if you are familiar with functions in coding). An argument is a value that you give to the command to tell it what to do. In this case, you are giving the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cd</code> command the argument 'fileName', where 'fileName' is the name of the directory you want to go to.
+                </p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    So, if you want to go to the `Downloads` folder, you would type the command:
+                </p>
+                <br/>
+                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+cd Downloads</pre>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    If it worked correctly, some things should change. First, the prompt should change from
+                </p>
+                <br/>
+                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+C:\Users\YourName</pre>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    to                
+                </p>
+                <br/>
+                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+C:\Users\YourName\Downloads</pre>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    Another thing you should notice is that nothing is outputted after you enter the command. That's okay. Not all commands print out responses, but if it doesn't give you a big red error, then odds are that it worked. However, to make sure, try printing out the name of the directory. Do you remember what the command to print the name of the directory is? (Hint: it's the first one you learned).                
+                </p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    Two important things to note:
+                </p>
+                <br/>
+                <ol class="list-decimal ml-6 text-lg">
+                    <li>You can only <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cd</code> into directories (always listed in blue). If you try to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cd</code> into a code file, you will get an error.</li>
+                    <li>If you type out the first couple letters of the file name and click Tab, then the Commands Line will autofill the rest of the file name. This will help you avoid making typos and speed up the process, especially for long file names. (One thing to note is that if multiple files have the same few letters, you can keep hitting Tab to cycle through all of your options).</li>
+                </ol>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    Now that you are in the 'Downloads' directory, try listing out the files. Do you remember the command? You should get an output similar to the first example, but this time, it only lists files in the Downloads file on your computer. You can actually check this by going to File Explorer (Windows) or Finder (Mac) and comparing your results. They may not be in the same order, but you should see all the files listed there!
+                </p>
+                <!-- Separator -->
+                <div class="h-px bg-cs-green my-6"></div>
+                <h1 id="creating-df" class="text-4xl font-extrabold">Creating Directories and Files</h1>
+                <br/>
+                <h1 class="text-2xl text-bold underline text-cs-green">Creating Directories</h1>
+                <p class="leading-relaxed text-lg">
+                    Since we now know how to go into a directory, let's learn how to make our own. The command for creating your own directory is <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mkdir directoryName</code>, where directoryName is what you want to call the new directory. You can call it whatever you like (or just FirstNameLastName for simplicity).
+                </p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    <blockquote class="border-l-4 border-cs-blue italic pl-4 text-cs-green text-xl">
+                        mkdir directoryName — Creates a directory inside the current directory. It stands for "MaKe DIRectory."
+                    </blockquote>
+                </p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    If you list out the files again, you should see your new, shiny blue directory among the list. Congrats! It's your very own directory. There are many like it, but this one is yours. Now, go ahead and enter into your new directory. Do you remember the command?
+                </p>
+                <br/>
+                <h1 class="text-2xl text-bold underline text-cs-green">Creating Files</h1>
+                <p class="leading-relaxed text-lg">
+                    Now that you're inside your new directory, try listing out the files using the command we learned. You should notice something strange: nothing gets displayed. That's because when we create a directory, it starts off empty. How sad! Let's make a file to fill our new directory. The command to make a new file is <code class="bg-cs-blue px-1 rounded shadow-lg text-base">touch fileName</code>, where fileName is the name of the file we want to create (including the extension, aka: .s .py .txt .mp3 etc). You can call it whatever you like (or just 'myFile.txt' for simplicity).
+                </p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    <blockquote class="border-l-4 border-cs-blue italic pl-4 text-cs-green text-xl">
+                        touch fileName — Creates a code file inside the current directory. Think about it as "putting your fingerprints on a new file."
+                    </blockquote>
+                </p>
+                <br/>
+                <p class="leading-relaxed text-lg">
+                    Beautiful! Go ahead and list the contents one more time to make sure your new file is in there (it should be in White text. If it's blue, you made a directory by mistake! Make sure to use <code class="bg-cs-blue px-1 rounded shadow-lg text-base">touch</code> and not <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mkdir</code>).
+                </p>
+                <br/>
+                
+
+
                 <!-- Separator -->
                 <div class="h-px bg-cs-green my-6"></div>
                 <h1 id="conclusion" class="text-4xl font-extrabold">Conclusion</h1>
@@ -205,84 +330,6 @@ helloworld: .ascii "Hello World!\n"</pre>
 
 
 <!--
-
----
-### Command
-`ls` — Displays the contents of the current directory. It is short for "LiSt" (as in "list" the files).
-
----
-
-On Mac/WSL, you will just see a list of folders and files in the current directory. On Windows, it will be the same, but formatted like this:
-
-```
-Mode                 LastWriteTime         Length Name
-\----                 -------------         ------ ----
-d-r---          3/2/2023   6:49 PM                Contacts
-d-r---         1/31/2024  12:26 AM                Desktop
-d-r---         1/24/2024   8:59 PM                Documents
-d-r---         2/11/2024   6:19 PM                Downloads
-d-r---          3/2/2023   6:49 PM                Favorites
-```
-
-(But yours will likely include many more files)
-
-The `ls` command is going to be your favorite and most used command from now on. It will help you navigate through directories, find out where you are, and display useful information about files.
-
-Here are some important things to note about using `ls`. If you are using `Windows PowerShell` and not `WSL`, then some of these next notes won't apply to you. I highly suggest making the switch so you can practice seeing these things. Here are some important notes about how `ls` displays files with color coding:
-- Blue — Directory
-- White/Black — Code file
-- Green — Executable
-
-## Changing Directories
-
-Odds are, when you used the `ls` command in your home directory, your `Downloads` file was displayed in blue text. That means that `Downloads` is a directory! Just like the home directory, you can enter the `Downloads` directory and see what's inside. To do that, we use the command `cd`.
-
----
-### Command
-`cd fileName` — Changes the directory that you are in. It stands for "Change Directory."
-
----
-
-There is something different about the `cd` command. Instead of just typing the command, you have to add something else to the line. This other part is called an "argument" (you may recognize the term if you are familiar with functions in coding). An argument is a value that you give to the command to tell it what to do. In this case, you are giving the `cd` command the argument `fileName`, where `fileName` is the name of the directory you want to go to.
-
-So, if you want to go to the `Downloads` folder, you would type the command:
-```bash
-cd Downloads
-```
-If it worked correctly, some things should change. First, the prompt should change from
-`C:\Users\YourName`
-to
-`C:\Users\YourName\Downloads`
-
-Another thing you should notice is that nothing is outputted after you enter the command. That's okay. Not all commands print out responses, but if it doesn't give you a big red error, then odds are that it worked. However, to make sure, try printing out the name of the directory. Do you remember what the command to print the name of the directory is? (Hint: it's the first one you learned).
-
-Two important things to note:
-1. You can only `cd` into directories (always listed in blue). If you try to `cd` into a code file, you will get an error.
-2. If you type out the first couple letters of the file name and click `Tab`, then the Commands Line will autofill the rest of the file name. How handy! This will help you avoid making typos and speed up the process, especially for long fine names. (One thing to note is that if multiple files have the same few letters, you can keep hitting `Tab` to cycle through all of your options).
-
-Now that you are in the `Downloads` directory, try listing out the files. Do you remember the command? (Hint: it is the second one we learned). You should get an output similar to the first example, but this time, it only lists files in the Downloads file on your computer. You can actually check this by going to File Explorer (Windows) or Finder (Mac) and comparing your results. They may not be in the same order, but you should see all the files listed there!
-
-# Creating Directories and Files
-## Creating Directories
-Since we now know how to go into a directory, let's learn how to make our own. The command for creating your own directory is `mkdir directoryName`, where directoryName is what you want to call the new directory. You can call it whatever you like (or just `FirstNameLastName` for simplicity).
-
----
-### Command
-`mkdir directoryName` — Creates a directory inside the current directory. It stands for "MaKe DIRectory."
-
----
-
-If you list out the files again, you should see your new, shiny blue directory among the list. Congrats! It's your very own directory. There are many like it, but this one is yours. Now, go ahead and enter into your new directory. Do you remember the command? (Hint: it is the third one we learned).
-
-
-## Creating Files
-Now that you're inside your new directory, try listing out the files using the command we learned. You should notice something strange: nothing gets displayed. That's because when we create a directory, it starts off empty. How sad! Let's make a file to fill our new directory. The command to make a new file is `touch fileName`, where fileName is the name of the file we want to create (including the extension, aka: .s .py .txt .mp3 etc). You can call it whatever you like (or just `myFile.txt` for simplicity).
-
----
-### Command
-`touch fileName` — Creates a code file inside the current directory. Think about it as "putting your fingerprints on a new file."
-
----
 
 Beautiful! Go ahead and list the contents one more time to make sure your new file is in there (it should be in White text. If it's blue, you made a directory by mistake! Make sure to use `touch` and not `mkdir`).
 
