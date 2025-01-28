@@ -27,10 +27,20 @@ def courses():
 def ece1181():
     return render_template("courses/ECE1181/index.html", title_extention="ECE1181 - ")
 
+# Previous Labs
+@app.route("/courses/ECE1181/previous-labs")
+def ece1181previouslabs():
+    return render_template("courses/ECE1181/previouslabs.html", title_extention="ECE1181 - ")
+
 # Lab1 Page
 @app.route("/courses/ECE1181/lab-1-getting-started")
 def ece1181lab1():
-    return render_template("courses/ECE1181/Lab1.html", title_extention="ECE1181 - ")
+    return render_template("courses/ECE1181/Lab1.html", title_extention="Lab 1 - ")
+
+# Lab2 Page
+@app.route("/courses/ECE1181/lab-2-tooling-up")
+def ece1181lab2():
+    return render_template("courses/ECE1181/Lab2.html", title_extention="Lab 2 - ")
 
 # Terminal Page
 @app.route("/courses/conquering-the-terminal")
