@@ -1,6 +1,7 @@
 from flask import Flask, render_template, abort, redirect, request, jsonify
 from flask_cors import CORS
 from datetime import datetime
+import pytz
 
 app = Flask(__name__)
 CORS(app)
@@ -66,7 +67,7 @@ def submit_feedback():
         url = data.get('url', '')
         # Get the user's IP and current timestamp
         user_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
-        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        timestamp = datetime.now(pytz.timezone('America/Chicago')).strftime('%Y-%m-%d %H:%M:%S')
 
         # Save feedback in a file
         with open('feedback.log', 'a') as file:
