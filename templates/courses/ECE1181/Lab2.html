@@ -192,6 +192,107 @@ _start:
             </div>
         </div>
     </div>
+
+    <!-- Feedback Box -->
+    <div id="feedback-box" class="fixed hidden right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 dark:bg-[#444444] border-l-4 border-b-4 border-[#E0E0E0] dark:border-[#3B3B3B] rounded-l-xl shadow-lg w-64 p-4 z-50">
+        <h2 class="font-bold text-lg dark:text-white text-gray-800 mb-2">Feedback</h2>
+        <textarea id="feedback-text" class="w-full p-2 border rounded-md dark:bg-[#333333] dark:text-steel text-gray-800" rows="4" placeholder="Feedback, corrections, feature ideas, comments, etc."></textarea>
+        <button id="submit-feedback" class="mt-2 w-full bg-cs-blue hover:bg-cs-green text-white py-2 px-4 rounded-md">Submit</button>
+    </div>
+
+    <!-- Toggle Tab -->
+    <button id="feedback-toggle" class="fixed top-1/2 transform -translate-y-1/2 right-0 md:right-64 bg-cs-blue hover:bg-cs-green text-steel rounded-l-md px-1 py-8 shadow-md">
+        ||
+    </button>
+
+    <script>
+        const feedbackBox = document.getElementById('feedback-box');
+        const feedbackToggle = document.getElementById('feedback-toggle');
+        const feedbackText = document.getElementById('feedback-text');
+        const submitFeedback = document.getElementById('submit-feedback');
+        
+        function checkScreenSize() {
+            const isLargerThanMD = window.matchMedia('(min-width: 768px)').matches;
+
+            if (isLargerThanMD) {
+                feedbackBox.classList.remove('hidden');
+                feedbackToggle.classList.remove('right-0');
+                feedbackToggle.classList.add('md:right-64', 'right-64'); // Move next to the feedback box
+            } else {
+                feedbackBox.classList.add('hidden');
+                feedbackToggle.classList.remove('md:right-64', 'right-64');
+                feedbackToggle.classList.add('right-0');
+            }
+        }
+
+        // Initial check when the page loads
+        checkScreenSize();
+
+        // Listen for window resize events to detect screen size changes
+        window.addEventListener('resize', checkScreenSize);
+
+        // Collapse/Expand Feedback Box
+        feedbackToggle.addEventListener('click', () => {
+            feedbackBox.classList.toggle('hidden');
+            // Adjust the position of the toggle tab
+            if (feedbackBox.classList.contains('hidden')) {
+                feedbackToggle.classList.remove('md:right-64', 'right-64');
+                feedbackToggle.classList.add('right-0'); // Move to the far right
+                feedbackBox.classList.remove('md:block');
+            } else {
+                feedbackToggle.classList.remove('right-0');
+                feedbackToggle.classList.add('md:right-64', 'right-64'); // Move next to the feedback box
+            }
+        });
+
+        // Submit Feedback Function
+        const submitFeedbackHandler = () => {
+            const feedback = feedbackText.value.trim();
+            if (feedback) {
+                fetch('/submit-feedback', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ feedback, url: "/" + window.location.pathname.split('/').pop() }), // Ensure `feedback` is a valid variable
+            })
+            .then(async response => {
+                if (response.ok) {
+                    // Clear the input and thank the user
+                    feedbackText.value = ''; // Ensure `feedbackText` is defined
+                    submitFeedback.innerText = 'Thank you!'; // Change the button text
+                    submitFeedback.classList.remove('bg-cs-blue'); // Remove original color
+                    submitFeedback.classList.add('bg-cs-green'); // Add new color (green for success)
+
+                    setTimeout(() => {
+                        submitFeedback.innerText = 'Submit'; // Revert the button text after 3 seconds
+                        submitFeedback.classList.remove('bg-cs-green'); // Remove green color
+                        submitFeedback.classList.add('bg-cs-blue');
+                    }, 3000); // 3000ms = 3 seconds
+                } else {
+                    // Attempt to read the error message from the server
+                    const errorData = await response.json();
+                    alert(`Error submitting feedback: ${errorData.details || 'Unknown error occurred'}. Please provide these details to Cooper :)`);
+                }
+            })
+            .catch(error => {
+                // Log the error for debugging and notify the user
+                console.error('Submission error:', error);
+                alert('An error occurred. Please try again.');
+            });
+            }
+        };
+
+        // Submit Feedback on Button Click
+        submitFeedback.addEventListener('click', submitFeedbackHandler);
+
+        // Submit Feedback on CMD+Enter or CTRL+Enter
+        feedbackText.addEventListener('keydown', (event) => {
+            if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+                submitFeedbackHandler();
+            }
+        });
+    </script>
 </body>
 {% endblock %}
 

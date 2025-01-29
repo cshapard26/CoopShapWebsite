@@ -1,6 +1,9 @@
-from flask import Flask, render_template, abort, redirect, request
+from flask import Flask, render_template, abort, redirect, request, jsonify
+from flask_cors import CORS
+from datetime import datetime
 
 app = Flask(__name__)
+CORS(app)
 
 # Home Page
 @app.route("/")
@@ -46,6 +49,34 @@ def ece1181lab2():
 @app.route("/courses/conquering-the-terminal")
 def ctt():
     return render_template("courses/ctt.html", title_extention="CtT - ")
+
+
+@app.route('/submit-feedback', methods=['POST'])
+def submit_feedback():
+    try:
+        # Retrieve the JSON data sent by the frontend
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'Missing or invalid JSON data'}), 400
+
+        feedback_content = data.get('feedback', '').strip()
+        if not feedback_content:
+            return jsonify({'error': 'No feedback provided'}), 400
+
+        url = data.get('url', '')
+        # Get the user's IP and current timestamp
+        user_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+        # Save feedback in a file
+        with open('feedback.log', 'a') as file:
+            file.write(f"{timestamp} | {user_ip} | {url} | {feedback_content}\n")
+
+        return jsonify({'message': 'Feedback submitted successfully'})
+
+    except Exception as error:
+        return jsonify({'error': 'Something went wrong', 'details': str(error)}), 500
+
 
 # 404 Error Handler
 @app.errorhandler(404)
