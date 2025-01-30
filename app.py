@@ -1,10 +1,14 @@
-from flask import Flask, render_template, abort, redirect, request, jsonify
+from flask import Flask, render_template, abort, redirect, request, jsonify, url_for
 from flask_cors import CORS
 from datetime import datetime
 import pytz
+import uuid
 
 app = Flask(__name__)
 CORS(app)
+
+# Store work orders in memory (or use a database)
+work_orders = []
 
 # Home Page
 @app.route("/")
@@ -51,7 +55,7 @@ def ece1181lab2():
 def ctt():
     return render_template("courses/ctt.html", title_extention="CtT - ")
 
-
+# Feedback Box
 @app.route('/submit-feedback', methods=['POST'])
 def submit_feedback():
     try:
@@ -77,6 +81,28 @@ def submit_feedback():
 
     except Exception as error:
         return jsonify({'error': 'Something went wrong', 'details': str(error)}), 500
+
+# Workorder
+@app.route('/submit_workorder', methods=['POST'])
+def submit_workorder():
+    issue = request.form.get('issue')
+    if issue:
+        work_orders.append({
+            'id': str(uuid.uuid4()),
+            'issue': issue,
+            'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        })
+    return jsonify({'message': 'Request submitted successfully'})
+
+@app.route('/ta-dashboard')
+def dashboard():
+    return render_template('courses/ECE1181/tadashboard.html', work_orders=work_orders)
+
+@app.route('/resolve/<work_id>', methods=['POST'])
+def resolve(work_id):
+    global work_orders
+    work_orders = [wo for wo in work_orders if wo['id'] != work_id]
+    return jsonify({'status': 'success'})
 
 
 # 404 Error Handler

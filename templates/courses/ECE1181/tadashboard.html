@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<body class="p-6 bg-gray-100">
+    <h1 class="text-3xl mb-4">TA Work Order Dashboard</h1>
+    <div class="bg-white p-4 rounded shadow-lg">
+        <table class="w-full border-collapse">
+            <thead>
+                <tr>
+                    <th class="border p-2">Issue</th>
+                    <th class="border p-2">Submitted At</th>
+                    <th class="border p-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in work_orders %}
+                <tr>
+                    <td class="border p-2">{{ order.issue }}</td>
+                    <td class="border p-2">{{ order.timestamp }}</td>
+                    <td class="border p-2">
+                        <button onclick="resolveIssue('{{ order.id }}')" class="bg-green-500 text-white px-2 py-1 rounded">Resolve</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<script>
+    async function resolveIssue(id) {
+        await fetch(`/resolve/${id}`, { method: "POST" });
+        location.reload();
+    }
+
+    setTimeout(() => {location.reload()}, 15000)
+</script>
+
+{% endblock %}
