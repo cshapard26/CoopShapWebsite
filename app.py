@@ -104,6 +104,23 @@ def resolve(work_id):
     work_orders = [wo for wo in work_orders if wo['id'] != work_id]
     return jsonify({'status': 'success'})
 
+# Terminal Page
+@app.route("/projects/the-coopshap-story")
+def coopshapstory():
+    return render_template("projects/coopshap-story.html", title_extention="Story - ")
+
+
+# Terminal Page
+@app.route("/projects/magnet-game")
+def maggame():
+    return render_template("projects/magnet-game/index.html", title_extention="Magnet Game - ")
+
+
+
+
+
+
+
 
 # 404 Error Handler
 @app.errorhandler(404)
