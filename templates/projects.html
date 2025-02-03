@@ -1,6 +1,82 @@
 {% extends 'base.html' %}
 {% block content %}
-<section>
-    Page not made yet :)
-</section>
+<section class="text-steel">
+    <body class="bg-gray-100 text-steel">
+        <!-- Title Section -->
+        <section class="text-center py-8 bg-gradient-to-t from-cs-green to-[#656740]">
+            <div class="max-w-screen-xl px-4 mx-auto">
+                <h1 class="text-5xl sm:text-7xl font-extrabold leading-tight text-gray-900 dark:text-steel mb-4">
+                    Projects by CoopShap
+                </h1>
+            </div>
+        </section>
+
+        <!-- Divider -->
+        <div class="ugreenclearseperator"></div>
+
+        <section class="text-center py-8">
+            <div class="max-w-screen-xl px-4 mx-auto flex flex-col items-center space-y-6">
+                <div class="relative inline-block mb-6">
+
+                    <p class="text-xl text-gray-800 dark:text-steel">
+                        <a class="inline-block bg-cs-blue px-4 py-1 rounded-lg font-medium hover:scale-105 transition duration-300">
+                            Hardware
+                        </a>  
+                        <a class="inline-block bg-cs-green px-4 py-1 rounded-lg font-medium hover:scale-105 transition duration-300">
+                            Software
+                        </a>  
+                        <a class="inline-block bg-steel px-4 py-1 rounded-lg font-medium hover:scale-105 transition duration-300">
+                            Devlog Collections
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Post Section -->
+        <section class="py-12">
+            <div class="max-w-screen-xl px-4 mx-auto">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-10 text-gray-900">
+                   <!-- Post 1 -->
+                    <a href="/courses/ECE1181/qa" class="relative rounded-lg shadow-lg transform hover:scale-105 transition duration-300 
+                    bg-gradient-to-t from-cs-blue to-[#444444] 
+                    after:content-[''] after:absolute after:-inset-4 after:rounded-lg after:bg-cs-blue/50 after:blur-lg after:z-[-1]">
+
+                    <img src="/static/images/featured/steno-anki-title.webp" alt="Q&A" class="w-full h-1/2 object-cover rounded-t-lg">
+                    <div class="p-6">
+                        <h3 class="text-2xl dark:text-white font-bold text-center mt-4">Q&A</h3>
+                        <hr class="my-4 border-gray-400">
+                        <p class="dark:text-white text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                    </a>
+
+                    <!-- Post 2 -->
+                    <a href="/courses/ECE1181/qa" class="relative rounded-lg shadow-lg transform hover:scale-105 transition duration-300 
+                    bg-gradient-to-t from-cs-green to-[#444444] 
+                    after:content-[''] after:absolute after:-inset-4 after:rounded-lg after:bg-cs-green/50 after:blur-lg after:z-[-1]">
+
+                    <img src="/static/images/featured/steno-anki-title.webp" alt="Q&A" class="w-full h-1/2 object-cover rounded-t-lg">
+                    <div class="p-6">
+                        <h3 class="text-2xl dark:text-white font-bold text-center mt-4">Q&A</h3>
+                        <hr class="my-4 border-gray-400">
+                        <p class="dark:text-white text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                    </a>
+
+                    <!-- Post 3 -->
+                    <a href="/courses/ECE1181/qa" class="relative rounded-lg shadow-lg transform hover:scale-105 transition duration-300 
+                    bg-gradient-to-t dark:from-steel from-black to-[#333333] 
+                    after:content-[''] after:absolute after:-inset-4 after:rounded-lg after:bg-steel/50 after:blur-lg after:z-[-1]">
+
+                    <img src="/static/images/featured/steno-anki-title.webp" alt="Q&A" class="w-full h-1/2 object-cover rounded-t-lg">
+                    <div class="p-6">
+                        <h3 class="text-2xl dark:text-white font-bold text-center mt-4">Q&A</h3>
+                        <hr class="my-4 border-gray-400">
+                        <p class="dark:text-white text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                    </a>
+                </div>
+            </div>
+        </section>
 {% endblock %}
