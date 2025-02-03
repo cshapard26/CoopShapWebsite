@@ -1888,6 +1888,11 @@ a {
   background-color: rgb(75 85 99 / var(--tw-bg-opacity, 1));
 }
 
+.dark\:bg-steel:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(235 238 246 / var(--tw-bg-opacity, 1));
+}
+
 .dark\:from-steel:is(.dark *) {
   --tw-gradient-from: #EBEEF6 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(235 238 246 / 0) var(--tw-gradient-to-position);
@@ -1897,6 +1902,11 @@ a {
 .dark\:text-gray-300:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-gray-800:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity, 1));
 }
 
 .dark\:text-steel:is(.dark *) {
