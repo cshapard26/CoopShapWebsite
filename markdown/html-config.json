@@ -1,0 +1,23 @@
+{
+    "^# (.*)$": "<div class=\"h-px bg-cs-green my-6\"></div><h1 id=\"overview\" class=\"text-4xl font-extrabold\">\\1</h1>",
+    "^## (.*)$": "<h2 class=\"text-2xl text-bold underline text-cs-green\">\\1</h1>",
+    "^### (.*)$": "<h3>\\1</h3>",
+    "^#### (.*)$": "<h4>\\1</h4>",
+    "^##### (.*)$": "<h5>\\1</h5>",
+    "^###### (.*)$": "<h6>\\1</h6>",
+    "\\*\\*(.*?)\\*\\*": "<a class=\"font-extrabold\">\\1</a>",
+    "_(.*?)_": "<a class=\"underline\">\\1</a>",
+    "\\*(.*?)\\*": "<a class=\"italic\">\\1</a>",
+    "~~(.*?)~~": "<del>\\1</del>",
+    "`([^`]+)`": "<code class=\"bg-cs-blue px-1 rounded shadow-lg text-base\">\\1</code>",
+    "```([\\s\\S]*?)```": "<pre class=\"dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto\">\\1</code>",
+    "~~~([\\s\\S]*?)~~~": "<pre><code>\\1</code></pre>",
+    "^> (.*)$": "<p class=\"leading-relaxed text-lg\"><blockquote class=\"border-l-4 border-cs-blue italic pl-4 text-cs-green text-xl\">\\1</blockquote></p>",
+    "\\[(.*?)\\]\\((.*?)\\)": "<a href=\"\\2\" class=\"text-lg text-cs-blue hover:text-blue-700 underline\">\\1</a>",
+    "^- (.*)$": "<ol class=\"list ml-16 text-lg\"><li>\\1</li></ol>",
+    "^(\\d+)\\. (.*)$": "<ol class=\"list-decimal ml-6 text-lg space-y-2\"><li>\\2</li></ol>",
+    "\\n-{3,}\\n": "<div class=\"h-px bg-cs-green my-6\"></div>",
+    "\\n\\*{3,}\\n": "<div class=\"h-px bg-cs-green my-6\"></div>",
+    "\\n_{3,}\\n": "<div class=\"h-px bg-cs-green my-6\"></div>",
+    "^(?!<|\\s*[-#>*`])(.+)$": "<p class=\"leading-relaxed text-lg\">\\1</p><br/>"
+}
