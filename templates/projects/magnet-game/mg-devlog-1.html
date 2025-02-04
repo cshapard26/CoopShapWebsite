@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<body class="bg-gray-100 dark:text-steel text-[#222222]">
+    <!-- Blog Post Wrapper -->
+    <div class="max-w-screen-md px-4 py-8 mx-auto">
+        <!-- Thinner Centered Bar -->
+        <div class="dark:bg-[#444444] bg-[#CCCCCC] rounded-3xl shadow-2xl dark:shadow-white p-6 mx-auto">
+            <!-- Title Section -->
+            <div class="text-center">
+                <h1 class="text-6xl font-extrabold leading-tight text-cs-green">
+                    Introducing... Magnet Game!
+                </h1>
+                <h2 class="text-2xl text-bold leading-tight text-cs-green">
+                    Devlog #1
+                </h1>
+                 <!-- Separator -->
+                <div class="h-px bg-cs-green my-6"></div>
+                <a href="#introduction" class="inline-block bg-cs-blue hover:bg-blue-700  hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Introduction
+                </a> >>
+                <a href="#wimg" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    What is Magnet Game?
+                </a> >>
+                <a href="#sandi" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Shoutouts/Inspiration
+                </a>
+            </div>
+
+            <!-- Separator -->
+            <div class="h-px bg-cs-green my-6"></div>
+
+            <!-- Blog Content -->
+            <div class="prose prose-lg mx-auto dark:text-steel text-[#222222]">
+                <div class="flex justify-center">
+                    <img src="/static/images/featured/magnet-game-poc.gif" alt="Main Image" class="w-full rounded-lg shadow-lg">
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}
