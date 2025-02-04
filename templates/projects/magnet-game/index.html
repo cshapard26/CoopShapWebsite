@@ -1,5 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
-Page not made yet :)
+<section class="text-steel">
+    <body class="bg-gray-100 text-steel">
+        <!-- Title Section -->
+        <section class="text-center py-8 bg-gradient-to-t from-cs-blue to-[#576769]">
+            <div class="max-w-screen-xl px-4 mx-auto">
+                <h1 class="text-5xl sm:text-7xl font-extrabold leading-tight text-gray-900 dark:text-steel mb-4">
+                    Magnet Game
+                </h1>
+                <h2 class="text-xl sm:text-2xl text-bold leading-tight text-gray-700 dark:text-steel-dim mb-4">
+                    The name is a work in progress...
+                </h1>
+            </div>
+        </section>
 
+        <!-- Divider -->
+        <div class="ublueclearseperator"></div>
+
+
+        <!-- Post Section -->
+        <section class="p-12 px-8">
+            <div class="max-w-screen-xl mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 text-gray-900">
+                    <!-- Post 1 -->
+                    <a href="/projects/magnet-game/devlog-1" class="relative rounded-3xl shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-t from-steel to-[#444444] border-l-4 border-b-4 border-[#444444] overflow-hidden">
+                        <img src="/static/images/featured/magnet-game-arrows.png" alt="Q&A" class="w-full h-52 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-center">Introducing... Magnet Game!</h3>
+                            <p class="text-center text-md ">Devlog #1 — 2025-01-08</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </body>
+</section>
 {% endblock %}
