@@ -17,7 +17,7 @@ This is how the computer sees the objects in the game, teleporting from one posi
 
 This also changes how forces interact in the game. In the real world, magnetic forces extend infinitely, but diminish quickly. In Magnet Game, they extend only for a certain number of discrete spaces. Small magnets only send attractive forces to cells in the four cardinal directions surrounding them. Large magnets have a 2 cell wide diamond of influence.
 
-In continuous space and time, you might expect something like this:
+In continuous space and time, you might expect something where the magnets rotate around a post, but stay together. Like this:
 
 Insert Gif 3 Here
 

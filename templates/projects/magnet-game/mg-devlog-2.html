@@ -2,7 +2,7 @@
 {% block content %}
 <body class="bg-gray-100 dark:text-steel text-[#222222]">
     <!-- Blog Post Wrapper -->
-    <div class="max-w-screen-md px-4 py-8 mx-auto">
+    <div class="max-w-screen-md px-4 pt-8 mx-auto">
         <!-- Thinner Centered Bar -->
         <div class="dark:bg-[#444444] bg-[#CCCCCC] rounded-3xl shadow-2xl dark:shadow-white p-6 mx-auto">
             <!-- Title Section -->
@@ -56,36 +56,50 @@
                 <p class="leading-relaxed text-lg">Discrete space means that each object in the game can only exist in certain positions. It can be in space 1 or space 2, but not space 1.5. This is how all grid-based games work. In chess, you can't respond to e4 with d4.5. This is a very important topic for Magnet Game, because real-world systems are in continuous space and that changes greatly in discrete space (similar to how signals in DSP change when discretized). Check the gif below, which is the same as the example above, but without the animations.</p><br/>
 
                 <div class="flex justify-center">
-                    <img src="/static/images/featured/mg/Log2Gif2.gif" alt="Main Image" class="w-full rounded-lg shadow-lg">
+                    <img src="/static/images/featured/mg/Log2Gif2.gif" alt="Main Image" class="md:w-2/5 w-1/2 rounded-lg shadow-lg">
+                </div>
+                <div class="flex justify-center">
+                    <p class="leading-relaxed text-[#666666] dark:text-[#999999] text-sm">Gif 2</p>
                 </div>
 
                 <p class="leading-relaxed text-lg">This is how the computer sees the objects in the game, teleporting from one position to another, but not seeing anything that happens in between. Though visually in the first gif, the two magnets pass each other, they don't "connect" and start moving together as you might expect in a continuous time system. The two magnets don't even see each other.</p><br/>
 
                 <p class="leading-relaxed text-lg">This also changes how forces interact in the game. In the real world, magnetic forces extend infinitely, but diminish quickly. In Magnet Game, they extend only for a certain number of discrete spaces. Small magnets only send attractive forces to cells in the four cardinal directions surrounding them. Large magnets have a 2 cell wide diamond of influence.</p><br/>
 
-                <p class="leading-relaxed text-lg">In continuous space and time, you might expect something like this:</p><br/>
+                <p class="leading-relaxed text-lg">In continuous space and time, you might expect something where the magnets rotate around a post, but stay together. Like this:</p><br/>
 
                 <div class="flex justify-center">
-                    <img src="/static/images/featured/mg/Log2Gif3.gif" alt="Main Image" class="w-full rounded-lg shadow-lg">
+                    <img src="/static/images/featured/mg/Log2Gif3.gif" alt="Main Image" class="md:w-2/5 w-1/2 rounded-lg shadow-lg">
                 </div>
-
+                <div class="flex justify-center">
+                    <p class="leading-relaxed text-[#666666] dark:text-[#999999] text-sm">Gif 3</p>
+                </div>
                 <p class="leading-relaxed text-lg">But in Magnet Game's discretized world, this is what actually happens:</p><br/>
 
                 <div class="flex justify-center">
-                    <img src="/static/images/featured/mg/Log2Gif4.gif" alt="Main Image" class="w-full rounded-lg shadow-lg">
+                    <img src="/static/images/featured/mg/Log2Gif4.gif" alt="Main Image" class="md:w-2/5 w-1/2 rounded-lg shadow-lg">
+                </div>
+                <div class="flex justify-center">
+                    <p class="leading-relaxed text-[#666666] dark:text-[#999999] text-sm">Gif 4</p>
                 </div>
 
                 <div class="h-px bg-cs-green my-6"></div><h1 id="animate" class="text-4xl font-extrabold">Why Animate</h1><br/>
                 <p class="leading-relaxed text-lg">If the animations are decpetive about how the system really works, then why include them? Why not have the visuals fully represent what is actually happening in the game? One reason. This:</p><br/>
 
                 <div class="flex justify-center">
-                    <img src="/static/images/featured/mg/Log2Gif5.gif" alt="Main Image" class="w-full rounded-lg shadow-lg">
+                    <img src="/static/images/featured/mg/Log2Gif5.gif" alt="Main Image" class="md:w-2/5 w-1/2 rounded-lg shadow-lg">
+                </div>
+                <div class="flex justify-center">
+                    <p class="leading-relaxed text-[#666666] dark:text-[#999999] text-sm">Gif 5</p>
                 </div>
 
                 <p class="leading-relaxed text-lg">Is easier to understand than this:</p><br/>
 
                 <div class="flex justify-center">
-                    <img src="/static/images/featured/mg/Log2Gif6.gif" alt="Main Image" class="w-full rounded-lg shadow-lg">
+                    <img src="/static/images/featured/mg/Log2Gif6.gif" alt="Main Image" class="md:w-2/5 w-1/2 rounded-lg shadow-lg">
+                </div>
+                <div class="flex justify-center">
+                    <p class="leading-relaxed text-[#666666] dark:text-[#999999] text-sm">Gif 6</p>
                 </div>
 
                 <div class="h-px bg-cs-green my-6"></div><h1 id="map-code" class="text-4xl font-extrabold">Map Code</h1><br/>
@@ -129,6 +143,27 @@ func _create_map(grid_size : int) -> void:
                     obj.z_index = obj.display_z
 
                     GOBJ_Node.add_child(obj)</pre>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-screen-md px-4 py-8 mx-auto flex">
+        <a href="devlog-1" class="bg-cs-blue rounded-3xl shadow-2xl p-6 mr-3 w-full">
+            <div class="text-left">
+                <h1 class="text-xl font-extrabold leading-tight text-[#222222]">
+                    ← Previous Devlog
+                </h1>
+                <h1 class="text-lg font-extrabold leading-tight ml-6 text-[#444444]">
+                    Introducing... Magnet Game!
+                </h1>
+            </div>
+        </a>
+        <div class="bg-[#647D7F] rounded-3xl shadow-2xl p-6 mr-3 w-full">
+            <div class="text-right">
+                <h1 class="text-xl font-extrabold leading-tight text-[#222222]">
+                    Next Devlog →
+                </h1>
+                <h1 class="text-lg font-extrabold leading-tight ml-6 text-[#444444]">
+                </h1>
             </div>
         </div>
     </div>
