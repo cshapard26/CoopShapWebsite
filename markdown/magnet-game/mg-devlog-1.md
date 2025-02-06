@@ -1,7 +1,5 @@
-
-
 # Introduction
-I'm sure you have memories of playing with magnets as a kid, feeling the force between your fingers or seeing how close you can push the opposing poles together before your strength gives out. I certainly do. What's interesting is that I never lost that childlike curiosity, which is why I and am always chasing the sense of discovery you get when you first figure something out on your own, like realizing you can pick up a magnet against the force of gravity or have them stick on opposite sides of your hand. The feeling is... magnetic, you might say.
+I'm sure you have memories of playing with magnets as a kid, feeling the force between your fingers or seeing how close you can push the opposing poles together before your strength gives out. I certainly do. What's interesting is that I never lost that childlike curiosity, which is why I and am always chasing the sense of discovery you get when you first figure something out on your own, like realizing you can pick up a magnet against the force of gravity or have them stick on opposite sides of your hand.
 
 In honor of the mechanical mystery of magnets, I wanted to create a game that allowed people to relive that same sense of discovery. Thus, 'Magnet Game' was born. The idea is great, the name is not (I swear I'll come up with a better one someday).
 

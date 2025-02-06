@@ -60,10 +60,15 @@ def ece1181lab3():
 def ctt():
     return render_template("courses/ctt.html", title_extention="CtT - ")
 
-# Terminal Page
+# Devlog Page
 @app.route("/projects/magnet-game/devlog-1")
 def mgdl1():
     return render_template("projects/magnet-game/mg-devlog-1.html", title_extention="Magnet Game - ")
+
+# Devlog Page
+@app.route("/projects/magnet-game/devlog-2")
+def mgdl2():
+    return render_template("projects/magnet-game/mg-devlog-2.html", title_extention="Magnet Game - ")
 
 # Feedback Box
 @app.route('/submit-feedback', methods=['POST'])
