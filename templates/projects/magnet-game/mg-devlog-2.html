@@ -38,7 +38,7 @@
             <!-- Blog Content -->
             <div class="prose prose-lg mx-auto dark:text-steel text-[#222222]">
                 <h1 id="introduction" class="text-4xl font-extrabold">Introduction</h1><br/>
-                <p class="leading-relaxed text-lg">Like all physical systems, magnetic interactions are based on mathematics. Given information like distance, charge, and shape, we can calculate exactly how electromagnetic interactions should behave. However, in a much simpler environment like a videogame simulation, we can control these behaviors however we see fit. In the case of Magnet Game, I have to build the entire electromagnetic interaction system from scratch. But there's a twist. Unlike real-world systems, Magnet Game exists in discrete time and discrete space, which changes the expected behavior of magnets. I have to decide how to implement those interactions to make the environment seem intuitive to a player.</p><br/>
+                <p class="leading-relaxed text-lg">Like all physical systems, magnetic interactions can be explained by mathematics. Given information like distance, charge, and shape, we can calculate exactly how electromagnetic interactions should behave. However, in a much simpler environment like a videogame simulation, we can control these behaviors however we see fit. In the case of Magnet Game, I have to build the entire electromagnetic interaction system from scratch. But there's a twist. Unlike real-world systems, Magnet Game exists in discrete time and discrete space, which changes the expected behavior of magnets. I have to decide how to implement those interactions to make the environment seem intuitive to a player.</p><br/>
 
                 <div class="h-px bg-cs-green my-6"></div><h1 id="dt" class="text-4xl font-extrabold">Discrete Time</h1><br/>
                 <p class="leading-relaxed text-lg">Discrete time means that the game is not continually updating the time. The magnets can only move and interact at certain times, and I have chosen to make that whenever the player presses a button. Take the example below of 2 magnets in an infinite loop below. Blue repels blue and attracts red (and vice versa). The green lights in the top left show when the user presses a button.</p><br/>
@@ -152,7 +152,7 @@ func _create_map(grid_size : int) -> void:
                 <h1 class="text-xl font-extrabold leading-tight text-[#222222]">
                     ← Previous Devlog
                 </h1>
-                <h1 class="text-lg font-extrabold leading-tight ml-6 text-[#444444]">
+                <h1 class="text-lg font-extrabold leading-tight text-[#444444]">
                     Introducing... Magnet Game!
                 </h1>
             </div>
@@ -162,7 +162,7 @@ func _create_map(grid_size : int) -> void:
                 <h1 class="text-xl font-extrabold leading-tight text-[#222222]">
                     Next Devlog →
                 </h1>
-                <h1 class="text-lg font-extrabold leading-tight ml-6 text-[#444444]">
+                <h1 class="text-lg font-extrabold leading-tight text-[#444444]">
                 </h1>
             </div>
         </div>
