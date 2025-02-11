@@ -12,7 +12,7 @@
                 </h1>
                 <h2 class="text-2xl text-bold leading-tight text-cs-green">
                     Start touching memory and implement different types of indexing
-                </h1>
+                </h2>
                  <!-- Separator -->
                 <div class="h-px bg-cs-green my-6"></div>
                 <a href="#overview" class="inline-block bg-cs-blue hover:bg-blue-700  hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
@@ -34,19 +34,17 @@
 
             <!-- Blog Content -->
             <div class="prose prose-lg mx-auto dark:text-steel text-[#222222]">
-                <div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Overview</h1><br/>
-                <p class="leading-relaxed text-lg">Welcome to Lab 4!</p><br/>
-
-                <p class="leading-relaxed text-lg">Here, you will learn about loading and storing. Be warned, this lab has the most screenshots of any. If you need any help or clarification, be sure to ask a TA. The old lab guides are avaliable in case you want to freshen up on the skills you have already learned.</p><br/>
-
+                <h1 id="overview" class="text-4xl font-extrabold">Overview</h1><br/>
+                
+                <p class="leading-relaxed text-lg">Welcome to Lab 4! Here, you will learn about loading and storing. Be warned, this lab needs quite a lot of screenshots. If you need any help or clarification, be sure to ask a TA. The old lab guides are avaliable in case you want to freshen up on the skills you have already learned.</p>
                 <div class="h-px bg-cs-green my-6"></div><h1 id="instructions" class="text-4xl font-extrabold">Instructions</h1><br/>
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 1</h1>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 1</h2>
                 <p class="leading-relaxed text-lg">Read through pages 87-91 (Chapter 5 beginning to Loading a Register) in the Smith book (please actually do this). Note that you do not have to act on anything in the book, just read for context. This is the beginning of Chapter 5 to the "Loading a Register" section for those without page numbers.</p><br/>
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 2</h1>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 2</h2>
                 <p class="leading-relaxed text-lg">Observe Table 5-3 on page 93 and note how the B, SB, H, and SH letters affect the LDR instruction.</p><br/>
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 3</h1>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 3</h2>
                 <p class="leading-relaxed text-lg">Read pages 95-96 (Loading from Memory to Indexing Through Memory). "Wrap" the given code from Listing 5-2 (also in the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">Code Given</a> section) in the starting and ending code you have seen in previous labs. Most coding languages have something called "wrapper" code. Like a candy wrapper, it surrounds the code and tells you something about what is inside. There are many variations of wrapper code, but for the ARM Assembly Language in this class, we use the following:</p><br/>
                 <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
 .global _start
@@ -59,72 +57,71 @@ _start:
     MOV R7, #1
     SVC 0
 
-@ Any .data or other information goes down here!
-                </pre>
+@ Any .data or other information goes down here!</pre><br/>
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 4</h1>
-                <p class="leading-relaxed text-lg">Compile the code from Step 3 using the familiar </code>make DEBUG=1<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> command. Make sure to update your makefile with the new filename before using the </code>make<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> command. Get used to the process of Step 3 and 4, as you will be using it in every lab from here on out. <a class="font-extrabold">After completing this step, take a screenshot of your code from Step 3 and the terminal showing that it compiles with no errors.</a></p><br/>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 4</h2>
+                <p class="leading-relaxed text-lg">Compile the code from Step 3 using the familiar <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make DEBUG=1</code> command. Make sure to update your makefile with the new filename before using the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make</code> command. Get used to the process of Step 3 and 4, as you will be using it in every lab from here on out. <a class="font-extrabold">After completing this step, take a screenshot of your code from Step 3 and the terminal showing that it compiles with no errors.</a></p><br/>
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 5</h1>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 5</h2>
                 <p class="leading-relaxed text-lg">Run the debugger (gdb) with your new code.</p><br/>
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 6</h1>
-                <p class="leading-relaxed text-lg">Repeat the debugger process you have used in previous labs to check the value of R1 after the </code>LDR R2, [R1]<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> line. This is the memory address of </code>mynumber<code class="bg-cs-blue px-1 rounded shadow-lg text-base">. Stay in the debugger for the next step.</p><br/>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 6</h2>
+                <p class="leading-relaxed text-lg">Repeat the debugger process you have used in previous labs to check the value of R1 after the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R2, [R1]</code> line. This is the memory address of <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mynumber</code>. Stay in the debugger for the next step.</p><br/>
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 7</h1>
-                <p class="leading-relaxed text-lg">Use the command </code>x /4ubfx TheNumberYouFoundInR1<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> (replacing TheNumberYouFoundInR1 with the actual number, in hex) to check what is stored in the memory address held in R1. <a class="font-extrabold">After completing this step, take a screenshot showing the values stored at R1's memory address.</a> These should be in the reverse order of the values you had in the "mynumber" line because of Little Endianness. Stay in the debugger for the next step.</p><br/>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 7</h2>
+                <p class="leading-relaxed text-lg">Use the command <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x /4ubfx TheNumberYouFoundInR1</code> (replacing TheNumberYouFoundInR1 with the actual number, in hex) to check what is stored in the memory address held in R1. <a class="font-extrabold">After completing this step, take a screenshot showing the values stored at R1's memory address.</a> These should be in the reverse order of the values you had in the "mynumber" line because of Little Endianness. Stay in the debugger for the next step.</p><br/>
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 8</h1>
-                <p class="leading-relaxed text-lg">Step over the next line of code and make sure R2 contains the reverse of the value you saw using the </code>x<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> command (aka, the same order as </code>mynumber<code class="bg-cs-blue px-1 rounded shadow-lg text-base">). You can now leave the debugger.</p><br/>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 8</h2>
+                <p class="leading-relaxed text-lg">Step over the next line of code and make sure R2 contains the reverse of the value you saw using the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x</code> command (aka, the same order as <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mynumber</code>). You can now leave the debugger.</p><br/>
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 9</h1>
-                <p class="leading-relaxed text-lg">Like in previous labs, change </code>mynumber<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> to your student ID in hexadecimal, </code>make DEBUG=1<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> the file, and disassemble your program using the command </code>objdump -s -d NameOfYourFile.o<code class="bg-cs-blue px-1 rounded shadow-lg text-base">. <a class="font-extrabold">After this step, take a screeenshot showing the disassembled code. In your lab report, note which memory addresses hold your student ID.</a></p><br/>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 9</h2>
+                <p class="leading-relaxed text-lg">Like in previous labs, change <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mynumber</code> to your student ID in hexadecimal, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make DEBUG=1</code> the file, and disassemble your program using the command <code class="bg-cs-blue px-1 rounded shadow-lg text-base">objdump -s -d NameOfYourFile.o</code>. <a class="font-extrabold">After this step, take a screeenshot showing the disassembled code. In your lab report, note which memory addresses hold your student ID.</a></p><br/>
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 10</h1>
-                <p class="leading-relaxed text-lg">You should have gone over different types of index addressing in class. This is your time to implement them on your own! For this part, you should have 4 groups of lines. I have added a template for this under "Step 10 Code" in the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">Code Given</a> section of this page, which you should use to replace the code in the same file as the last few steps. <u>If you are copy and pasting my given template, make sure to change the value of </code>mynumber<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> back to your student ID</u>. You should have 4 total comparisons, following this format:</p><br/>
-                <ol class="list-decimal ml-6 text-lg space-y-2"><li>Compare a Byte using </code>[R1, #1]<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> vs </code>[R1], #1<code class="bg-cs-blue px-1 rounded shadow-lg text-base"></li></ol>
-                <ol class="list-decimal ml-6 text-lg space-y-2"><li>Compare a Signed Byte using </code>[R1, #1]!<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> vs </code>[R1], #1<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> (note the ! symbol)</li></ol>
-                <ol class="list-decimal ml-6 text-lg space-y-2"><li>Compare a Halfword using </code>[R1, #2]<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> vs </code>[R1], #2<code class="bg-cs-blue px-1 rounded shadow-lg text-base"></li></ol>
-                <ol class="list-decimal ml-6 text-lg space-y-2"><li>Compare a Signed Halfword using </code>[R1, #2]!<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> vs </code>[R1], #2<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> (note the ! symbol)</li></ol>
-                <a class="font-extrabold">Take a screenshot of your code and include it in your lab report.</a>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 10</h2>
+                <p class="leading-relaxed text-lg">You should have gone over different types of index addressing in class. This is your time to implement them on your own! For this part, you should have 4 groups of lines. I have added a template for this under "Step 10 Code" in the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">Code Given</a> section of this page, which you should use to replace the code in the same file as the last few steps. <u>If you are copy and pasting my given template, make sure to change the value of <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mynumber</code> back to your student ID</u>. You should have 4 total comparisons, following this format:</p>
+                <ol class="list-decimal ml-12 text-lg space-y-2">
+                    <li>Compare a Byte using <code class="bg-cs-blue px-1 rounded shadow-lg">[R1, #1]</code> vs <code class="bg-cs-blue px-1 rounded shadow-lg text-base">[R1], #1</code></li>
+                    <li>Compare a Signed Byte using<code class="bg-cs-blue px-1 rounded shadow-lg">[R1, #1]!</code> vs <code class="bg-cs-blue px-1 rounded shadow-lg text-base">[R1], #1</code> (note the ! symbol)</li>
+                    <li>Compare a Halfword using <code class="bg-cs-blue px-1 rounded shadow-lg">[R1, #2]</code> vs <code class="bg-cs-blue px-1 rounded shadow-lg text-base">[R1], #2</code></li>
+                    <li>Compare a Signed Halfword using <code class="bg-cs-blue px-1 rounded shadow-lg ">[R1, #2]!</code> vs <code class="bg-cs-blue px-1 rounded shadow-lg text-base">[R1], #2</code> (note the ! symbol)</li>
+                </ol>
+                <p class="leading-relaxed text-lg"><a class="font-extrabold">Take a screenshot of your code and include it in your lab report.</a></p><br/>
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 11</h1>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 11</h2>
                 <p class="leading-relaxed text-lg">Run the code in the previous step with the debugger, and show the values of R2 for each comparison (as in, you should have 2 screenshots/displays per comparison. One with the first R2, and one with the second. They may be the same value). Remember that the line being displayed in the debugger has not been executed, and you need to step over it to execute it. <a class="font-extrabold">Take a screenshot of each comparison (there should be 4 comparisons for this part)</a>. If you can't fit both examples in one screenshot, then that is okay. <a class="font-extrabold">Make sure to discuess the differences in your lab report.</a></p><br/>
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 12</h1>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 12</h2>
                 <p class="leading-relaxed text-lg">Stores (STR) are like loads (LDR), except reversed. Instead of grabbing values from memory, they place values into memory at the designated address. Remember: LDR changes registers, STR changes memory. There is no action needed for this step. </p><br/>
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 13</h1>
-                <p class="leading-relaxed text-lg">Now, make a new file with the code given in "Step 13 Code" in the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">Code Given</a>. Update your makefile with the name, </code>make DEBUG=1<code class="bg-cs-blue px-1 rounded shadow-lg text-base">, and run the debugger. Once you step PAST the </code>STR R2, [R1]<code class="bg-cs-blue px-1 rounded shadow-lg text-base">, check the registers, find the value in </code>R1<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> (the memory address for </code>mynumber<code class="bg-cs-blue px-1 rounded shadow-lg text-base">), then run </code>x /4ubfx TheNumberYouFoundInR1<code class="bg-cs-blue px-1 rounded shadow-lg text-base">. What are the values at the memory address? <a class="font-extrabold">Discuss this in your lab report.</a></p><br/>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 13</h2>
+                <p class="leading-relaxed text-lg">Now, make a new file with the code given in "Step 13 Code" in the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">Code Given</a>. Update your makefile with the name, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make DEBUG=1</code>, and run the debugger. Once you step PAST the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">STR R2, [R1]</code>, check the registers, find the value in <code class="bg-cs-blue px-1 rounded shadow-lg text-base">R1</code> (the memory address for <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mynumber</code>), then run <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x /4ubfx TheNumberYouFoundInR1</code>. What are the values at the memory address? <a class="font-extrabold">Discuss this in your lab report.</a></p><br/>
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 14</h1>
-                <p class="leading-relaxed text-lg">Now, BETWEEN the </code>LDR R1<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> and </code>STR R2<code class="bg-cs-blue px-1 rounded shadow-lg text-base"> lines in your code file, add the following lines:</p><br/>
-                </code>`<code class="bg-cs-blue px-1 rounded shadow-lg text-base">asm
-                <p class="leading-relaxed text-lg">LDR R2, [R1]</p><br/>
-                <p class="leading-relaxed text-lg">LDR R3, =0x01010101 </p><br/>
-                <p class="leading-relaxed text-lg">ADD R2, R2, R3 </p><br/>
-                </code>`<code class="bg-cs-blue px-1 rounded shadow-lg text-base">
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 14</h2>
+                <p class="leading-relaxed text-lg">Now, BETWEEN the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R1</code> and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">STR R2</code> lines in your code file, add the following lines:</p>
+                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+LDR R2, [R1]
+LDR R3, =0x01010101 
+ADD R2, R2, R3 </pre><br/>
                 <p class="leading-relaxed text-lg">This code adds the number 0x01010101 to your student ID, then stores it back in the original memory address. Go through the same process as Step 13 and <a class="font-extrabold">in your lab report, discuss what values are stored at the memory address.</a></p><br/>
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 15</h1>
-                <p class="leading-relaxed text-lg">Go back to your file from Step 10/11. Under the line </code>LDR R1, =mynumber<code class="bg-cs-blue px-1 rounded shadow-lg text-base">, add </code>LDR R2, [R1]<code class="bg-cs-blue px-1 rounded shadow-lg text-base">. This will put your student ID into R2. Next, you are going to do exactly what you did in Step 10, but with STR commands. Simply replace all the </code>LDR<code class="bg-cs-blue px-1 rounded shadow-lg text-base">s with </code>STR<code class="bg-cs-blue px-1 rounded shadow-lg text-base">s (besides the ones in </code>LDR R1, =mynumber<code class="bg-cs-blue px-1 rounded shadow-lg text-base">) BELOW the line </code>LDR R2, [R1]<code class="bg-cs-blue px-1 rounded shadow-lg text-base">. Update the lengths (B, SB, etc) as follows:</p><br/>
-                <ol class="list-decimal ml-6 text-lg space-y-2"><li>Byte</li></ol>
-                <ol class="list-decimal ml-6 text-lg space-y-2"><li>Byte</li></ol>
-                <ol class="list-decimal ml-6 text-lg space-y-2"><li>Halfword</li></ol>
-                <ol class="list-decimal ml-6 text-lg space-y-2"><li>Halfword</li></ol>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 15</h2>
+                <p class="leading-relaxed text-lg">Go back to your file from Step 10/11. Under the line <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R1, =mynumber</code>, add <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R2, [R1]</code>. This will put your student ID into R2. Next, you are going to do exactly what you did in Step 10, but with STR commands. Simply replace all the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR</code>s with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">STR</code>s (besides the ones in <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R1, =mynumber</code>) BELOW the line <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R2, [R1]</code>. Update the lengths (B, SB, etc) as follows:</p>
+                <ol class="list-decimal ml-12 text-lg space-y-2"><li>Byte</li>
+                <li>Byte</li>
+                <li>Halfword</li>
+                <li>Halfword</li></ol><br/>
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 16</h1>
-                <p class="leading-relaxed text-lg">Make sure you update the correct file in your makefile, then make it. Run the code in the previous step with the debugger, and show the values of at the memory address of R1 for each comparison (as in, you should have 2 screenshots/displays per comparison. One with the first memory address, and one with the second. They may be the same value). Remember that, to view the data at a memory address, you need to check the value of </code>R1<code class="bg-cs-blue px-1 rounded shadow-lg text-base">,  then run </code>x /4ubfx TheNumberYouFoundInR1<code class="bg-cs-blue px-1 rounded shadow-lg text-base">. <a class="font-extrabold">Take a screenshot of each comparison (there should be 4 comparisons for this part)</a>. If you can't fit both examples in one screenshot, then that is okay. <a class="font-extrabold">Make sure to discuess the differences in your lab report.</a></p><br/>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 16</h2>
+                <p class="leading-relaxed text-lg">Make sure you update the correct file in your makefile, then make it. Run the code in the previous step with the debugger, and show the values of at the memory address of R1 for each comparison (as in, you should have 2 screenshots/displays per comparison. One with the first memory address, and one with the second. They may be the same value). Remember that, to view the data at a memory address, you need to check the value of <code class="bg-cs-blue px-1 rounded shadow-lg text-base">R1</code>,  then run <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x /4ubfx TheNumberYouFoundInR1</code>. <a class="font-extrabold">Take a screenshot of each comparison (there should be 4 comparisons for this part)</a>. If you can't fit both examples in one screenshot, then that is okay. <a class="font-extrabold">Make sure to discuess the differences in your lab report.</a></p><br/>
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 17</h1>
-                <a class="font-extrabold">In your lab report, explain why there is no signed STR instruction.</a>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 17</h2>
+                <p class="leading-relaxed text-lg"><a class="font-extrabold">In your lab report, explain why there is no signed STR instruction.</a></p>
 
                 <div class="h-px bg-cs-green my-6"></div><h1 id="conclusion" class="text-4xl font-extrabold">Conclusion</h1><br/>
-                <p class="leading-relaxed text-lg">In this lab, you applied your knowledge of loading and storing values in memory. This is a very important concept you will use in every lab from now on. You should also now have a concrete understanding of pre, post, and auto indexing and how it effects the addresses you load and store from. This lab was a bit harder than the last, so if you have any questions, be sure to ask a TA. We also have office hours if you have more questions. Be sure to turn in your lab report before next lab, and have a great weekend.</p><br/>
-
+                <p class="leading-relaxed text-lg">In this lab, you applied your knowledge of loading and storing values in memory. This is a very important concept you will use in every lab from now on. You should also now have a concrete understanding of pre, post, and auto indexing and how it effects the addresses you load and store from. This lab was a bit harder than the last, so if you have any questions, be sure to ask a TA. We also have office hours if you have more questions. Be sure to turn in your lab report before next lab, and have a great weekend.</p>
 
                 <div class="h-px bg-cs-green my-6"></div><h1 id="code-given" class="text-4xl font-extrabold">Code Given</h1><br/>
-                <p class="leading-relaxed text-lg">Listing 5-2:</p>
+                <h1 class="text-2xl text-bold underline text-cs-green">Listing 5-2:</h1>
                 <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
 @ load the address of mynumber into R1
     LDR R1, =mynumber
@@ -134,10 +131,9 @@ _start:
 
 @ Put this in the .data section of the wrapper, below everything else
 .data
-    mynumber: .WORD 0x1234ABCD
-                </pre>
+    mynumber: .WORD 0x1234ABCD</pre>
                 <br/>
-                <p class="leading-relaxed text-lg">Step 10 Code:</p>
+                <h1 class="text-2xl text-bold underline text-cs-green">Step 10 Code:</h1>
                 <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
 .global _start
 
@@ -156,10 +152,9 @@ _start:
 
 
 .data
-mynumber: .word 0x12345678
-                </pre>
+mynumber: .word 0x12345678</pre>
                 <br/>
-                <p class="leading-relaxed text-lg">Step 13 Code:</p>
+                <h1 class="text-2xl text-bold underline text-cs-green">Step 13 Code:</h1>
                 <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
 .global _start
 
@@ -172,8 +167,7 @@ _start:
     SVC 0
 
 .data
-mynumber: .word 0xYourStudentID
-                </pre>
+mynumber: .word 0xYourStudentID</pre>
                 <br/>
                 
             </div>

@@ -1,6 +1,6 @@
 {
     "^# (.*)$": "<div class=\"h-px bg-cs-green my-6\"></div><h1 id=\"overview\" class=\"text-4xl font-extrabold\">\\1</h1><br/>",
-    "^## (.*)$": "<h2 class=\"text-2xl text-bold underline text-cs-green\">\\1</h1>",
+    "^## (.*)$": "<h2 class=\"text-2xl text-bold underline text-cs-green\">\\1</h2>",
     "^### (.*)$": "<h3>\\1</h3>",
     "^#### (.*)$": "<h4>\\1</h4>",
     "^##### (.*)$": "<h5>\\1</h5>",
@@ -15,7 +15,7 @@
     "^> (.*)$": "<p class=\"leading-relaxed text-lg\"><blockquote class=\"border-l-4 border-cs-blue italic pl-4 text-cs-green text-xl\">\\1</blockquote></p>",
     "\\[(.*?)\\]\\((.*?)\\)": "<a href=\"\\2\" class=\"text-lg text-cs-blue hover:text-blue-700 underline\">\\1</a>",
     "^- (.*)$": "<ol class=\"list ml-16 text-lg\"><li>\\1</li></ol>",
-    "^(\\d+)\\. (.*)$": "<ol class=\"list-decimal ml-6 text-lg space-y-2\"><li>\\2</li></ol>",
+    "^(\\d+)\\. (.*)$": "<ol class=\"list-decimal ml-12 text-lg space-y-2\"><li>\\2</li></ol>",
     "\\n-{3,}\\n": "<div class=\"h-px bg-cs-green my-6\"></div>",
     "\\n\\*{3,}\\n": "<div class=\"h-px bg-cs-green my-6\"></div>",
     "\\n_{3,}\\n": "<div class=\"h-px bg-cs-green my-6\"></div>",
