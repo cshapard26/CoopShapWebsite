@@ -1,27 +1,17 @@
----
-title: "Lab 4: Thanks for the Memories"
-author: Cooper Shapard
-date: 2024-09-18
-category: Jekyll
-layout: post
----
-
-[Download Lab Instructions](/ECE1181/pages/Lab4/Lab4_ThanksForTheMemories.pdf)
-
 # Overview
 Welcome to Lab 4!
 
-As always, this guide is a supplement for the official lab instructions, not a replacement. When in doubt, refer back to the official instructions. If you need any help or clarification, be sure to ask a TA. The old lab guides are avaliable in case you want to freshen up on the skills you have already learned.
+Here, you will learn about loading and storing. Be warned, this lab has the most screenshots of any. If you need any help or clarification, be sure to ask a TA. The old lab guides are avaliable in case you want to freshen up on the skills you have already learned.
 
 # Explanations
 ## Step 1
-Read through pages 87-91 in the Smith book (please actually do this). This is the beginning of Chapter 5 to the "Loading a Register" section for those without page numbers.
+Read through pages 87-91 (Chapter 5 beginning to Loading a Register) in the Smith book (please actually do this). Note that you do not have to act on anything in the book, just read for context. This is the beginning of Chapter 5 to the "Loading a Register" section for those without page numbers.
 
 ## Step 2
 Observe Table 5-3 on page 93 and note how the B, SB, H, and SH letters affect the LDR instruction.
 
 ## Step 3
-Read pages 95-96. "Wrap" the given code from Listing 5-2 (also in the [Code Given](#code-given) section) in the starting and ending code you have seen in previous labs. Most coding languages have something called "wrapper" code. Like a candy wrapper, it surrounds the code and tells you something about what is inside. There are many variations of wrapper code, but for the ARM Assembly Language in this class, we use the following:
+Read pages 95-96 (Loading from Memory to Indexing Through Memory). "Wrap" the given code from Listing 5-2 (also in the [Code Given](#code-given) section) in the starting and ending code you have seen in previous labs. Most coding languages have something called "wrapper" code. Like a candy wrapper, it surrounds the code and tells you something about what is inside. There are many variations of wrapper code, but for the ARM Assembly Language in this class, we use the following:
 ```ARM
 .global _start
 
@@ -63,14 +53,13 @@ You should have gone over different types of index addressing in class. This is 
 **Take a screenshot of your code and include it in your lab report.**
 
 ## Step 11
-Run the code in the previous step with the debugger, and show the values of R2 for each comparison (as in, you should have 2 screenshots/displays per comparison. One with the first R2, and one with the second. They may be the same value). **Take a screenshot of each comparison (there should be 4 comparisons for this part)**. If you can't fit both examples in one screenshot, then that is okay. **Make sure to discuess the differences in your lab report.**
+Run the code in the previous step with the debugger, and show the values of R2 for each comparison (as in, you should have 2 screenshots/displays per comparison. One with the first R2, and one with the second. They may be the same value). Remember that the line being displayed in the debugger has not been executed, and you need to step over it to execute it. **Take a screenshot of each comparison (there should be 4 comparisons for this part)**. If you can't fit both examples in one screenshot, then that is okay. **Make sure to discuess the differences in your lab report.**
 
 ## Step 12
 Stores (STR) are like loads (LDR), except reversed. Instead of grabbing values from memory, they place values into memory at the designated address. Remember: LDR changes registers, STR changes memory. There is no action needed for this step. 
 
 ## Step 13
 Now, make a new file with the code given in "Step 13 Code" in the [Code Given](#code-given). Update your makefile with the name, `make DEBUG=1`, and run the debugger. Once you step PAST the `STR R2, [R1]`, check the registers, find the value in `R1` (the memory address for `mynumber`), then run `x /4ubfx TheNumberYouFoundInR1`. What are the values at the memory address? **Discuss this in your lab report.**
-
 
 ## Step 14
 Now, BETWEEN the `LDR R1` and `STR R2` lines in your code file, add the following lines:
