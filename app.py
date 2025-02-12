@@ -55,11 +55,15 @@ def ece1181lab2():
 def ece1181lab3():
     return render_template("courses/ECE1181/Lab3.html", title_extention="Lab 3 - ")
 
-
-# Lab3 Page
+# Lab4 Page
 @app.route("/courses/ECE1181/lab-4-thanks-for-the-memories")
 def ece1181lab4():
     return render_template("courses/ECE1181/Lab4.html", title_extention="Lab 4 - ")
+
+# Lab5 Page
+@app.route("/courses/ECE1181/lab-5-literal-pools-and-logic")
+def ece1181lab5():
+    return render_template("courses/ECE1181/Lab5.html", title_extention="Lab 5 - ")
 
 # Terminal Page
 @app.route("/courses/conquering-the-terminal")
