@@ -1,79 +1,33 @@
 <div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Introduction</h1><br/>
-<p class="leading-relaxed text-lg">Like all physical systems, magnetic interactions are based on mathematics. Given information like distance, charge, and shape, we can calculate exactly how electromagnetic interactions should behave. However, in a much simpler environment like a videogame simulation, we can control these behaviors however we see fit. In the case of Magnet Game, I have to build the entire electromagnetic interaction system from scratch. But there's a twist. Unlike real-world systems, Magnet Game exists in discrete time and discrete space, which changes the expected behavior of magnets. I have to decide how to implement those interactions to make the environment seem intuitive to a player.</p><br/>
+<p class="leading-relaxed text-lg">At this point, all the magnets have a net force controlling where they want to go. However, what happens if two magnets want to move to the same space? Which, if any, should get the space? Where should the other one move if it's first choice is taken? These are the questions I will answer in this devlog. <a class="italic">Note that all the below information is subject to change before the game's release. This algorithm works well for the current interactions, but new mechanics might warrant a full revamp of the algorithm.</a></p><br/>
 
-<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Discrete Time</h1><br/>
-<p class="leading-relaxed text-lg">Discrete time means that the game is not continually updating the time. The magnets can only move and interact at certain times, and I have chosen to make that whenever the player presses a button. Take the example below of 2 magnets in an infinite loop below. Blue repels blue and attracts red (and vice versa). The green lights in the top left show when the user presses a button.</p><br/>
+<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Setting Desired Cells</h1><br/>
+<p class="leading-relaxed text-lg">The first goal is converting a magnet's net force into a list of cells the magnet wants to occupy, each with a weight. The way I implemented this was to break each force into its component x and y forces, weight each one directly with their magnitude, and also weight the diagonal with the average of these two weights multiplied by a constant. </p><br/>
 
-<p class="leading-relaxed text-lg">Insert Gif 1 Here</p><br/>
+<p class="leading-relaxed text-lg">The cell associated with each of these weights are located at <code class="bg-cs-blue px-1 rounded shadow-lg text-base">(sign(net<a class="underline">force.x), 0)</code>, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">(0, sign(net</a>force.y))</code>, and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">(sign(net<a class="underline">force.x), sign(net</a>force.y))</code>, relative to the given magnet.</p><br/>
 
-<p class="leading-relaxed text-lg">Even though there are times when two blue magnets sit next to each other, they do not repel until after the user's input. This is because time does not update until the instantaneous time the user presses a key. The computer then calculates where the magents should move (explained in a future post), and then teleports them to their position in the next time state.</p><br/>
+<p class="leading-relaxed text-lg">The reason that the diagonal weight is not simply the magnitude of the vector is to prevent magnets from always preferring to move diagonally. If there is any perpendicular force, no matter how small, it would make the magnet want to choose the diagonal. Instead, by averaging the x and y components and multiplying by a constant > 1, the magnets are able to move diagonally when the x and y forces are similar in magnitude, but prefer to move in cardinal directions otherwise.</p><br/>
 
-<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Discrete Space</h1><br/>
-<p class="leading-relaxed text-lg">Discrete space means that each object in the game can only exist in certain positions. It can be in space 1 or space 2, but not space 1.5. This is how all grid-based games work. In chess, you can't respond to e4 with d4.5. This is a very important topic for Magnet Game, because real-world systems are in continuous space and that changes greatly in discrete space (similar to how signals in DSP change when discretized). Check the gif below, which is the same as the example above, but without the animations.</p><br/>
+<p class="leading-relaxed text-lg">The magnet also stores its current location as "friction" with a small constant. This ensures that even magnets with zero net force still have a place to move and also prevents negligible forces from influencing magnet movement.</p><br/>
 
-<p class="leading-relaxed text-lg">Insert Gif 2 Here</p><br/>
+<p class="leading-relaxed text-lg">Magnets now store an array filled with objects of (desired_cell, weight). A dictionary mapping each magnet to its array is created to consolidate this information.</p><br/>
 
-<p class="leading-relaxed text-lg">This is how the computer sees the objects in the game, teleporting from one position to another, but not seeing anything that happens in between. Though visually in the first gif, the two magnets pass each other, they don't "connect" and start moving together as you might expect in a continuous time system. The two magnets don't even see each other.</p><br/>
+<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Resolving Cell Disputes</h1><br/>
+<p class="leading-relaxed text-lg">With each magnet now knowing what it wants and how much it wants it, we can start divvying up the cells. The algorithm is as follows:</p><br/>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>Repeat the algorithm below until the dictionary is empty</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>Loop through each magnet in the dictionary.</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>If a magnet has no available spaces to move to, throw an error.</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>If a magnet only has one space it can move to, it moves there regardless of the weight and is removed from the dictionary. This location is now removed from all other magnets' desired cell arrays in the dictionary. </li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>Repeat the above process until all remaining magnets have >= 2 desired cells.</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>Find the highest weight among the remaining magnets' objects. Add all magnets with this weight to an array.</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>Check where each of these magnets want to move. If there is no conflict, then that magnet moves there and is removed from the dictionary. This location is now removed from all other magnets' desired cell arrays in the dictionary. </li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>If there is a conflict, the magnet with the smallest base (i.e. regular magnets are 1, large magnets are 2, etc.) moves and the objects are removed like in step 7.</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>If both magnets have the same base, then neither magnet moves. The shared location is removed form the dictionary, but the magnets are not.</li></ol>
 
-<p class="leading-relaxed text-lg">This also changes how forces interact in the game. In the real world, magnetic forces extend infinitely, but diminish quickly. In Magnet Game, they extend only for a certain number of discrete spaces. Small magnets only send attractive forces to cells in the four cardinal directions surrounding them. Large magnets have a 2 cell wide diamond of influence.</p><br/>
+<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Examples</h1><br/>
+<p class="leading-relaxed text-lg">At this point, all magnets have moved to a cell determined the above algorithm. It allows for both complex and deterministic interactions, which is key in a puzzle game like Magnet Game. Here are some gifs of the interactions in action, with updated art too!</p><br/>
+<p class="leading-relaxed text-lg">[Gif 1]</p><br/>
+<p class="leading-relaxed text-lg">[Gif 2]</p><br/>
+<p class="leading-relaxed text-lg">[Gif 3]</p><br/>
 
-<p class="leading-relaxed text-lg">In continuous space and time, you might expect something like this:</p><br/>
-
-<p class="leading-relaxed text-lg">Insert Gif 3 Here</p><br/>
-
-<p class="leading-relaxed text-lg">But in Magnet Game's discretized world, this is what actually happens:</p><br/>
-
-<p class="leading-relaxed text-lg">Insert Gif 4 Here</p><br/>
-
-<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Why Animate</h1><br/>
-<p class="leading-relaxed text-lg">If the animations are decpetive about how the system really works, then why include them? Why not have the visuals fully represent what is actually happening in the game? One reason. This:</p><br/>
-
-<p class="leading-relaxed text-lg">Insert Gif 5 Here</p><br/>
-
-<p class="leading-relaxed text-lg">Is easier to understand than this:</p><br/>
-
-<p class="leading-relaxed text-lg">Insert Gif 6 Here</p><br/>
-
-<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Map Code</h1><br/>
-<p class="leading-relaxed text-lg">As promised, here is some code you can use in your own project. It generates a map in your Godot Scene on runtime, adding all the sprites and backgrounds to the scene. This won't be plug-and-play in your project, as you will need to implement custom classes such as Matrix and Cell, but it should give you a good starting place to start implementing grid-style movement and runtime instantiation. </p><br/>
-
-``<code class="bg-cs-blue px-1 rounded shadow-lg text-base">
-<p class="leading-relaxed text-lg">var map_size : Vector2i</p><br/>
-<p class="leading-relaxed text-lg">var cells : Matrix</p><br/>
-<p class="leading-relaxed text-lg">var cell_background : PackedScene</p><br/>
-<p class="leading-relaxed text-lg">var original<a class="underline">map</a>string : Matrix</p><br/>
-
-<p class="leading-relaxed text-lg">func <a class="underline">create</a>map(grid_size : int) -> void:</p><br/>
-<p class="leading-relaxed text-lg">    cells = Matrix.new(map<a class="underline">size.x, map</a>size.y)</p><br/>
-<p class="leading-relaxed text-lg">        for row in range(map_size.x):</p><br/>
-<p class="leading-relaxed text-lg">            for cell in range(map_size.y):</p><br/>
-<p class="leading-relaxed text-lg">                cells.set_element(row, cell, Cell.new())</p><br/>
-<p class="leading-relaxed text-lg">                var curr<a class="underline">cell = cells.get</a>element(row, cell)</p><br/>
-<p class="leading-relaxed text-lg">                curr<a class="underline">cell.name = "Cell</a>" + str(row) + "_" + str(cell)</p><br/>
-<p class="leading-relaxed text-lg">                curr_cell.location = Vector2i(row, cell)</p><br/>
-<p class="leading-relaxed text-lg">                curr<a class="underline">cell.position = curr</a>cell.location * grid_size</p><br/>
-<p class="leading-relaxed text-lg">                Cell<a class="underline">Node.add</a>child(curr_cell)</p><br/>
-                
-                # Sprite
-<p class="leading-relaxed text-lg">                var bg<a class="underline">sprite = cell</a>background.instantiate()</p><br/>
-<p class="leading-relaxed text-lg">                bg<a class="underline">sprite.z</a>index = -100</p><br/>
-<p class="leading-relaxed text-lg">                bg<a class="underline">sprite.name = "Background</a>Reg"</p><br/>
-<p class="leading-relaxed text-lg">                curr<a class="underline">cell.add</a>child(bg_sprite)</p><br/>
-                
-                # Fill cell
-<p class="leading-relaxed text-lg">                var curr<a class="underline">data = original</a>map<a class="underline">string.get</a>element(row, cell)</p><br/>
-<p class="leading-relaxed text-lg">                for i in range(len(curr_data)):</p><br/>
-                    # Edge cases
-<p class="leading-relaxed text-lg">                    if curr_data[i] == " ":</p><br/>
-<p class="leading-relaxed text-lg">                        continue</p><br/>
-                    
-                    # Create GameObject (gobj)
-<p class="leading-relaxed text-lg">                    var obj = char<a class="underline">to</a>gobj(curr_data[i]).new()</p><br/>
-<p class="leading-relaxed text-lg">                    obj.host<a class="underline">cell = curr</a>cell</p><br/>
-<p class="leading-relaxed text-lg">                    obj.id = GlobalFunctions.generate<a class="underline">random</a>id()</p><br/>
-<p class="leading-relaxed text-lg">                    obj.name = str(obj.id)</p><br/>
-<p class="leading-relaxed text-lg">                    obj.position = obj.host_cell.position</p><br/>
-<p class="leading-relaxed text-lg">                    obj.z<a class="underline">index = obj.display</a>z</p><br/>
-
-<p class="leading-relaxed text-lg">                    GOBJ<a class="underline">Node.add</a>child(obj)</p><br/>
-</code>``
+<p class="leading-relaxed text-lg">I hope you found the magnet movement system interesting and useful. If you have any questions, comments, or ideas, feel free to email me at coopershapard(at)duck.com!</p><br/>

@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block content %}
+<body class="bg-gray-100 dark:text-steel text-[#222222]">
+    <!-- Blog Post Wrapper -->
+    <div class="max-w-screen-md px-4 pt-8 mx-auto">
+        <!-- Thinner Centered Bar -->
+        <div class="dark:bg-[#444444] bg-[#CCCCCC] rounded-3xl shadow-2xl dark:shadow-white p-6 mx-auto">
+            <!-- Title Section -->
+            <div class="text-center">
+                <h1 class="text-6xl font-extrabold leading-tight text-cs-green">
+                    Moving Magnets to Cells
+                </h1>
+                <h2 class="text-2xl text-bold leading-tight text-cs-green">
+                    Devlog #4 — 2025-03-02
+                </h1>
+                 <!-- Separator -->
+                <div class="h-px bg-cs-green my-6"></div>
+                <a href="#introduction" class="inline-block bg-cs-blue hover:bg-blue-700  hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Introduction
+                </a> >>
+                <a href="#sdc" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Setting Desired Cells
+                </a> >>
+                <a href="#rcd" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Resolving Cell Disputes
+                </a> >>
+                <a href="#examples" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Examples
+                </a>
+            </div>
+
+            <!-- Separator -->
+            <div class="h-px bg-cs-green my-6"></div>
+
+            <!-- Blog Content -->
+            <div class="prose prose-lg mx-auto dark:text-steel text-[#222222]">
+                <h1 id="introduction" class="text-4xl font-extrabold">Introduction</h1><br/>
+                <p class="leading-relaxed text-lg">At this point, all the magnets have a net force controlling where they want to go. However, what happens if two magnets want to move to the same space? Which, if any, should get the space? Where should the other one move if it's first choice is taken? These are the questions I will answer in this devlog. <a class="italic">Note that all the below information is subject to change before the game's release. This algorithm works well for the current interactions, but new mechanics might warrant a full revamp of the algorithm.</a></p><br/>
+
+                <div class="h-px bg-cs-green my-6"></div><h1 id="sdc" class="text-4xl font-extrabold">Setting Desired Cells</h1><br/>
+                <p class="leading-relaxed text-lg">The first goal is converting a magnet's net force into a list of cells the magnet wants to occupy, each with a weight. The way I implemented this was to break each force into its component x and y forces, weight each one directly with their magnitude, and also weight the diagonal with the average of these two weights multiplied by a constant. </p><br/>
+
+                <p class="leading-relaxed text-lg">The cell associated with each of these weights are located at <code class="bg-cs-blue px-1 rounded shadow-lg text-base">(sign(net_force.x), 0)</code>, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">(0, sign(net_force.y))</code>, and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">(sign(net_force.x), sign(net_force.y))</code>, relative to the given magnet.</p><br/>
+
+                <p class="leading-relaxed text-lg">The reason that the diagonal weight is not simply the magnitude of the vector is to prevent magnets from always preferring to move diagonally. If there is any perpendicular force, no matter how small, it would make the magnet want to choose the diagonal. Instead, by averaging the x and y components and multiplying by a constant > 1, the magnets are able to move diagonally when the x and y forces are similar in magnitude, but prefer to move in cardinal directions otherwise.</p><br/>
+
+                <p class="leading-relaxed text-lg">The magnet also stores its current location as "friction" with a small constant. This ensures that even magnets with zero net force still have a place to move and also prevents negligible forces from influencing magnet movement.</p><br/>
+
+                <p class="leading-relaxed text-lg">Magnets now store an array filled with objects of (desired_cell, weight). A dictionary mapping each magnet to its array is created to consolidate this information.</p><br/>
+
+                <div class="h-px bg-cs-green my-6"></div><h1 id="rcd" class="text-4xl font-extrabold">Resolving Cell Disputes</h1><br/>
+                <p class="leading-relaxed text-lg">With each magnet now knowing what it wants and how much it wants it, we can start divvying up the cells. The algorithm is as follows:</p><br/>
+                <ol class="list-decimal ml-12 text-lg space-y-2"><li>Repeat the algorithm below until the dictionary is empty.</li>
+                <li>Loop through each magnet in the dictionary.</li>
+                <li>If a magnet has no available spaces to move to, throw an error.</li>
+                <li>If a magnet only has one space it can move to, it moves there regardless of the weight and is removed from the dictionary. This location is now removed from all other magnets' desired cell arrays in the dictionary. </li>
+                <li>Repeat the above process until all remaining magnets have >= 2 desired cells.</li>
+                <li>Find the highest weight among the remaining magnets' objects. Add all magnets with this weight to an array.</li>
+                <li>Check where each of these magnets want to move. If there is no conflict, then that magnet moves there and is removed from the dictionary. This location is now removed from all other magnets' desired cell arrays in the dictionary. </li>
+                <li>If there is a conflict, the magnet with the smallest base (i.e. regular magnets are 1, large magnets are 2, etc.) moves and the objects are removed like in step 7.</li>
+                <li>If both magnets have the same base, then neither magnet moves. The shared location is removed from the dictionary, but the magnets are not.</li></ol>
+
+                <div class="h-px bg-cs-green my-6"></div><h1 id="examples" class="text-4xl font-extrabold">Examples</h1><br/>
+                <p class="leading-relaxed text-lg">At this point, all magnets have moved to a cell determined the above algorithm. It allows for complex and deterministic interactions, which is key in a puzzle game like Magnet Game. Here are some gifs of the interactions in action, with updated art too!</p><br/>
+                <div class="flex justify-center">
+                    <img src="/static/images/featured/mg/Log4Gif1.gif" alt="Main Image" class="md:w-2/5 w-1/2 rounded-lg shadow-lg">
+                </div>
+                <div class="flex justify-center">
+                    <p class="leading-relaxed text-center mx-16 text-[#666666] dark:text-[#999999] text-sm">Two red magnets competing for the same space. Neither recieves it because the desires are equal.</p>
+                </div></br>
+                <div class="flex justify-center">
+                    <img src="/static/images/featured/mg/Log4Gif2.gif" alt="Main Image" class="md:w-2/5 w-1/2 rounded-lg shadow-lg">
+                </div>
+                <div class="flex justify-center">
+                    <p class="leading-relaxed text-center mx-16 text-[#666666] dark:text-[#999999] text-sm">Two blue magnets, one the player, competing for the same space. Player recieves it because it is weighted more.</p>
+                </div></br>
+                <div class="flex justify-center">
+                    <img src="/static/images/featured/mg/Log4Gif3.gif" alt="Main Image" class="md:w-2/5 w-1/2 rounded-lg shadow-lg">
+                </div>
+                <div class="flex justify-center">
+                    <p class="leading-relaxed text-center mx-16 text-[#666666] dark:text-[#999999] text-sm">Connected magnets can rotate around corners with help from external magnets.</p>
+                </div>
+                <p class="leading-relaxed text-lg">I hope you found the magnet movement system interesting and useful. If you have any questions, comments, or ideas, feel free to email me at coopershapard(at)duck.com!</p>
+            </div>
+        </div>
+        <div class="max-w-screen-md px-4 py-8 mx-auto flex">
+            <a href="devlog-3" class="bg-cs-blue rounded-3xl shadow-2xl p-6 mr-3 hover:scale-105 duration-200 w-full">
+                <div class="text-left">
+                    <h1 class="text-xl font-extrabold leading-tight text-[#222222]">
+                        ← Previous Devlog
+                    </h1>
+                    <h1 class="text-lg font-extrabold leading-tight text-[#444444]">
+                        How the Forces Work
+                    </h1>
+                </div>
+            </a>
+            <div class="bg-[#647D7F] rounded-3xl shadow-2xl p-6 mr-3 w-full">
+                <div class="text-right">
+                    <h1 class="text-xl font-extrabold leading-tight text-[#222222]">
+                        Next Devlog →
+                    </h1>
+                    <h1 class="text-lg font-extrabold leading-tight text-[#444444]">
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}
+

@@ -85,6 +85,11 @@ def mgdl2():
 def mgdl3():
     return render_template("projects/magnet-game/mg-devlog-3.html", title_extention="Magnet Game - ")
 
+# Devlog Page
+@app.route("/projects/magnet-game/devlog-4")
+def mgdl4():
+    return render_template("projects/magnet-game/mg-devlog-4.html", title_extention="Magnet Game - ")
+
 # Feedback Box
 @app.route('/submit-feedback', methods=['POST'])
 def submit_feedback():
