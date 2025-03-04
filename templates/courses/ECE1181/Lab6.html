@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+{% block content %}
+<body class="bg-gray-100 dark:text-steel text-[#222222]">
+    <!-- Blog Post Wrapper -->
+    <div class="max-w-screen-md px-4 py-8 mx-auto">
+        <!-- Thinner Centered Bar -->
+        <div class="dark:bg-[#444444] bg-[#CCCCCC] rounded-3xl shadow-2xl dark:shadow-white p-6 mx-auto">
+            <!-- Title Section -->
+            <div class="text-center">
+                <h1 class="text-6xl font-extrabold leading-tight text-cs-green">
+                    Lab 6: Controlling Program Flow
+                </h1>
+                <h2 class="text-2xl text-bold leading-tight text-cs-green">
+                    Loops, branching, conditionals – everything you'll ever need.
+                </h2>
+                 <!-- Separator -->
+                <div class="h-px bg-cs-green my-6"></div>
+                <a href="#overview" class="inline-block bg-cs-blue hover:bg-blue-700  hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Overview
+                </a> >>
+                <a href="#instructions" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Instructions
+                </a> >>
+                <a href="#code-given" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Code Given
+                </a>
+            </div>
+            <!-- Separator -->
+            <div class="h-px bg-cs-green my-6"></div>
+
+            <!-- Blog Content -->
+            <div class="prose prose-lg mx-auto dark:text-steel text-[#222222]">
+                <h1 id="overview" class="text-4xl font-extrabold">Overview</h1><br/>
+                <p class="leading-relaxed text-lg">Welcome to Lab 6! Here, you will find only 4 simple steps. Simple does not mean easy.</p><br/>
+
+                <p class="leading-relaxed text-lg">In this lab, you will begin to see how a program can execute different parts based on <a class="font-extrabold">something called a <a class="italic">branch.</a></a> Before, your program would execute each line in your program, one by one, in order. That was called PC+4 behavior because each command is four bytes long, so the program counter (PC) would go up by four bytes to execute the next line. Now, instead of the letting the program counter work on its own, <a class="font-extrabold">we can change the PC to whatever location we want.</a> That allows us to do some really fun things like repeating a section of code multiple times without having to rewrite it over and over or executing large blocks of code without the need for conditional execution (subgt, addlt, etc). </p><br/>
+
+                <p class="leading-relaxed text-lg">While this new behavior is very useful, it is also very dangerous. You may move the program counter to a location it's not allowed to execute, or if it stops lining up with the four byte lines of code, that could cause problems that are very hard to identify. That second part is easy to find if you know what you're looking for. <a class="font-extrabold">The main thing to note is that the program counter must always be a multiple of four.</a> Luckily, we use hex numbers, so you can check if a number is divisible by four by checking if the hex number ends in 0, 4, 8, or c. If so, then your program counter is lined up correctly!</p><br/>
+
+                <p class="leading-relaxed text-lg">If you need any help, be sure to ask a TA!</p><br/>
+
+                <div class="h-px bg-cs-green my-6"></div><h1 id="instructions" class="text-4xl font-extrabold">Instructions</h1><br/>
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 1</h2>
+                <p class="leading-relaxed text-lg">Read through all of chapter 4 in the Smith textbook (please actually do this). Then, copy the code from the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">code given</a> section into a new file with a name of your choosing. Create a makefile, and update it with the new filename. Use <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make DEBUG=1</code> to make the program with gdb enabled. Test the program using <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./your<a class="underline">program</a>name</code> (without the .s). The program should work just like Lab 5, but it can take up to 50 characters of input. It will simply output the same characters you put in. Make sure that your program does this correctly.</p><br/>
+
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 2</h2>
+                <p class="leading-relaxed text-lg">This step is pretty much the whole lab.</p><br/>
+
+                <p class="leading-relaxed text-lg">Similarly to last lab, you need to design an algorithm that changes a lowercase letter to an uppercase letter (but not vice versa this time). However, instead of only uppercasing one letter, you need to be able to check up to fifty letters. <a class="italic">You are not allowed to do this by writing the same code 50 times.</a> You must use branching, which you read about in chapter four, to execute the same command for the length of the string. Your program should:</p>
+                <p class="leading-relaxed text-lg ml-8">- Loop through each character stored at the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">msg</code> label in the .data section of your code.</p>
+                <p class="leading-relaxed text-lg ml-8">- Use a register to keep track of which character you are on (which I call a "tracker"). So if you have already checked/updated the first 14 characters, you should have a register that has the number 14 in it (or some other way to track where you are in the string, like updating the base register).</p>
+                <p class="leading-relaxed text-lg ml-8">- For each character:</p>
+                <p class="leading-relaxed text-lg ml-16">- Check if it is capitalized. If not, capitalize it, then store it back in the same position. If so, ignore it.</p>
+                <p class="leading-relaxed text-lg ml-16">- If it is not a letter, ignore it.</p>
+                <p class="leading-relaxed text-lg ml-16">- Update the location of your tracker.</p><br/>
+
+                <p class="leading-relaxed text-lg">Note that your program must make the output look pretty. If the characters are merging with the command prompt (e.x. "HELLOroot@rp-f0b870") or if there is a bunch of empty space after your output, then you will get points taken off.</p><br/>
+
+                <a class="font-extrabold">Notes</a>
+                <ol class="list-decimal ml-12 text-lg space-y-2"><li>If we are ignoring both uppercase letters and numbers, then what is the only ascii range we need to check?</li>
+                <li>How can we check if we have reached the end of the string? What is the ascii value of a '\n' (also called a Line Feed)?</li>
+                <li>You can either print out each character after checking if it is uppercase, or you can print them all out at the end. The choice is yours.</li>
+                <li>For your tracker, you can either update the register that holds the address of <code class="bg-cs-blue px-1 rounded shadow-lg text-base">msg</code> or have a register that tracks how many characters away from the start of <code class="bg-cs-blue px-1 rounded shadow-lg text-base">msg</code> you are. One uses pre-indexed addressing and one uses post/auto-indexed addressing. Depending on your solution, which should you use?</li>
+                <li>The program counter naturally increases by 4 bytes to get the next instruction. If one loop ends without branching to another part of the code, it will always start executing the next line, whether or not that is another loop. Always make sure that all branching cases are accounted for to prevent executing code you don't intend to (so if you have a BGT, you will probably want a BLE as well).</li></ol><br/>
+
+                <a class="font-extrabold">Coding Practices</a>
+                <p class="leading-relaxed text-lg">It is possible to combine <a class="italic">branching</a> with <a class="italic">conditional execution.</a> For example:</p>
+                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+MOV R1, #0
+
+loopstart:
+    ADD R1, R1, #1    @ Adds 1 to R1
+    CMP R1, #5        @ Compares the number in R1 to the number 5
+    BLT loopstart     @ If R1 is less than 5, branch back to the loop start.
+                        @ Otherwise, continue downwards (to the Other Code).
+
+    @ Other Code</pre><br/>
+
+                <p class="leading-relaxed text-lg">You can have multiple branch heads. For example:</p>
+                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+loophead:
+    CMP R1, #5
+    BGT doThis     @ Goes to the doThis block of code if R1 > 5
+    BLT doThat     @ Goes to the doThat block of code if R1 < 5
+    BEQ end        @ Goes to end block of code if R1 == 5
+    
+doThis:           @ Comment "hi coop" for 2 bonus points
+    SUB R1, R1, #1 @ Subtracts 1 from R1
+    B loophead     @ Returns to loophead block of code
+    
+doThat:
+    ADD R1, R1, #1 @ Adds 1 to R1
+    B end          @ Branches to the 'end' block of code
+    
+end:
+    @ Print output, etc.</pre><br/>
+
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 3</h2>
+                <p class="leading-relaxed text-lg"><a class="font-extrabold">In your lab report, describe line-by-line how your algorithm works for the code you wrote.</a> You should be doing this anyway to get full points for your code.</p><br/>
+
+                <h2 class="text-2xl text-bold underline text-cs-green">Step 4</h2>
+                <p class="leading-relaxed text-lg">Screenshot at least 3 different tests that showcase your program working. Include various upper and lower case mixtures of your first name, last name, and student ID. <a class="font-extrabold">Include the screenshots in your lab report.</a></p><br/>
+
+                <div class="h-px bg-cs-green my-6"></div><h1 id="code-given" class="text-4xl font-extrabold">Code Given</h1><br/>
+                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+@ Assembler program to input ASCII characters via stdin 
+@ The program will take a string of up to 50 characters and modify it 
+@ such that all lower-cased letters will be made upper-case. 
+@ R0-R2 - parameters to linux function services 
+@ R7 - linux function number 
+
+.global _start          @ Provide program starting at address to linker 
+                        @ Set up the parameters to retrieve characters and then call Linux to do it. 
+_start:   
+    MOV R0, #0           @ 0 = StdIn 
+    LDR R1, =msg         @ Address to receive input 
+    MOV R2, #50          @ Receive at most 50 characters 
+    MOV R7, #3           @ Read 
+    SVC 0                @ Call linux to receive input 
+
+    @ The above code also places the number of characters inputted into R0
+    @ Use this to your advantage.
+
+@ Insert your code here 
+
+                        @ Set up stdout to echo those characters back and then call Linux to do it. 
+    MOV R0, #1           @ 1 = StdOut 
+    LDR R1, =msg         @ String to print 
+    @MOV R2, #???           @ Commented out because you will need to calculate the string length 
+    MOV R7, #4           @ Linux write system call 
+    SVC 0                @ Call linux to print 
+
+    MOV R0, #0           @ Use 0 return code 
+    MOV R7, #1           @ Service command code 1 terminates this program 
+    SVC 0                @ Call linux to terminate 
+
+.data 
+    msg:   .fill 51, 1, '\n'  @ Allocates enough memory for 50 characters </pre>
+                <br/>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- Feedback Box -->
+<div id="feedback-box" class="fixed hidden right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 dark:bg-[#444444] border-l-4 border-b-4 border-[#E0E0E0] dark:border-[#3B3B3B] rounded-l-xl shadow-lg w-64 p-4 z-50">
+    <h2 class="font-bold text-lg dark:text-white text-gray-800 mb-2 text-center">Feedback</h2>
+    <textarea id="feedback-text" class="w-full p-2 border rounded-md dark:bg-[#333333] dark:text-steel text-gray-800" rows="4" placeholder="Feedback, corrections, feature ideas, comments, etc."></textarea>
+    <button id="submit-feedback" class="mt-2 w-full bg-cs-blue hover:bg-cs-green text-white py-2 px-4 rounded-md">Submit</button>
+</div>
+
+<!-- Toggle Tab -->
+<button id="feedback-toggle" class="fixed top-1/2 transform -translate-y-1/2 right-0 md:right-64 bg-cs-blue hover:bg-cs-green text-steel rounded-l-md px-1 py-8 shadow-md">
+    ||
+</button>
+
+<script>
+    const feedbackBox = document.getElementById('feedback-box');
+    const feedbackToggle = document.getElementById('feedback-toggle');
+    const feedbackText = document.getElementById('feedback-text');
+    const submitFeedback = document.getElementById('submit-feedback');
+    
+    function checkScreenSize() {
+        const isLargerThanMD = window.matchMedia('(min-width: 768px)').matches;
+
+        if (isLargerThanMD) {
+            feedbackBox.classList.remove('hidden');
+            feedbackToggle.classList.remove('right-0');
+            feedbackToggle.classList.add('md:right-64', 'right-64'); // Move next to the feedback box
+        } else {
+            feedbackBox.classList.add('hidden');
+            feedbackToggle.classList.remove('md:right-64', 'right-64');
+            feedbackToggle.classList.add('right-0');
+        }
+    }
+
+    // Initial check when the page loads
+    checkScreenSize();
+
+    // Listen for window resize events to detect screen size changes
+    window.addEventListener('resize', checkScreenSize);
+
+    // Collapse/Expand Feedback Box
+    feedbackToggle.addEventListener('click', () => {
+        feedbackBox.classList.toggle('hidden');
+        // Adjust the position of the toggle tab
+        if (feedbackBox.classList.contains('hidden')) {
+            feedbackToggle.classList.remove('md:right-64', 'right-64');
+            feedbackToggle.classList.add('right-0'); // Move to the far right
+            feedbackBox.classList.remove('md:block');
+        } else {
+            feedbackToggle.classList.remove('right-0');
+            feedbackToggle.classList.add('md:right-64', 'right-64'); // Move next to the feedback box
+        }
+    });
+
+    // Submit Feedback Function
+    const submitFeedbackHandler = () => {
+        const feedback = feedbackText.value.trim();
+        if (feedback) {
+            fetch('/submit-feedback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ feedback, url: "/" + window.location.pathname.split('/').pop() }), // Ensure `feedback` is a valid variable
+        })
+        .then(async response => {
+            if (response.ok) {
+                // Clear the input and thank the user
+                feedbackText.value = ''; // Ensure `feedbackText` is defined
+                submitFeedback.innerText = 'Thank you!'; // Change the button text
+                submitFeedback.classList.remove('bg-cs-blue'); // Remove original color
+                submitFeedback.classList.add('bg-cs-green'); // Add new color (green for success)
+
+                setTimeout(() => {
+                    submitFeedback.innerText = 'Submit'; // Revert the button text after 3 seconds
+                    submitFeedback.classList.remove('bg-cs-green'); // Remove green color
+                    submitFeedback.classList.add('bg-cs-blue');
+                }, 3000); // 3000ms = 3 seconds
+            } else {
+                // Attempt to read the error message from the server
+                const errorData = await response.json();
+                alert(`Error submitting feedback: ${errorData.details || 'Unknown error occurred'}. Please provide these details to Cooper :)`);
+            }
+        })
+        .catch(error => {
+            // Log the error for debugging and notify the user
+            console.error('Submission error:', error);
+            alert('An error occurred. Please try again.');
+        });
+        }
+    };
+
+    // Submit Feedback on Button Click
+    submitFeedback.addEventListener('click', submitFeedbackHandler);
+
+    // Submit Feedback on CMD+Enter or CTRL+Enter
+    feedbackText.addEventListener('keydown', (event) => {
+        if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+            submitFeedbackHandler();
+        }
+    });
+</script>
+</body>
+{% endblock %}
+

@@ -1,14 +1,3 @@
----
-title: "Lab 6: Controlling Program Flow"
-author: Cooper Shapard
-date: 2024-10-03
-category: Jekyll
-draft: true
-layout: post
----
-
-[Download Lab Instructions](/ECE1181/pages/Lab6/Lab6_ControllingProgramFlow.pdf)
-
 # Overview
 Welcome to Lab 6! Here, you will find only 4 simple steps. Simple does not mean easy.
 
@@ -33,6 +22,8 @@ Similarly to last lab, you need to design an algorithm that changes a lowercase 
         - If it is not a letter, ignore it.
         - Update the location of your tracker.
 
+Note that your program must make the output look pretty. If the characters are merging with the command prompt (e.x. "HELLOroot@rp-f0b870") or if there is a bunch of empty space after your output, then you will get points taken off.
+
 **Notes**
 1. If we are ignoring both uppercase letters and numbers, then what is the only ascii range we need to check?
 2. How can we check if we have reached the end of the string? What is the ascii value of a '\n' (also called a Line Feed)?
@@ -43,42 +34,14 @@ Similarly to last lab, you need to design an algorithm that changes a lowercase 
 **Coding Practices**
 1. It is possible to combine *branching* with *conditional execution.* For example:
 
-```assembly
-   MOV R1, #0
 
-loopstart:
-   ADD R1, R1, #1    @ Adds 1 to R1
-   CMP R1, #5        @ Compares the number in R1 to the number 5
-   BLT loopstart     @ If R1 is less than 5, branch back to the loop start.
-                     @ Otherwise, continue downwards (to the Other Code).
-
-   @ Other Code
-```
 
 2. You can have multiple branch heads. For example:
 
-```assembly
-loophead:
-   CMP R1, #5
-   BGT doThis     @ Goes to the doThis block of code if R1 > 5
-   BLT doThat     @ Goes to the doThat block of code if R1 < 5
-   BEQ end        @ Goes to end block of code if R1 == 5
 
-doThis:           @ Write "hi coop" for 2 extra lab points
-   SUB R1, R1, #1 @ Subtracts 1 from R1
-   B loophead     @ Returns to loophead block of code
-
-doThat:
-   ADD R1, R1, #1 @ Adds 1 to R1
-   B end          @ Branches to the 'end' block of code
-
-end:
-   @ Print output, etc.
-
-```
 
 ## Step 3
-**In your lab report, describe line-by-line how your algorithm works for the code you wrote.**
+**In your lab report, describe line-by-line how your algorithm works for the code you wrote.** You should be doing this anyway to get full points for your code.
 
 ## Step 4
 Screenshot at least 3 different tests that showcase your program working. Include various upper and lower case mixtures of your first name, last name, and student ID. **Include the screenshots in your lab report.**
@@ -100,14 +63,15 @@ _start:
    MOV R7, #3           @ Read 
    SVC 0                @ Call linux to receive input 
 
-   MOV r2, r0           @ Captures number of characters input 
+   @ The above code also places the number of characters inputted into R0
+   @ Use this to your advantage.
 
 @ Insert your code here 
 
                         @ Set up stdout to echo those characters back and then call Linux to do it. 
    MOV R0, #1           @ 1 = StdOut 
    LDR R1, =msg         @ String to print 
-   @MOV R2, #2           @ Commented out because you will need to calculate the string length 
+   @MOV R2, #???           @ Commented out because you will need to calculate the string length 
    MOV R7, #4           @ Linux write system call 
    SVC 0                @ Call linux to print 
 
@@ -117,4 +81,36 @@ _start:
 
 .data 
    msg:   .fill 51, 1, '\n'  @ Allocates enough memory for 50 characters 
+```
+
+```assembly
+   MOV R1, #0
+
+loopstart:
+   ADD R1, R1, #1    @ Adds 1 to R1
+   CMP R1, #5        @ Compares the number in R1 to the number 5
+   BLT loopstart     @ If R1 is less than 5, branch back to the loop start.
+                     @ Otherwise, continue downwards (to the Other Code).
+
+   @ Other Code
+```
+
+```assembly
+loophead:
+   CMP R1, #5
+   BGT doThis     @ Goes to the doThis block of code if R1 > 5
+   BLT doThat     @ Goes to the doThat block of code if R1 < 5
+   BEQ end        @ Goes to end block of code if R1 == 5
+
+doThis:           @ Comment "hi coop" for 2 bonus points
+   SUB R1, R1, #1 @ Subtracts 1 from R1
+   B loophead     @ Returns to loophead block of code
+
+doThat:
+   ADD R1, R1, #1 @ Adds 1 to R1
+   B end          @ Branches to the 'end' block of code
+
+end:
+   @ Print output, etc.
+
 ```

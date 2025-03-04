@@ -1,33 +1,116 @@
-<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Introduction</h1><br/>
-<p class="leading-relaxed text-lg">At this point, all the magnets have a net force controlling where they want to go. However, what happens if two magnets want to move to the same space? Which, if any, should get the space? Where should the other one move if it's first choice is taken? These are the questions I will answer in this devlog. <a class="italic">Note that all the below information is subject to change before the game's release. This algorithm works well for the current interactions, but new mechanics might warrant a full revamp of the algorithm.</a></p><br/>
+<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Overview</h1><br/>
+<p class="leading-relaxed text-lg">Welcome to Lab 6! Here, you will find only 4 simple steps. Simple does not mean easy.</p><br/>
 
-<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Setting Desired Cells</h1><br/>
-<p class="leading-relaxed text-lg">The first goal is converting a magnet's net force into a list of cells the magnet wants to occupy, each with a weight. The way I implemented this was to break each force into its component x and y forces, weight each one directly with their magnitude, and also weight the diagonal with the average of these two weights multiplied by a constant. </p><br/>
+<p class="leading-relaxed text-lg">In this lab, you will begin to see how a program can execute different parts based on <a class="font-extrabold">something called a <a class="italic">branch.</a></a> Before, your program would execute each line in your program, one by one, in order. That was called PC+4 behavior because each command is four bytes long, so the program counter (PC) would go up by four bytes to execute the next line. Now, instead of the letting the program counter work on its own, <a class="font-extrabold">we can change the PC to whatever location we want.</a> That allows us to do some really fun things like repeating a section of code multiple times without having to rewrite it over and over or executing large blocks of code without the need for conditional execution (subgt, addlt, etc). </p><br/>
 
-<p class="leading-relaxed text-lg">The cell associated with each of these weights are located at <code class="bg-cs-blue px-1 rounded shadow-lg text-base">(sign(net<a class="underline">force.x), 0)</code>, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">(0, sign(net</a>force.y))</code>, and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">(sign(net<a class="underline">force.x), sign(net</a>force.y))</code>, relative to the given magnet.</p><br/>
+<p class="leading-relaxed text-lg">While this new behavior is very useful, it is also very dangerous. You may move the program counter to a location it's not allowed to execute, or if it stops lining up with the four byte lines of code, that could cause problems that are very hard to identify. That second part is easy to find if you know what you're looking for. <a class="font-extrabold">The main thing to note is that the program counter must always be a multiple of four.</a> Luckily, we use hex numbers, so you can check if a number is divisible by four by checking if the hex number ends in 0, 4, 8, or c. If so, then your program counter is lined up correctly!</p><br/>
 
-<p class="leading-relaxed text-lg">The reason that the diagonal weight is not simply the magnitude of the vector is to prevent magnets from always preferring to move diagonally. If there is any perpendicular force, no matter how small, it would make the magnet want to choose the diagonal. Instead, by averaging the x and y components and multiplying by a constant > 1, the magnets are able to move diagonally when the x and y forces are similar in magnitude, but prefer to move in cardinal directions otherwise.</p><br/>
+<p class="leading-relaxed text-lg">If you need any help, be sure to ask a TA!</p><br/>
 
-<p class="leading-relaxed text-lg">The magnet also stores its current location as "friction" with a small constant. This ensures that even magnets with zero net force still have a place to move and also prevents negligible forces from influencing magnet movement.</p><br/>
+<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Explanations</h1><br/>
+<h2 class="text-2xl text-bold underline text-cs-green">Step 1</h2>
+<p class="leading-relaxed text-lg">Read through all of chapter 4 in the Smith textbook (please actually do this). Then, copy the code from the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">code given</a> section into a new file with a name of your choosing. Create a makefile, and update it with the new filename. Use <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make DEBUG=1</code> to make the program with gdb enabled. Test the program using <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./your<a class="underline">program</a>name</code> (without the .s). The program should work just like Lab 5, but it can take up to 50 characters of input. It will simply output the same characters you put in. Make sure that your program does this correctly.</p><br/>
 
-<p class="leading-relaxed text-lg">Magnets now store an array filled with objects of (desired_cell, weight). A dictionary mapping each magnet to its array is created to consolidate this information.</p><br/>
+<h2 class="text-2xl text-bold underline text-cs-green">Step 2</h2>
+<p class="leading-relaxed text-lg">This step is pretty much the whole lab.</p><br/>
 
-<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Resolving Cell Disputes</h1><br/>
-<p class="leading-relaxed text-lg">With each magnet now knowing what it wants and how much it wants it, we can start divvying up the cells. The algorithm is as follows:</p><br/>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li>Repeat the algorithm below until the dictionary is empty</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li>Loop through each magnet in the dictionary.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li>If a magnet has no available spaces to move to, throw an error.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li>If a magnet only has one space it can move to, it moves there regardless of the weight and is removed from the dictionary. This location is now removed from all other magnets' desired cell arrays in the dictionary. </li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li>Repeat the above process until all remaining magnets have >= 2 desired cells.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li>Find the highest weight among the remaining magnets' objects. Add all magnets with this weight to an array.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li>Check where each of these magnets want to move. If there is no conflict, then that magnet moves there and is removed from the dictionary. This location is now removed from all other magnets' desired cell arrays in the dictionary. </li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li>If there is a conflict, the magnet with the smallest base (i.e. regular magnets are 1, large magnets are 2, etc.) moves and the objects are removed like in step 7.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li>If both magnets have the same base, then neither magnet moves. The shared location is removed form the dictionary, but the magnets are not.</li></ol>
+<p class="leading-relaxed text-lg">Similarly to last lab, you need to design an algorithm that changes a lowercase letter to an uppercase letter (but not vice versa this time). However, instead of only uppercasing one letter, you need to be able to check up to fifty letters. <a class="italic">You are not allowed to do this by writing the same code 50 times.</a> You must use branching, which you read about in chapter four, to execute the same command for the length of the string. Your program should:</p><br/>
+    - Loop through each character stored at the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">msg</code> label in the .data section of your code.
+    - Use a register to keep track of which character you are on (which I call a "tracker"). So if you have already checked/updated the first 14 characters, you should have a register that has the number 14 in it (or some other way to track where you are in the string, like updating the base register).
+    - For each character:
+        - Check if it is capitalized. If not, capitalize it, then store it back in the same position. If so, ignore it.
+        - If it is not a letter, ignore it.
+        - Update the location of your tracker.
 
-<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Examples</h1><br/>
-<p class="leading-relaxed text-lg">At this point, all magnets have moved to a cell determined the above algorithm. It allows for both complex and deterministic interactions, which is key in a puzzle game like Magnet Game. Here are some gifs of the interactions in action, with updated art too!</p><br/>
-<p class="leading-relaxed text-lg">[Gif 1]</p><br/>
-<p class="leading-relaxed text-lg">[Gif 2]</p><br/>
-<p class="leading-relaxed text-lg">[Gif 3]</p><br/>
+<p class="leading-relaxed text-lg">Note that your program must make the output look pretty. If the characters are merging with the command prompt (e.x. "HELLOroot@rp-f0b870") or if there is a bunch of empty space after your output, then you will get points taken off.</p><br/>
 
-<p class="leading-relaxed text-lg">I hope you found the magnet movement system interesting and useful. If you have any questions, comments, or ideas, feel free to email me at coopershapard(at)duck.com!</p><br/>
+<a class="font-extrabold">Notes</a>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>If we are ignoring both uppercase letters and numbers, then what is the only ascii range we need to check?</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>How can we check if we have reached the end of the string? What is the ascii value of a '\n' (also called a Line Feed)?</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>You can either print out each character after checking if it is uppercase, or you can print them all out at the end. The choice is yours.</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>For your tracker, you can either update the register that holds the address of <code class="bg-cs-blue px-1 rounded shadow-lg text-base">msg</code> or have a register that tracks how many characters away from the start of <code class="bg-cs-blue px-1 rounded shadow-lg text-base">msg</code> you are. One uses pre-indexed addressing and one uses post/auto-indexed addressing. Depending on your solution, which should you use?</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>The program counter naturally increases by 4 bytes to get the next instruction. If one loop ends without branching to another part of the code, it will always start executing the next line, whether or not that is another loop. Always make sure that all branching cases are accounted for to prevent executing code you don't intend to (so if you have a BGT, you will probably want a BLE as well).</li></ol>
+
+<a class="font-extrabold">Coding Practices</a>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>It is possible to combine <a class="italic">branching</a> with <a class="italic">conditional execution.</a> For example:</li></ol>
+
+
+
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>You can have multiple branch heads. For example:</li></ol>
+
+
+
+<h2 class="text-2xl text-bold underline text-cs-green">Step 3</h2>
+<a class="font-extrabold">In your lab report, describe line-by-line how your algorithm works for the code you wrote.</a> You should be doing this anyway to get full points for your code.
+
+<h2 class="text-2xl text-bold underline text-cs-green">Step 4</h2>
+<p class="leading-relaxed text-lg">Screenshot at least 3 different tests that showcase your program working. Include various upper and lower case mixtures of your first name, last name, and student ID. <a class="font-extrabold">Include the screenshots in your lab report.</a></p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Code Given</h1><br/>
+``<code class="bg-cs-blue px-1 rounded shadow-lg text-base">asm
+<p class="leading-relaxed text-lg">@ Assembler program to input ASCII characters via stdin </p><br/>
+<p class="leading-relaxed text-lg">@ The program will take a string of up to 50 characters and modify it </p><br/>
+<p class="leading-relaxed text-lg">@ such that all lower-cased letters will be made upper-case. </p><br/>
+<p class="leading-relaxed text-lg">@ R0-R2 - parameters to linux function services </p><br/>
+<p class="leading-relaxed text-lg">@ R7 - linux function number </p><br/>
+
+<p class="leading-relaxed text-lg">.global _start          @ Provide program starting at address to linker </p><br/>
+<p class="leading-relaxed text-lg">                        @ Set up the parameters to retrieve characters and then call Linux to do it. </p><br/>
+<p class="leading-relaxed text-lg">_start:   </p><br/>
+<p class="leading-relaxed text-lg">   MOV R0, #0           @ 0 = StdIn </p><br/>
+<p class="leading-relaxed text-lg">   LDR R1, =msg         @ Address to receive input </p><br/>
+<p class="leading-relaxed text-lg">   MOV R2, #50          @ Receive at most 50 characters </p><br/>
+<p class="leading-relaxed text-lg">   MOV R7, #3           @ Read </p><br/>
+<p class="leading-relaxed text-lg">   SVC 0                @ Call linux to receive input </p><br/>
+
+<p class="leading-relaxed text-lg">   @ The above code also places the number of characters inputted into R0</p><br/>
+<p class="leading-relaxed text-lg">   @ Use this to your advantage.</p><br/>
+
+<p class="leading-relaxed text-lg">@ Insert your code here </p><br/>
+
+<p class="leading-relaxed text-lg">                        @ Set up stdout to echo those characters back and then call Linux to do it. </p><br/>
+<p class="leading-relaxed text-lg">   MOV R0, #1           @ 1 = StdOut </p><br/>
+<p class="leading-relaxed text-lg">   LDR R1, =msg         @ String to print </p><br/>
+<p class="leading-relaxed text-lg">   @MOV R2, #???           @ Commented out because you will need to calculate the string length </p><br/>
+<p class="leading-relaxed text-lg">   MOV R7, #4           @ Linux write system call </p><br/>
+<p class="leading-relaxed text-lg">   SVC 0                @ Call linux to print </p><br/>
+
+<p class="leading-relaxed text-lg">   MOV R0, #0           @ Use 0 return code </p><br/>
+<p class="leading-relaxed text-lg">   MOV R7, #1           @ Service command code 1 terminates this program </p><br/>
+<p class="leading-relaxed text-lg">   SVC 0                @ Call linux to terminate </p><br/>
+
+<p class="leading-relaxed text-lg">.data </p><br/>
+<p class="leading-relaxed text-lg">   msg:   .fill 51, 1, '\n'  @ Allocates enough memory for 50 characters </p><br/>
+</code>`<code class="bg-cs-blue px-1 rounded shadow-lg text-base">
+
+</code>`<code class="bg-cs-blue px-1 rounded shadow-lg text-base">assembly
+<p class="leading-relaxed text-lg">   MOV R1, #0</p><br/>
+
+<p class="leading-relaxed text-lg">loopstart:</p><br/>
+<p class="leading-relaxed text-lg">   ADD R1, R1, #1    @ Adds 1 to R1</p><br/>
+<p class="leading-relaxed text-lg">   CMP R1, #5        @ Compares the number in R1 to the number 5</p><br/>
+<p class="leading-relaxed text-lg">   BLT loopstart     @ If R1 is less than 5, branch back to the loop start.</p><br/>
+<p class="leading-relaxed text-lg">                     @ Otherwise, continue downwards (to the Other Code).</p><br/>
+
+<p class="leading-relaxed text-lg">   @ Other Code</p><br/>
+</code>`<code class="bg-cs-blue px-1 rounded shadow-lg text-base">
+
+</code>`<code class="bg-cs-blue px-1 rounded shadow-lg text-base">assembly
+<p class="leading-relaxed text-lg">loophead:</p><br/>
+<p class="leading-relaxed text-lg">   CMP R1, #5</p><br/>
+<p class="leading-relaxed text-lg">   BGT doThis     @ Goes to the doThis block of code if R1 > 5</p><br/>
+<p class="leading-relaxed text-lg">   BLT doThat     @ Goes to the doThat block of code if R1 < 5</p><br/>
+<p class="leading-relaxed text-lg">   BEQ end        @ Goes to end block of code if R1 == 5</p><br/>
+
+<p class="leading-relaxed text-lg">doThis:           @ Comment "hi coop" for 2 bonus points</p><br/>
+<p class="leading-relaxed text-lg">   SUB R1, R1, #1 @ Subtracts 1 from R1</p><br/>
+<p class="leading-relaxed text-lg">   B loophead     @ Returns to loophead block of code</p><br/>
+
+<p class="leading-relaxed text-lg">doThat:</p><br/>
+<p class="leading-relaxed text-lg">   ADD R1, R1, #1 @ Adds 1 to R1</p><br/>
+<p class="leading-relaxed text-lg">   B end          @ Branches to the 'end' block of code</p><br/>
+
+<p class="leading-relaxed text-lg">end:</p><br/>
+<p class="leading-relaxed text-lg">   @ Print output, etc.</p><br/>
+
+</code>``

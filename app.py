@@ -65,6 +65,11 @@ def ece1181lab4():
 def ece1181lab5():
     return render_template("courses/ECE1181/Lab5.html", title_extention="Lab 5 - ")
 
+# Lab6 Page
+@app.route("/courses/ECE1181/lab-6-controlling-program-flow")
+def ece1181lab6():
+    return render_template("courses/ECE1181/Lab6.html", title_extention="Lab 6 - ")
+
 # Terminal Page
 @app.route("/courses/conquering-the-terminal")
 def ctt():
