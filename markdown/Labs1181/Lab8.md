@@ -12,7 +12,7 @@ Welcome to Lab 9: The Final Lab! Here, you will learn how to interface with the 
 # Explanations
 ## Step 1
 ### Figure 1
-![Figure 1 (let me know if it doesn't show up here)](/ECE1181/pages/Lab9/gpio-diagram.png)
+![Figure 1 (let me know if it doesn't show up here)](https://github.com/cshapard26/CoopShapWebsite/blob/main/markdown/Labs1181/gpio-diagram.png)
 
 Wire your breadboard according to the picture above. Note the following:
 1. The red pitaya has the golden bits facing upwards. This will make the logo on your case "upside-down."
