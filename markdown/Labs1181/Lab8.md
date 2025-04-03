@@ -6,8 +6,6 @@ category: Jekyll
 layout: post
 ---
 
-[Download Lab Instructions](/ECE1181/pages/Lab9/Lab9_GPIO_Hackathon.pdf)
-
 # Overview
 Welcome to Lab 9: The Final Lab! Here, you will learn how to interface with the General Purpose Input/Output (GPIO) Pins on your red pitaya. You will receive a breadboard, resistors, LEDs, and jumpers (wires). You will then program your red pitaya to turn on the lights following a certain pattern.
 
