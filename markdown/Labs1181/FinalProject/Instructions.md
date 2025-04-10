@@ -62,7 +62,7 @@ As you can see, the most popular project was the palindrome identifier, followed
 
 Of the 17 proposed project ideas, only 4 went completely unsubmitted: Rename a File (1 Credit), Blinking Lights v2 (3 Credits), Happy Birthday (5 Credits), and Push Button Lights (8 Credits). All of these except renaming a file are Hardware projects, and they happen to be the only hardware projects listed (minus Create Your Own).
 
-The average grade for the final was 57.3%. Excluding zeros, the average grade was 77.5%, the low was 20%, and the high was 120%.
+The average grade for the final project was 57.3%. Excluding zeros, the average grade was 77.5%, the low was 20%, and the high was 120%.
 
 # Projects
 16 project prompts/ideas sorted by credit value. A star `*` means that the project was part of the original Homework 4 (most are simplified for this project). You can also propose your own project, seen at the bottom. Feel free to use code from previous labs (all are avaliable on the website), collaborate (each person must submit their own assignment), and ask a TA if you need assistance or clarification.
