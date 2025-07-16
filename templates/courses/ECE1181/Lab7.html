@@ -1,0 +1,327 @@
+{% extends 'base.html' %}
+{% block content %}
+<body class="bg-gray-100 dark:text-steel text-[#222222]">
+    <!-- Blog Post Wrapper -->
+    <div class="max-w-screen-md px-4 py-8 mx-auto">
+        <!-- Thinner Centered Bar -->
+        <div class="dark:bg-[#444444] bg-[#CCCCCC] rounded-3xl shadow-2xl dark:shadow-white p-6 mx-auto">
+            <!-- Title Section -->
+            <div class="text-center">
+                <h1 class="text-6xl font-extrabold leading-tight text-cs-green">
+                    Lab 7: Functions and the Stack
+                </h1>
+                <h2 class="text-2xl text-bold leading-tight text-cs-green">
+                    Stack protocols and nesting functions with pass-by- techniques
+                </h2>
+                 <!-- Separator -->
+                <div class="h-px bg-cs-green my-6"></div>
+                <a href="#overview" class="inline-block bg-cs-blue hover:bg-blue-700  hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Overview
+                </a> >>
+                <a href="#instructions" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Instructions
+                </a> >>
+                <a href="#code-given" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Code Given
+                </a>
+            </div>
+            <!-- Separator -->
+            <div class="h-px bg-cs-green my-6"></div>
+
+            <!-- Blog Content -->
+            <div class="prose prose-lg mx-auto dark:text-steel text-[#222222]">
+		<h1 id="overview" class="text-4xl font-extrabold">Overview</h1><br/>
+		<p class="leading-relaxed text-lg">Welcome to Lab 7. Here, you will learn how to use subroutines, a.k.a. functions, to avoid rewriting code multiple times. <a class="font-extrabold">This may be one of the most valuable/useful concepts you learn relating to ARM Assembly.</a> Functions can take multiple inputs and return multiple outputs and can be called multiple times from anywhere in your code. However, there are a couple different ways that you can send and receive data to and from a function. They are:</p><br/>
+		
+		<p class="leading-relaxed text-lg">1) <u>Pass by Register</u></p><br/>
+		<p class="leading-relaxed text-lg">This works by leaving values in the register, then accessing those same values from both functions. It's like putting the values on a desk so that multiple people can work on them/change them without having to move them to a different location.</p><br/>
+		
+		<p class="leading-relaxed text-lg">Pros: Easiest to understand and implement.</p>
+		<p class="leading-relaxed text-lg">Cons: Least amount of space for values and can have side-effects (side-effects mean some values may change that you did not want to change).</p><br/>
+		
+		<p class="leading-relaxed text-lg">2) <u>Pass by Reference</u></p><br/>
+		<p class="leading-relaxed text-lg">This works by placing the desired values in memory, then just sending the address of that memory location to the function. It's like putting the values in a storage locker, then sending the key to another person. To get the results, you must go back to the storage locker and grab them yourself.</p><br/>
+		
+		<p class="leading-relaxed text-lg">Pros: Most amount of space and no side-effects.<br></p>
+		<p class="leading-relaxed text-lg">Cons: Slowest method and allows for possible memory leaks (memory leaks are values that get "stuck" in memory and just take up space without doing anything).</p><br/>
+		
+		<p class="leading-relaxed text-lg">3) <u>Pass by Stack</u></p><br/>
+		<p class="leading-relaxed text-lg">This works by pushing all the values onto the stack, then letting the function pop them off as needed. It's like putting the values in a box, then sending the box to someone. That person changes the values, then sends the box with the results back to you.</p><br/>
+		
+		<p class="leading-relaxed text-lg">Pros: Large amount of space and no side-effects or memory leaks.<br></p>
+		<p class="leading-relaxed text-lg">Cons: Only the top value on the stack can be popped unless you add extra code.</p><br/>
+		
+		<p class="leading-relaxed text-lg"><a class="font-extrabold">Pass by Stack is the preferred method by professionals</a> because it is fast, free of side-effects/memory leaks, and allows for something called <a class="italic">nested function calls</a>, which are a very important concept. Here is an explanation as well as a written explanation below. </p>
+		
+		<p class="leading-relaxed text-lg">[image here]</p><br/>
+		
+		<p class="leading-relaxed text-lg">Nested function calls means that you can call another function within a function. Very useful for efficiency, but it's not as simple as calling the new function and moving on. The Link Register (LR) can only store one value at any given time. So let's say I go into a function with a Branch and Link (BL), setting the link register to my return address. If I then call another function within that function using another BL, then it will overwrite the old LR value, and we get stuck in the function since we don't have a return address. </p><br/>
+		
+		<p class="leading-relaxed text-lg"><a class="font-extrabold">The way to fix this is by <a class="italic">pushing</a> the value of the LR to the stack when we enter a new function and <a class="italic">popping</a> it when we leave the function.</a> This allows us to store multiple LR values, but only use the one that we need in nay given function. With that, you are ready for the lab!</p>
+		
+		<div class="h-px bg-cs-green my-6"></div><h1 id="instructions" class="text-4xl font-extrabold">Instructions</h1><br/>
+		<h2 class="text-2xl text-bold underline text-cs-green">Step 1</h2>
+		<p class="leading-relaxed text-lg">Read through pages 109-116 in the Smith book. It should be review from class, but please actually read it so you can get a different perspective on functions and the stack.</p><br/>
+		
+		<h2 class="text-2xl text-bold underline text-cs-green">Step 2</h2>
+		<p class="leading-relaxed text-lg">Use the instructions on page 116 to 121 to make the specified Uppercase Revisited program. Code provided in the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">Code Given Section</a>. Make and run the code to check that it works. If not, ask a TA.</p><br/>
+		
+		<h2 class="text-2xl text-bold underline text-cs-green">Step 3</h2>
+		<p class="leading-relaxed text-lg">Choose your favorite stack convention (IA, IB, DA, DB), and replace all the PUSH and POP commands in your program with the correct STMxx and LDRyy commands (where xx and yy are your stack conventions). Choosing a stack convention is like choosing a starter pokémon. There's really only a few options, but that doesn't mean you won't drastically overthink which one to choose. Here is a quick table with some info (SP stands for Stack Pointer):</p><br/>
+		
+	<table>
+    <tr>
+        <td>Name</td>
+        <td>Abbreviation</td>
+        <td>Example</td>
+        <td>Why you should choose it</td>
+    </tr>
+    <tr>
+        <td>Increment Before/<br>Full Ascending</td>
+        <td>IB</td>
+	<td>0x200b0: Data1<br>0x200b4: Data2<br>0x200b8: Data3<br>0x200bc: Data4 &lt;-- SP <br><br><br></td>
+        <td>Counts upwards and always<br> points to the last used data.<br> Best if you like to logically keep<br> track of where everything is.</td>
+    </tr>
+    <tr>
+        <td>Increment After/<br>Empty Ascending</td>
+        <td>IA</td>
+	<td>0x200b0: Data1<br>0x200b4: Data2<br>0x200b8: Data3<br>0x200bc: Empty &lt;-- SP<br><br><br></td>
+        <td>Counts upwards, but conceptually<br> starts at 0 instead of 1.<br> Best if you have lots of <br> programming experience.</td>
+    </tr>
+    <tr>
+        <td>Decrement Before/<br>Full Descending</td>
+        <td>DB</td>
+        <td>0x200b0: Data4 &lt;-- SP<br>0x200b4: Data3<br>0x200b8: Data1<br>0x200bc: Data1<br><br><br></td>
+        <td>Counts downwards and always<br> points to the last used data.<br> Best for people who like<br> to visualize the stack<br> like a stack of papers.</td>
+    </tr>
+    <tr>
+        <td>Decrement After/<br>Empty Descending</td>
+        <td>DA</td>
+        <td>0x200b0: Empty &lt;-- SP<br>0x200b4: Data3<br>0x200b8: Data1<br>0x200bc: Data1<br><br><br></td>
+        <td>Counts downwards and always<br> points to the next avaliable spot.<br> Best for people who don't like<br> any of the other options and<br>just wants to choose one and<br>move on.</td>
+    </tr>
+</table>	
+		<p class="leading-relaxed text-lg">Now, it's important to note that <a class="font-extrabold">The Store Sets the Protocol</a>. However, <a class="font-extrabold">your load should always use the opposite protocol</a>. I just remember this by flipping each letter in the protocol to the other option during the load. So, if you want to use Increment Before, you will use STMIB and LDRDA. If you were using Decrement After, you will use STMDA and LDRIB, etc.</p><br/>
+		
+		<p class="leading-relaxed text-lg">For this step, go replace every <code class="bg-cs-blue px-1 rounded shadow-lg text-base">PUSH</code> command with STMxx (where xx is your protocol), and every <code class="bg-cs-blue px-1 rounded shadow-lg text-base">POP</code> command with LDRyy (where yy is the opposite of your protocol).</p><br/>
+		
+		<h2 class="text-2xl text-bold underline text-cs-green">Step 4</h2>
+		<p class="leading-relaxed text-lg">Make sure your code works the exact same way as it did in Step 2. If not, try to find and fix the issues on your own before asking a TA. <a class="font-extrabold">Take a screenshot showing that your program works with your chosen stack convention. Make sure to include this code in your lab report as well.</a></p><br/>
+		
+		<h2 class="text-2xl text-bold underline text-cs-green">Step 5</h2>
+		<p class="leading-relaxed text-lg">Read through pages 121-124 in the Smith book.</p><br/>
+		
+		
+		<h2 class="text-2xl text-bold underline text-cs-green">Step 6</h2>
+		<p class="leading-relaxed text-lg">Look at your modified code Step 3. This code uses <a class="italic">pass by register</a> to input and output the data to and from the function. Currently, R0 and R1 contain the addresses of the input and output string, and after the function executes, R0 is replaced by the length of the string. Your goal is to change this code so that it used <a class="italic">pass by stack</a> instead, which uses STMxx and LDRyy to send data to the toupper function. Then, use STMxx and LDRyy to get the length of the string into R0 after toupper executes. Note that you will need to manually offset the stack pointer to grab R0 and R1 from the stack, since R4 and R5 will go on top of them. Your offset may be positive or negative depending on your stack convention. It may help to draw out your stack so it is easier to visualize.</p><br/>
+		
+		<p class="leading-relaxed text-lg">To convert your program from a Pass by Register to a Pass by Stack procedure, you need to store the values of <code class="bg-cs-blue px-1 rounded shadow-lg text-base">R0</code> and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">R1</code> on the stack BEFORE you branch to the toupper function. Then, in the toupper function, after you add R4 and R5 to the stack (which you should already be doing from the original code), you need to load the values of R0 and R1 FROM the stack. However, since those values are not on top, you will need to offset the stack pointer by a certain number (positive if you are using a descending protocol and negative if you are using an ascending protocol). You must figure out what this offset is and how to change the stack pointer to get the values you want, while also making sure it ends up where it was before the offset. Before ending the function, you need to push the new value of R0 onto the stack (you can do this after the LDRyy statement that is already at the bottom of the function).</p><br/>
+		
+		<p class="leading-relaxed text-lg">Then, when you return to the main function, you need to load the values of R0 FROM the stack. This should be done before the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOV R2, R0</code> command so that the correct value is placed in R2. </p><br/>
+		
+		<p class="leading-relaxed text-lg">It's easy to get lost in all this pushing and popping, so just let a TA know if you get stuck, and we can come help flush it out!</p><br/>
+		
+		<h3>Tips</h3>
+		<ol class="list-decimal ml-12 text-lg space-y-2"><li>Remember to include the ! after the SP in your STMxx and LDRyy commands. So it should look like <code class="bg-cs-blue px-1 rounded shadow-lg text-base">STMxx SP!, {your registers}</code> and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDRyy SP!, {your registers}</code>.</li>
+		<li>Everything on the stack is stored in sets of 4 bytes. If your stack has 2 values on top of the values you want, then how may bytes will you need to reach over to get the values you want? Remember to account for if you're using a Full or Empty stack protocol!</li>
+		<li>Confused on what is on your stack at any given time? Try to draw it out! The TA's can help you find scratch paper if you don't have any.</li></ol><br/>
+		
+		<h2 class="text-2xl text-bold underline text-cs-green">Step 7 </h2>
+		<p class="leading-relaxed text-lg">If you have not already, modify your STMxx and LDRyy statements to include the Link Register (LR) so that your program returns to the same place after performing the subroutine/function. You might already have this from the code you modified, but if you don't, just add the LR to the stack when you store the values and pop it when you load them (but only in the STMxx/LDRyy statements in the toupper function). Make sure to update your offset to include the LR. <a class="font-extrabold">Take a screenshot showing your progam works with your new Pass by Stack method, as well as your finished code</a></p><br/>
+		
+		
+		<div class="h-px bg-cs-green my-6"></div><h1 id="code-given" class="text-4xl font-extrabold">Code Given</h1><br/>
+		<p class="leading-relaxed text-lg">main.s (Listing 6-3):</p><br/>
+        <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+@
+@ Assembler program to convert a string to
+@ all uppercase by calling a function.
+@
+@ R0-R2 - parameters to linux function services
+@ R1 - address of output string
+@ R0 - address of input string
+@ R5 - current character being processed
+@ R7 - linux function number
+@
+
+.global _start          @ Provide program starting address
+_start: 
+    LDR R0, =instr      @ start of input string
+    LDR R1, =outstr     @ address of output string
+    BL toupper
+                        @ Set up the parameters to print our hex number
+                        @ and then call Linux to do it.
+    MOV R2, R0          @ return code is the length of the string
+    MOV R0, #1          @ 1 = StdOut
+    LDR R1, =outstr     @ string to print
+    MOV R7, #4          @ linux write system call
+    SVC 0               @ Call linux to output the string
+                        @ Set up the parameters to exit the program
+                        @ and then call Linux to do it.
+    MOV R0, #0          @ Use 0 return code
+    MOV R7, #1          @ Command code 1 terminates
+    SVC 0               @ Call linux to terminate the program
+
+.data
+instr: .asciz "This is our Test String that we will
+convert.\n"
+outstr: .fill 255, 1, 0</pre><br/>
+<p class="leading-relaxed text-lg">upper.s (Listing 6-4):</p><br/>
+        
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+@ Assembler program to convert a string to
+@ all uppercase.
+@
+@ R1 - address of output string
+@ R0 - address of input string
+@ R4 - original output string for length calc.
+@ R5 - current character being processed
+@
+.global toupper             @ Allow other files to call this routine
+toupper: 
+    PUSH {R4-R5}            @ Save the registers we use.
+    MOV R4, R1
+                            @ The loop is until byte pointed to by R1 is non-zero
+loop: 
+    LDRB R5, [R0], #1       @ load character and increment pointer
+                            @ If R5 > 'z' then goto cont
+    CMP R5, #'z'            @ is letter > 'z'?
+    BGT cont
+                            @ Else if R5 < 'a' then goto end if
+    CMP R5, #'a'
+    BLT cont                @ goto to end if
+                            @ if we got here then the letter is lower case, so convert it.
+    SUB R5, #('a'-'A')
+cont:                       @ end if
+    STRB R5, [R1], #1       @ store character to output str
+    CMP R5, #0              @ stop on hitting a null character
+    BNE loop                @ loop if character isn't null
+    SUB R0, R1, R4          @ get the length by subtracting the pointers
+    POP {R4-R5}             @ Restore the register we use.
+    BX LR                   @ Return to caller</pre><br/>
+<p class="leading-relaxed text-lg">makefile (Listing 6-5). Note that this is different than you've seen before since you are combining two files during compilation (Make sure that the `as` and `ld` lines copy over as a tab and not 4 spaces):</p><br/>
+
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+UPPEROBJS = main.o upper.o
+
+ifdef DEBUG
+DEBUGFLGS = -g
+else
+DEBUGFLGS =
+endif
+LSTFLGS =
+
+all: upper
+
+%.o : %.s
+    as $(DEBUGFLGS) $(LSTFLGS) $< -o $@
+upper: $(UPPEROBJS)
+    ld -o upper $(UPPEROBJS)</pre><br/>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- Feedback Box -->
+<div id="feedback-box" class="fixed hidden right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 dark:bg-[#444444] border-l-4 border-b-4 border-[#E0E0E0] dark:border-[#3B3B3B] rounded-l-xl shadow-lg w-64 p-4 z-50">
+    <h2 class="font-bold text-lg dark:text-white text-gray-800 mb-2 text-center">Feedback</h2>
+    <textarea id="feedback-text" class="w-full p-2 border rounded-md dark:bg-[#333333] dark:text-steel text-gray-800" rows="4" placeholder="Feedback, corrections, feature ideas, comments, etc."></textarea>
+    <button id="submit-feedback" class="mt-2 w-full bg-cs-blue hover:bg-cs-green text-white py-2 px-4 rounded-md">Submit</button>
+</div>
+
+<!-- Toggle Tab -->
+<button id="feedback-toggle" class="fixed top-1/2 transform -translate-y-1/2 right-0 md:right-64 bg-cs-blue hover:bg-cs-green text-steel rounded-l-md px-1 py-8 shadow-md">
+    ||
+</button>
+
+<script>
+    const feedbackBox = document.getElementById('feedback-box');
+    const feedbackToggle = document.getElementById('feedback-toggle');
+    const feedbackText = document.getElementById('feedback-text');
+    const submitFeedback = document.getElementById('submit-feedback');
+    
+    function checkScreenSize() {
+        const isLargerThanMD = window.matchMedia('(min-width: 768px)').matches;
+
+        if (isLargerThanMD) {
+            feedbackBox.classList.remove('hidden');
+            feedbackToggle.classList.remove('right-0');
+            feedbackToggle.classList.add('md:right-64', 'right-64'); // Move next to the feedback box
+        } else {
+            feedbackBox.classList.add('hidden');
+            feedbackToggle.classList.remove('md:right-64', 'right-64');
+            feedbackToggle.classList.add('right-0');
+        }
+    }
+
+    // Initial check when the page loads
+    checkScreenSize();
+
+    // Listen for window resize events to detect screen size changes
+    window.addEventListener('resize', checkScreenSize);
+
+    // Collapse/Expand Feedback Box
+    feedbackToggle.addEventListener('click', () => {
+        feedbackBox.classList.toggle('hidden');
+        // Adjust the position of the toggle tab
+        if (feedbackBox.classList.contains('hidden')) {
+            feedbackToggle.classList.remove('md:right-64', 'right-64');
+            feedbackToggle.classList.add('right-0'); // Move to the far right
+            feedbackBox.classList.remove('md:block');
+        } else {
+            feedbackToggle.classList.remove('right-0');
+            feedbackToggle.classList.add('md:right-64', 'right-64'); // Move next to the feedback box
+        }
+    });
+
+    // Submit Feedback Function
+    const submitFeedbackHandler = () => {
+        const feedback = feedbackText.value.trim();
+        if (feedback) {
+            fetch('/submit-feedback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ feedback, url: "/" + window.location.pathname.split('/').pop() }), // Ensure `feedback` is a valid variable
+        })
+        .then(async response => {
+            if (response.ok) {
+                // Clear the input and thank the user
+                feedbackText.value = ''; // Ensure `feedbackText` is defined
+                submitFeedback.innerText = 'Thank you!'; // Change the button text
+                submitFeedback.classList.remove('bg-cs-blue'); // Remove original color
+                submitFeedback.classList.add('bg-cs-green'); // Add new color (green for success)
+
+                setTimeout(() => {
+                    submitFeedback.innerText = 'Submit'; // Revert the button text after 3 seconds
+                    submitFeedback.classList.remove('bg-cs-green'); // Remove green color
+                    submitFeedback.classList.add('bg-cs-blue');
+                }, 3000); // 3000ms = 3 seconds
+            } else {
+                // Attempt to read the error message from the server
+                const errorData = await response.json();
+                alert(`Error submitting feedback: ${errorData.details || 'Unknown error occurred'}. Please provide these details to Cooper :)`);
+            }
+        })
+        .catch(error => {
+            // Log the error for debugging and notify the user
+            console.error('Submission error:', error);
+            alert('An error occurred. Please try again.');
+        });
+        }
+    };
+
+    // Submit Feedback on Button Click
+    submitFeedback.addEventListener('click', submitFeedbackHandler);
+
+    // Submit Feedback on CMD+Enter or CTRL+Enter
+    feedbackText.addEventListener('keydown', (event) => {
+        if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+            submitFeedbackHandler();
+        }
+    });
+</script>
+</body>
+{% endblock %}
+
