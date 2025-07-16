@@ -70,6 +70,11 @@ def ece1181lab5():
 def ece1181lab6():
     return render_template("courses/ECE1181/Lab6.html", title_extention="Lab 6 - ")
 
+# Lab7 Page
+@app.route("/courses/ECE1181/lab-7-functions-and-the-stack")
+def ece1181lab7():
+    return render_template("courses/ECE1181/Lab7.html", title_extention="Lab 7 - ")
+
 # Terminal Page
 @app.route("/courses/conquering-the-terminal")
 def ctt():

@@ -1402,11 +1402,6 @@ video {
   color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
 
-.text-blue-500 {
-  --tw-text-opacity: 1;
-  color: rgb(59 130 246 / var(--tw-text-opacity, 1));
-}
-
 .text-cs-blue {
   --tw-text-opacity: 1;
   color: rgb(125 158 160 / var(--tw-text-opacity, 1));
@@ -2035,11 +2030,6 @@ a {
   .sm\:text-7xl {
     font-size: 4.5rem;
     line-height: 1;
-  }
-
-  .sm\:text-lg {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
   }
 
   .sm\:text-xl {
