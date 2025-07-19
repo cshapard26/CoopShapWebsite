@@ -54,8 +54,11 @@ Learn how to move and add numbers in ARM. Go over Shifting. Learn how to interfa
       GDB
       
       Project: PICK 2 (all these are hard coded, no terminal input, show result in gdb)
+      
             1. Write a program that creates a large number/student id (MOV only has 1 byte. Need to move, shift, add, move, shift, add)
+	    
             2. Write a program that rotates a number by a variable amount (from another register)
+	    
             3. Write a program that adds 2 numbers and only saves the last 4 bits (done by LSL 28, then LSR 28. Chops the top part right off)
       
 [[Microcontrollers Lab 3]]: Memory
@@ -75,8 +78,11 @@ Learn the intricacies of memory, data size, and indexing. Write code that shows 
       Accessing memory with GDB
       
       Project: PICK 2 (all these are hard coded, no terminal input, show result in gdb)
+      
             1. Show and explain what happens if your LDR and STR indexing types don't align
+	    
             2. Show and explain how data sizes affect the way endianness stores numbers (STRH 0x1234 vs STR 0x12, STR 0x34)
+	    
             3. Write a program that takes a number stored in memory and adds your student ID to it, then puts it back
 
 
@@ -102,7 +108,7 @@ Learn what macros are and how to interface the GPIO pins on the red pitaya. Expl
  
 [[Microcontrollers Project]]
 
-	Same as before
+Same as before
 
 Other additions:
 - How to write a lab report
