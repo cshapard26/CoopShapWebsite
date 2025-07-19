@@ -60,7 +60,8 @@ Learn how to move and add numbers in ARM. Go over Shifting. Learn how to interfa
             2. Write a program that rotates a number by a variable amount (from another register)
 	    
             3. Write a program that adds 2 numbers and only saves the last 4 bits (done by LSL 28, then LSR 28. Chops the top part right off)
-      
+
+      
 [[Microcontrollers Lab 3]]: Memory
 
 Learn the intricacies of memory, data size, and indexing. Write code that shows the difference between indexing types, but more open-ended compared to the current version.
