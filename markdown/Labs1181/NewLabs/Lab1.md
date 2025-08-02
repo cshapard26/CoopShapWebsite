@@ -75,6 +75,9 @@ Here is the play-by-play for this program:
 
 
 
+Note to Joe: Haven't finished this part yet. It will just be an explanation of the new Makefile once I get that set up, as well as a note on how ASCII works. The assignment will be compiling and running a file with the code above, but printing their name instead. I will not be explicitly reminding them to replace the value in R2 to get the length right.
+
+
 
 # Conclusion
 
