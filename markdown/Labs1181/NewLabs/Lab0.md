@@ -1,5 +1,5 @@
 # Overview
-Welcome to Microcontrollers and Embedded Systems, Lab 1!
+Welcome to Microcontrollers and Embedded Systems, Lab 0!
 
 In this lab, you will learn the basics of terminal navigation, Linux commands, and creating files on computers that don't have screens. The terminal/command line can be a bit intimidating because of how vast it is with no easy way to figure out what things do. However, with a little guidance and practice, you will get it down in no time.
 
