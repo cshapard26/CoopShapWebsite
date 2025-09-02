@@ -40,41 +40,46 @@ def ece1181():
 def ece1181previouslabs():
     return render_template("courses/ECE1181/previouslabs.html", title_extention="ECE1181 - ")
 
+# Lab0 Page
+@app.route("/courses/ECE1181/lab-0")
+def ece1181lab1():
+    return render_template("courses/ECE1181/Lab0.html", title_extention="Lab 0 - ")
+'''
 # Lab1 Page
-@app.route("/courses/ECE1181/lab-1-getting-started")
+@app.route("/courses/ECE1181/lab-1")
 def ece1181lab1():
     return render_template("courses/ECE1181/Lab1.html", title_extention="Lab 1 - ")
 
 # Lab2 Page
-@app.route("/courses/ECE1181/lab-2-tooling-up")
+@app.route("/courses/ECE1181/lab-2")
 def ece1181lab2():
     return render_template("courses/ECE1181/Lab2.html", title_extention="Lab 2 - ")
 
 # Lab3 Page
-@app.route("/courses/ECE1181/lab-3-moving-and-adding")
+@app.route("/courses/ECE1181/lab-3")
 def ece1181lab3():
     return render_template("courses/ECE1181/Lab3.html", title_extention="Lab 3 - ")
 
 # Lab4 Page
-@app.route("/courses/ECE1181/lab-4-thanks-for-the-memories")
+@app.route("/courses/ECE1181/lab-4")
 def ece1181lab4():
     return render_template("courses/ECE1181/Lab4.html", title_extention="Lab 4 - ")
 
 # Lab5 Page
-@app.route("/courses/ECE1181/lab-5-literal-pools-and-logic")
+@app.route("/courses/ECE1181/lab-5")
 def ece1181lab5():
     return render_template("courses/ECE1181/Lab5.html", title_extention="Lab 5 - ")
 
 # Lab6 Page
-@app.route("/courses/ECE1181/lab-6-controlling-program-flow")
+@app.route("/courses/ECE1181/lab-6")
 def ece1181lab6():
     return render_template("courses/ECE1181/Lab6.html", title_extention="Lab 6 - ")
 
 # Lab7 Page
-@app.route("/courses/ECE1181/lab-7-functions-and-the-stack")
+@app.route("/courses/ECE1181/lab-7")
 def ece1181lab7():
     return render_template("courses/ECE1181/Lab7.html", title_extention="Lab 7 - ")
-
+'''
 # Terminal Page
 @app.route("/courses/conquering-the-terminal")
 def ctt():
