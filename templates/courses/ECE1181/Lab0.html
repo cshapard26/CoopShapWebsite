@@ -44,7 +44,7 @@
 
 <p class="leading-relaxed text-lg">This first lab is going to be very text-heavy, as it is introducing you to most of the tools you will be using every single lab from here on out. Please read through it all, and I promise the future ones will be shorter and focused more on problem-solving.</p><br/>
 
-<p class="leading-relaxed text-lg">All labs require a lab report. For a comprehensive look on what the TAs are looking for, formatting, and scoring, take a look at the <a href="TODO: Link here" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab Report Guide</a>.</p><br/>
+<p class="leading-relaxed text-lg">All labs require a lab report. For a comprehensive look on what the TAs are looking for, formatting, and scoring, take a look at the <a href="lab-guide" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab Report Guide</a>.</p><br/>
 
 <p class="leading-relaxed text-lg">These lab guides are handmade, and as such may contain errors in logic, spelling, grammar, etc. If you find any issues, please leave a note in the Feedback tab on the right so we can fix it ASAP.</p><br/>
 
@@ -72,7 +72,7 @@
 <h2 class="text-2xl text-bold underline text-cs-green">The Terminal</h2>
 <p class="leading-relaxed text-lg">The next step is to actually connect to the pitaya to be able to send commands. Here, the pitaya functions as a "headless" device, meaning it doesn't have a screen or keyboard, etc. In these systems, you will communicate with the device using the terminal. The terminal is a completely text-based system that lets you send and run commands on a device. There are no buttons, no graphics, no instructions. Just a blinking cursor and your sad, tired eyes in the reflection of the black screen. Master the terminal, and you will be unstoppable.</p><br/>
 
-<p class="leading-relaxed text-lg">The first step is to open your computer's terminal. All computers come with a terminal app. On Mac, this is aptly named "Terminal." On Windows, this is called "Powershell" (if multiple flavors pop up when your search, pick your favorite). If you are on Linux, I pray that you already know what your terminal is called. If you don't, it might be time to sell your soul to Microsoft.</p><br/>
+<p class="leading-relaxed text-lg">The first step is to open your computer's terminal. All computers come with a terminal app. On Mac, this is aptly named "Terminal." On Windows, this is called "Powershell" (if multiple flavors pop up when your search, use the basic "Powershell", not x86 or ISE). If you are on Linux, I pray that you already know what your terminal is called. If you don't, it might be time to sell your soul to Microsoft.</p><br/>
 
 <p class="leading-relaxed text-lg">You should see a blank box with a text cursor and some sort of "prompt" (looks like <code class="bg-cs-blue px-1 rounded shadow-lg text-base">C:\Users\YourName ></code> or <code class="bg-cs-blue px-1 rounded shadow-lg text-base">YourName's Macbook 69 Pro $</code> or something similar). This is where you will enter your text commands. When you enter a command, the computer will respond in some way right under the space where you entered the command, and a new prompt will appear under that, allowing you to type another command. If you want to see this in action, go ahead and type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">pwd</code> into the command prompt and click enter. It should respond with a file path and bring up a new prompt.</p><br/>
 
@@ -80,69 +80,83 @@
 
 <p class="leading-relaxed text-lg">I also plan on dissecting each important command to help you understand what each command is doing. I don't believe that "repeat after me" learning is worthwhile or a productive use of your time. Here is your first command:</p><br/>
 
-<h3>SSH</h3>
-<p class="leading-relaxed text-lg">Command: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ssh</code></p><br/>
-<p class="leading-relaxed text-lg">Usage: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ssh username@server</code></p><br/>
-<p class="leading-relaxed text-lg">Description: Connects your terminal to another computer's terminal</p><br/>
+<div class="dark:bg-cs-blue bg-cs-blue rounded-lg p-4 shadow-2xl">
+    <p class="leading-relaxed text-lg">Command: ssh </p>
+    <p class="leading-relaxed text-lg">Usage: ssh username@server </p>
+    <p class="leading-relaxed text-lg">Description: Connects your terminal to another computer's terminal </p>
+</div>
 
-<p class="leading-relaxed text-lg">ssh stands for "secure shell" ("shell" is basically synonymous to "terminal") and is how you access and send commands to computers other than your own. For your pitaya, your username is <code class="bg-cs-blue px-1 rounded shadow-lg text-base">root</code> (which is the default and most powerful user on all devices) and the server is <code class="bg-cs-blue px-1 rounded shadow-lg text-base">rp-xxxxxx.local</code>, where xxxxxx is your pitaya's unique ID number (which can be found on the sticker on your pitaya; some will be under a QR code). Dissecting the command further, you can note that the server is on the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">.local</code> channel because it is physically (locally) connected to your computer.</p><br/>
+<p class="leading-relaxed text-lg">ssh stands for "secure shell" ("shell" is basically synonymous to "terminal") and is how you access and send commands to computers other than your own. For your pitaya, your username is <code class="bg-cs-blue px-1 rounded shadow-lg text-base">root</code> (which is the default and most powerful user on all devices) and the server is <code class="bg-cs-blue px-1 rounded shadow-lg text-base">rp-xxxxxx.local</code>, where xxxxxx is your pitaya's unique ID number (the same six digits you used to check your connection earlier). Dissecting the command further, you can note that the server is on the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">.local</code> channel because it is physically (locally) connected to your computer.</p><br/>
 
 <p class="leading-relaxed text-lg">Try using the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ssh</code> command with the correct username and server. If all goes correctly, it will prompt you for a password. The password is <code class="bg-cs-blue px-1 rounded shadow-lg text-base">root</code> (secure, I know). <u>You won't see the letters you are typing while entering the password. This is normal and a "security feature." Just type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">root</code> and click enter.</u></p><br/>
 
-<p class="leading-relaxed text-lg">You should now be connected to your pitaya through the terminal. You can check this by seeing if your command line now says <code class="bg-cs-blue px-1 rounded shadow-lg text-base">root:~ $</code> or something similar, instead of your laptop name.</p><br/>
+<p class="leading-relaxed text-lg">You should now be connected to your pitaya through the terminal. You can check this by seeing if your command line now says <code class="bg-cs-blue px-1 rounded shadow-lg text-base">root@rp-xxxxxx:~#</code> or something similar, instead of your laptop name.</p><br/>
 
 <div class="h-px bg-cs-green my-6"></div><h1 id="linux-commands" class="text-4xl font-extrabold">Linux Commands</h1><br/>
 <p class="leading-relaxed text-lg">Unlike your computer, the Red Pitaya runs on Linux (if your computer also runs Linux... nerd). This means you can run Linux commands without any extra work. Below, you will learn some of these Linux commands (part of the 8 I mentioned above, also available in the <a href="TODO: Link here" class="text-lg text-cs-blue hover:text-blue-700 underline">Cheat Sheet</a>.)</p><br/>
 
 <p class="leading-relaxed text-lg">If you already are comfortable using the command line, you can brush over this. However, if you do so, you will miss the chance to read my lame attempts at humor.</p><br/>
 
-<h2 class="text-2xl text-bold underline text-cs-green">The Most Important Command</h2>
+<h2 class="text-2xl text-bold underline text-cs-green">Tidying</h2>
 <p class="leading-relaxed text-lg">Next, type this command into your terminal <code class="bg-cs-blue px-1 rounded shadow-lg text-base">rdmcmdidk</code> and click enter.</p><br/>
 
-<p class="leading-relaxed text-lg">You should get some red text, or at least an angry terminal that says the command you entered is wrong, doesn't exist, etc. This is good. <code class="bg-cs-blue px-1 rounded shadow-lg text-base">rdmcmdidk</code> is a made up command that does not exist. It literally stands for "random command, idk", which I just made up with my extremely creative mind. The lesson here is that you are going to make errors in the terminal. Things are going to go wrong. Things are going to be frustrating. You're going to end up in a folder in who-knows-where trying to run some command that has been outdated since before the first Apple computer came out, wondering how the heck to exit vim. Deep breath. Your terminal may be covered in red error messages, but those don't define you. Wish them away.</p><br/>
+<p class="leading-relaxed text-lg">You should get some red text, or at least an angry terminal that says the command you entered is wrong, doesn't exist, etc. This is good. <code class="bg-cs-blue px-1 rounded shadow-lg text-base">rdmcmdidk</code> is a made up command that does not exist. It literally stands for "random command, idk", which I just made up with my extremely creative mind. The lesson here is that you are going to make errors in the terminal. Things are going to go wrong. Things are going to be frustrating. You're going to end up in a folder in who-knows-where trying to run some command that has been outdated since before the first Apple computer came out, wondering how the heck to exit vim. Deep breath. Your terminal may be covered in red error messages, but you don't have to be. Wish them away.</p><br/>
 
-<p class="leading-relaxed text-lg">Command: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">clear</code></p><br/>
-<p class="leading-relaxed text-lg">Usage: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">clear</code></p><br/>
-<p class="leading-relaxed text-lg">Description: Clears the old text from your terminal. Does not mess up any configuration.</p><br/>
+<div class="dark:bg-cs-blue bg-cs-blue rounded-lg p-4 shadow-2xl">
+    <p class="leading-relaxed text-lg">Command: clear</p>
+    <p class="leading-relaxed text-lg">Usage: clear</p>
+    <p class="leading-relaxed text-lg">Description: Clears the old text from your terminal. Does not mess up any configuration.</p>
+</div>
+
 
 <p class="leading-relaxed text-lg">Make mistakes. It is how you learn. But feel free to keep things clean and tidy while you do.</p><br/>
 
 <h2 class="text-2xl text-bold underline text-cs-green">The File System</h2>
 <p class="leading-relaxed text-lg">Everything on a computer can be broken down into 2 types of objects: folders and files. Folders, which are mostly referred to as "directories" in the terminal, can only contain other files. Files can only contain data of some kind. When you are on your pitaya, or any terminal session for that matter, you will always be "in" a directory. Think of it as the file system on your computer. There is always one folder that you are looking at, and you can only see the folders "below" that one in the hierarchy. Unlike your computer's file system, you cannot click around to navigate. The terminal needs commands.</p><br/>
 
-<p class="leading-relaxed text-lg">The quickest way to tell which directory you are in is to check the command prompt. It will always start with your current location. If you look at your terminal, you should see something like <code class="bg-cs-blue px-1 rounded shadow-lg text-base">root@~</code>. Here, "~" is your directory. The squiggle is a pseudonym for your "home" directory. Imagine this as the very base of your file system, where you open up to every time you open your file explorer (this technically isn't true, but treat it like the base for all intense and porpoises).</p><br/>
+<p class="leading-relaxed text-lg">The quickest way to tell which directory you are in is to check the command prompt. It will always start with your current location. If you look at your terminal, you should see something like <code class="bg-cs-blue px-1 rounded shadow-lg text-base">root@rp-xxxxxx~ #</code>. Here, "~" is your directory. The squiggle is a pseudonym for your "home" directory. Imagine this as the very base of your file system, where you open up to every time you open your file explorer (this technically isn't true, but treat it like the base for all intense and porpoises).</p><br/>
 
 <p class="leading-relaxed text-lg">We now want to see which files are in our current directory. This will be your next command.</p><br/>
 
-<p class="leading-relaxed text-lg">Command: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ls</code></p><br/>
-<p class="leading-relaxed text-lg">Usage <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ls</code>, or <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ls -a</code> to list hidden files too</p><br/>
-<p class="leading-relaxed text-lg">Description: List ("LiSt") all files and folders in the current directory</p><br/>
+<div class="dark:bg-cs-blue bg-cs-blue rounded-lg p-4 shadow-2xl">
+    <p class="leading-relaxed text-lg">Command: ls</p>
+    <p class="leading-relaxed text-lg">Usage: ls (or "ls -a" to list hidden files too)</p>
+    <p class="leading-relaxed text-lg">Description: List ("LiSt") all files and folders in the current directory</p>
+</div>
+
 
 <p class="leading-relaxed text-lg">Try using the basic <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ls</code> command now. You should see 2 files listed, "empty.txt" and "example.md". These are 2 files I added to your pitaya before you arrived, just so you aren't working with an empty directory. To see what is in a file, use the following command.</p><br/>
 
-<p class="leading-relaxed text-lg">Command: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cat</code></p><br/>
-<p class="leading-relaxed text-lg">Usage: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cat file_name</code></p><br/>
-<p class="leading-relaxed text-lg">Description: Prints ("conCATenates") the contents of a file to the terminal.</p><br/>
+<div class="dark:bg-cs-blue bg-cs-blue rounded-lg p-4 shadow-2xl">
+<p class="leading-relaxed text-lg">Command: cat</p>
+<p class="leading-relaxed text-lg">Usage: cat file_name</p>
+<p class="leading-relaxed text-lg">Description: Prints ("conCATenates") the contents of a file to the terminal.</p>
+</div>
+
 
 <p class="leading-relaxed text-lg">Try it out now, replacing <code class="bg-cs-blue px-1 rounded shadow-lg text-base">file_name</code> with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">example.md</code>. You should see a little welcome message! You can also try using the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cat</code> command on the empty.txt file, but nothing will print. That's because the I named the file after the state of your DMs: empty. There is nothing to print if there is nothing in the file.</p><br/>
 
 <p class="leading-relaxed text-lg">The next step is to start making our own content. Let's begin with how to make a directory.</p><br/>
 
-<p class="leading-relaxed text-lg">Command: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mkdir</code></p><br/>
-<p class="leading-relaxed text-lg">Usage: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mkdir new<a class="underline">directory</a>name</code></p><br/>
-<p class="leading-relaxed text-lg">Description: Creates a new, empty directory ("MaKe DIRectory") with whatever name you put for <code class="bg-cs-blue px-1 rounded shadow-lg text-base">new<a class="underline">directory</a>name</code>.</p><br/>
-
+<div class="dark:bg-cs-blue bg-cs-blue rounded-lg p-4 shadow-2xl">
+<p class="leading-relaxed text-lg">Command: mkdir</p>
+<p class="leading-relaxed text-lg">Usage: mkdir new_directory_name</p>
+<p class="leading-relaxed text-lg">Description: Creates a new, empty directory ("MaKe DIRectory") with whatever name you put for new_directory_name</code>.</p>
+</div>
 <p class="leading-relaxed text-lg">Make your own directory now, call it whatever you like. Note that the terminal does not give an output when you run this command. That means it was successful, and some commands you run won't give an output. As long as you don't get an error message, you can assume things are working. Before moving on, make sure your new folder was successfully created by listing the files in your current directory. You already know this command.</p><br/>
 
 <p class="leading-relaxed text-lg">With your new folder/directory created, the next step is to enter it. If you want to do things in the terminal, you usually want to be inside the directory you are interacting with. That brings us to our next command.</p><br/>
 
-<p class="leading-relaxed text-lg">Command: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cd</code></p><br/>
-<p class="leading-relaxed text-lg">Usage: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cd directory_name</code></p><br/>
-<p class="leading-relaxed text-lg">Description: Changes your current directory ("Change Directory") to the specified directory name. Paths are relative to your current location (e.x. you can't go from ~/Lab1/screenshots/ into ~/Lab2 by just typing <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cd Lab2</code>. You need to go up the chain and find it).</p><br/>
+<div class="dark:bg-cs-blue bg-cs-blue rounded-lg p-4 shadow-2xl">
+    <p class="leading-relaxed text-lg">Command: cd</p>
+<p class="leading-relaxed text-lg">Usage: cd directory_name</p>
+<p class="leading-relaxed text-lg">Description: Changes your current directory ("Change Directory") to the specified directory name. Paths are relative to your current location (e.x. you can't go from ~/Lab1/screenshots/ into ~/Lab2 by just typing "cd Lab2". You need to go up the chain and find it).</p>
 
-<p class="leading-relaxed text-lg">Try "cd-ing" (a term you might hear in this lab) into your newly made directory, whatever you called it. Check your command prompt to make sure that you are now in <code class="bg-cs-blue px-1 rounded shadow-lg text-base">root@~/your<a class="underline">directory</a>name/</code> instead of <code class="bg-cs-blue px-1 rounded shadow-lg text-base">root@~/</code>. Now that you are in here, you can run all your normal commands like <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ls</code> to list the files (which will be blank because the directory is empty). You can create more directories and cd into them too, if you wish.</p><br/>
+</div>
 
-<p class="leading-relaxed text-lg">You may encounter a problem here. Once you go "down" into a directory, you cannot go back "up" to the "parent" directory. For example, if you are in <code class="bg-cs-blue px-1 rounded shadow-lg text-base">~/random<a class="underline">name/second</a>name/</code>, then you cannot go back up by running <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cd random_name</code>. Generally, you can only cd into directories below the one you are currently in. To go up a directory, the special keyword is <code class="bg-cs-blue px-1 rounded shadow-lg text-base">..</code> (two periods). In the terminal, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">.</code> refers to your current directory, and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">..</code> refers to the directory above that (it stops there, no <code class="bg-cs-blue px-1 rounded shadow-lg text-base">...</code> for you. Those are reserved for adding suspense...). So, to go up a directory, you would run <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cd ..</code>. Try it now and check the command prompt to make sure you are in the right place.</p><br/>
+<p class="leading-relaxed text-lg">Try "cd-ing" (a term you might hear in this lab) into your newly made directory, whatever you called it. Check your command prompt to make sure that you are now in <code class="bg-cs-blue px-1 rounded shadow-lg text-base">root@rp-xxxxxx:~/your_directory_name/ #</code> instead of <code class="bg-cs-blue px-1 rounded shadow-lg text-base">root@rp-xxxxxx:~ #</code>. Now that you are in here, you can run all your normal commands like <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ls</code> to list the files (which will be blank because the directory is empty). You can create more directories and cd into them too, if you wish.</p><br/>
+
+<p class="leading-relaxed text-lg">You may encounter a problem here. Once you go "down" into a directory, you cannot go back "up" to the "parent" directory. For example, if you are in <code class="bg-cs-blue px-1 rounded shadow-lg text-base">~/random_name/second_name/</code>, then you cannot go back up by running <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cd random_name</code>. Generally, you can only cd into directories below the one you are currently in. To go up a directory, the special keyword is <code class="bg-cs-blue px-1 rounded shadow-lg text-base">..</code> (two periods). In the terminal, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">.</code> refers to your current directory, and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">..</code> refers to the directory above that (it stops there, no <code class="bg-cs-blue px-1 rounded shadow-lg text-base">...</code> for you. Those are reserved for adding suspense...). So, to go up a directory, you would run <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cd ..</code>. Try it now and check the command prompt to make sure you are in the right place.</p><br/>
 
 <p class="leading-relaxed text-lg">You now know all the basic commands for navigating the terminal. Take a second to play around with creating directories, cd-ing into them, going out of them, making more nested directories, etc. As much as you think you can learn from just reading, this is going to be a lot easier if you play with it and make it your own. You are going to have to get very used to this system of navigation, and the more you play with it, the better--and faster--you will get. Eventually, you will be able to jump around your file system like it wasn't even there.</p><br/>
 
@@ -159,9 +173,12 @@
 
 <p class="leading-relaxed text-lg">Go into a directory of your choice, which is where you will create and edit a new file.</p><br/>
 
-<p class="leading-relaxed text-lg">Command: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">nano</code></p><br/>
-<p class="leading-relaxed text-lg">Usage <code class="bg-cs-blue px-1 rounded shadow-lg text-base">nano file_name</code></p><br/>
-<p class="leading-relaxed text-lg">Description: Runs the Terminal App "Nano," which allows you to edit files. If <code class="bg-cs-blue px-1 rounded shadow-lg text-base">file_name</code> exists in the current directory, you start editing it. If <code class="bg-cs-blue px-1 rounded shadow-lg text-base">file_name</code> does not exist in the current directory, nano will create a new file of that name and begin editing it.</p><br/>
+<div class="dark:bg-cs-blue bg-cs-blue rounded-lg p-4 shadow-2xl">
+    <p class="leading-relaxed text-lg">Command: nano</p>
+<p class="leading-relaxed text-lg">Usage: nano file_name</p>
+<p class="leading-relaxed text-lg">Description: Runs the Terminal App "Nano," which allows you to edit files. If file_name exists in the current directory, you start editing it. If file_name does not exist in the current directory, nano will create a new file of that name and begin editing it.</p>
+
+</div>
 
 <p class="leading-relaxed text-lg">Try creating a new file with a name of your choice now. Remember to add some sort of extension to it (e.x. ".txt", ".md", ".html", whatever you want).</p><br/>
 
@@ -179,13 +196,14 @@
 <p class="leading-relaxed text-lg">Congratulations! You now know all the basic terminal commands for navigation and file editing. You may have felt a little overwhelmed during this first session. That's okay. It may take a minute to settle into these concepts, but know that there are plenty of resources available to you if you are confused. See either Dr. Camp's office hours or preferably the TA office hours for help with labs, homework, or general questions about the course. All that's left to do now is to write your lab report and submit it via Canvas sometime before your next lab session.</p><br/>
 
 <div class="h-px bg-cs-green my-6"></div><h1 id="assignment" class="text-4xl font-extrabold">Assignment</h1><br/>
-<p class="leading-relaxed text-lg">The assignment portion of the lab contains all instructions and requirements for your lab report. Any challenges or questions in the sections above were hypothetical and just for your practice. On your lab report, you only need to respond to the assignments in this section. Remember that you can check out the <a href="TODO: Link here" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab Report Guide</a> to see the expectations the TAs have of your lab reports. Without further ado, here is your task:</p><br/>
+<p class="leading-relaxed text-lg">The assignment portion of the lab contains all instructions and requirements for your lab report. Any challenges or questions in the sections above were hypothetical and just for your practice. On your lab report, you only need to respond to the assignments in this section. Remember that you can check out the <a href="lab-guide" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab Report Guide</a> to see the expectations the TAs have of your lab reports. Without further ado, here is your task:</p><br/>
 
 <h2 class="text-2xl text-bold underline text-cs-green">Task 1</h2>
 <p class="leading-relaxed text-lg">Starting in the home directory, create a new directory called "first_name" (replacing it with your actual first name) and create a directory inside of that one called "last_name" (same applies). Inside of that second directory, create a file named "smuid.txt" and fill it with your SMUID. No need to delete any files or folders you made while playing around. As long as you have these 3 things, full credit.</p><br/>
 
 <p class="leading-relaxed text-lg">Clear your terminal, then show your chain of commands as you go down the directories one-by-one, listing the files in each one, and then printing the SMUID file to the terminal. You should then return to the home directory, going up one folder at a time. Take a screenshot of your terminal and include it in your lab report. You should only need the 1 screenshot that has your terminal's history of the commands listed in this paragraph.</p><br/>
 
+<h2 class="text-2xl text-bold underline text-cs-green">Task 2</h2>
 <p class="leading-relaxed text-lg">Explain the difference between <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cat</code> and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">nano</code> if you just want to read what is in a file.</p><br/>
 
 <p class="leading-relaxed text-lg">Explain what happens when you try to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cat</code> a directory and why you get the result that you do.</p><br/>

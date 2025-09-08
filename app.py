@@ -40,6 +40,11 @@ def ece1181():
 def ece1181previouslabs():
     return render_template("courses/ECE1181/previouslabs.html", title_extention="ECE1181 - ")
 
+# Lab Guide Page
+@app.route("/courses/ECE1181/lab-guide")
+def ece1181labguide():
+    return render_template("courses/ECE1181/labguide.html", title_extention="ECE1181 - ")
+
 # Lab0 Page
 @app.route("/courses/ECE1181/lab-0")
 def ece1181lab1():
