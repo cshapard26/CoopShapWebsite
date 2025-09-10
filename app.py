@@ -47,14 +47,14 @@ def ece1181labguide():
 
 # Lab0 Page
 @app.route("/courses/ECE1181/lab-0")
-def ece1181lab1():
+def ece1181lab0():
     return render_template("courses/ECE1181/Lab0.html", title_extention="Lab 0 - ")
-'''
+
 # Lab1 Page
 @app.route("/courses/ECE1181/lab-1")
 def ece1181lab1():
     return render_template("courses/ECE1181/Lab1.html", title_extention="Lab 1 - ")
-
+'''
 # Lab2 Page
 @app.route("/courses/ECE1181/lab-2")
 def ece1181lab2():
