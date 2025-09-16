@@ -45,6 +45,11 @@ def ece1181previouslabs():
 def ece1181labguide():
     return render_template("courses/ECE1181/labguide.html", title_extention="ECE1181 - ")
 
+# Lab Guide Page
+@app.route("/courses/ECE1181/cheat-sheet")
+def ece1181lcheatsheet():
+    return render_template("courses/ECE1181/cheatsheet.html", title_extention="ECE1181 - ")
+
 # Lab0 Page
 @app.route("/courses/ECE1181/lab-0")
 def ece1181lab0():
@@ -54,12 +59,12 @@ def ece1181lab0():
 @app.route("/courses/ECE1181/lab-1")
 def ece1181lab1():
     return render_template("courses/ECE1181/Lab1.html", title_extention="Lab 1 - ")
-'''
+
 # Lab2 Page
 @app.route("/courses/ECE1181/lab-2")
 def ece1181lab2():
     return render_template("courses/ECE1181/Lab2.html", title_extention="Lab 2 - ")
-
+'''
 # Lab3 Page
 @app.route("/courses/ECE1181/lab-3")
 def ece1181lab3():

@@ -8,21 +8,9 @@ These lab guides are handmade, and as such may contain errors in logic, spelling
 
 # Wrapper Code
 Like most programming languages, ARM has some boilerplate code that you need to put in all files for it to work properly. We will be calling this "wrapper code" (since it wraps around your main logic), and this is what it looks like:
-```arm
-.global _start
 
-_start:
+1
 
-      @ Main logic here
-
-      
-      MOV R0, #0
-      MOV R7, #1
-      SVC 0
-
-.data
-      @ Memory storage down here
-```
 Recall from the previous lab that the "MOV, MOV, SVC" block is what ends your program. All code you write in this class will first start with this wrapper code.
 
 # The MOV Instruction
@@ -32,23 +20,10 @@ Instruction: `MOV`
 Usage: `MOV destination, number`
 Description: Places ("MOVes") a number into the destination register. If the number is another register, it copies that register's contents into the destination register.
 Example:
-```arm
-      MOV R1, #42 @ Puts the decimal number "42" inside R1
-      MOV R3, #0x84     @ Puts the hex number 0x84 (which is 132 in decimal) into R3
-      MOV R4, R3  @ Puts the value of R3 (0x84) into R4. Now, both R3 and R4 contain 0x84
-      MOV R1, R2  @ A register that has not been modified yet is defaulted to 0...
-                  @ ...Here, the value in R1 (42) is replaced by the value in R2 (0). Now R1 holds the value 0
-```
+2
 
 Take a minute to figure out what value will be in each register after the following code is ran. Assume we are starting from scratch (all registers hold 0x0).
-```arm
-      MOV R6, #0x13
-      MOV R7, R6
-      MOV R3, R7
-      MOV R3, #16
-      MOV R6, R8
-      MOV R7, R7
-```
+3
 
 Here are the correct answers: R3=16, R6=0, R7=0x13 or 19 in decimal, R8=0. You may have been caught off guard by the last one. Note that this is a valid instruction in ARM, and it is just moving a register's content into itself, which makes no change. It may seem useless, and in this example it is, but later it will become a powerful tool.
 
@@ -61,24 +36,13 @@ Instruction: `ADD`
 Usage: `ADD destination, number1, number2`
 Description: Adds ("ADDs") number1 and number2 and places the result in the destination register. Note that number1 *must* be a register, and number2 can be either a register or a regular number.
 Example:
-```arm
-      MOV R0, #144
-      ADD R1, R0, #40         @ Adds the value in R0 (144) with the value 40. R1 now contains the value 184, and R0 was not changed
-      ADD R3, R0, R1          @ Adds the value in R0 (144) with the value in R1 (184). R3 now contains 328, and neither R0 nor R1 were changed
-      ADD R3, R3, #0x2A @ Adds the value in R3 (328) with the hex value 0x2A (42 in decimal) and places the result (370) in R3...
-                        @ ... R3 now holds the value 370. The old value of R3 (328) was replaced with the new value.
-```
+4
+
 In the last instruction, you can see how we can add "in-place" by making the destination register one of the operands. You will notice that most ARM instructions require a destination, and since registers are limited, we often want to save space by performing the instruction "in-place." This is an example of how you would do that.
 
 Like before, take a minute to figure out what the final value of each register will be after this code is run from scratch:
-```arm
-      ADD R0, R1, R2
-      MOV R1, #160
-      ADD R0, R0, R1
-      MOV R1, #80
-      ADD R2, R0, R1
-      ADD R2, R2, R2
-```
+5
+
 Correct answers: r0=160, R1=80, R2=480. Notice how we can use the same register as many times as we want in a command, and that the old value will only be updated *after* the whole command is ran.
 
 # A Quick Note on Binary
@@ -95,19 +59,10 @@ Here is how you use them in your code:
 Instruction: LSL, LSR, or ROR
 Usage: `TYPE destination, number, amount`
 Example:
-```arm
-      MOV R3, #0b1101
-      LSL R0, R3, #4    @ R0 now contains the value of R3 (0b1100 or 12 in decimal/0xC in hex) shifted to the left by 4 bits. R0 holds 0b11010000 (or 192 in decimal, 0x12 in hex)
-      LSR R1, R3, #2    @ R1 now contains the value of R3 shifted to the right by 4 bits. R1 holds 0b11 (or 3 in decimal, 0x3 in hex)
-      ROR R2, R3, #12 @ R2 now contains the value of R3 rotated to the right by 12 bits. Remember that the registers are 32 bits long...
-                  @  ...R2 now holds 0b00000000110100000000000000000000 (or 13631488 in decimal, 0x00D00000 in hex)
-
-```
+6
 
 Note that shifting/rotating is special in that you can combine it with other commands, making it an extension of the "number" operand. Example:
-```arm
-      MOV R2, #8, LSL 2 @ R2 now contains the value 8 (0b1000) shifted left 2 bits, which is 0b100000, 32, or 0x20
-```
+7
 
 You can do this with any command, but note that it can only operate on the *last* number in the command. E.x. you can't do `ADD R3, LSL 3, #4, ROR 18`, but you can do `ADD R3, #4, ROR 18`, which would rotate only the #4 by 18 bits.
 
@@ -171,48 +126,48 @@ Additionally, if you come up with a task that you think is of comparable challen
 Write a program that makes a register hold your student ID (in hex).
 
 Additional Requirements:
-- Your program can only use MOV, ADD, and shifting/rotating commands.
-- You must show the results by inspecting registers in the debugger.
+Your program can only use MOV, ADD, and shifting/rotating commands.
+You must show the results by inspecting registers in the debugger.
 
 Assumptions:
-- Your student ID will be in hex. That means if your student ID is 12345678, the register should hold 0x12345678. You do not need to use any converter for this, just enter all digits in hex instead of decimal.
-- Your SMUID is 8 hex digits (32 bits), which is within the 32-bit limit for registers.
-- Remember that an MOV command can only move one named byte (two hex digits) into a register at a time.
+Your student ID will be in hex. That means if your student ID is 12345678, the register should hold 0x12345678. You do not need to use any converter for this, just enter all digits in hex instead of decimal.
+Your SMUID is 8 hex digits (32 bits), which is within the 32-bit limit for registers.
+Remember that an MOV command can only move one named byte (two hex digits) into a register at a time.
 
 Expected Outputs:
-- Inspecting regisers in GDB should show your full student ID in any of the available registers. E.x.
+Inspecting regisers in GDB should show your full student ID in any of the available registers. E.x.
 TODO: Photo here
 
 ## Task 2
 Write a program that rotates a number by a variable amount.
 
 Additional Requirements:
-- Your program can only use MOV, ADD, and shifting/rotating commands.
-- You must show the results by inspecting registers in the debugger.
-- Debugging screenshots must include both the original number and the shift amount.
+Your program can only use MOV, ADD, and shifting/rotating commands.
+You must show the results by inspecting registers in the debugger.
+Debugging screenshots must include both the original number and the shift amount.
 
 Assumptions:
-- You put the number and the shift amount in two differnet registers of your choice at the start of your program.
-- Any 32-bit number can be used (but you should stick with 1 byte numbers for ease), and the rotate amount should be less than 32.
+You put the number and the shift amount in two differnet registers of your choice at the start of your program.
+Any 32-bit number can be used (but you should stick with 1 byte numbers for ease), and the rotate amount should be less than 32.
 
 Expected Outputs:
-- Inspecting regisers in GDB should show the number, shift amount, and result in any three separate registers. E.x.
+Inspecting regisers in GDB should show the number, shift amount, and result in any three separate registers. E.x.
 TODO: Photo here
 
 ## Task 3
 Write a program that adds two numbers, then saves only the last four bits. (e.x. 0x12 + 0xA4 = 0xB6 = 0b10110110. Last 4 bits = 0b0110 = 0x6, so the final register should only have 0x6 in it).
 
 Additional Requirements:
-- Your program can only use MOV, ADD, and shifting/rotating commands.
-- You must show the results by inspecting registers in the debugger.
-- Debugging screenshots must include both original numbers and the result.
-- The two original numbers must be greater than 15.  
+Your program can only use MOV, ADD, and shifting/rotating commands.
+You must show the results by inspecting registers in the debugger.
+Debugging screenshots must include both original numbers and the result.
+The two original numbers must be greater than 15.  
 
 Assumptions:
-- You put both original numbers in two different registers of your choice at the start of your program.
-- Any 32-bit numbers greater than 15 can be used (but you should stick with 1 byte numbers for ease).
-- The resulting four bits do NOT need to be returned directly after the ADD. You can run as many instructions as you need to achieve this result, and the four bits need only need to be isolated sometime before the end of your program.
+You put both original numbers in two different registers of your choice at the start of your program.
+Any 32-bit numbers greater than 15 can be used (but you should stick with 1 byte numbers for ease).
+The resulting four bits do NOT need to be returned directly after the ADD. You can run as many instructions as you need to achieve this result, and the four bits need only need to be isolated sometime before the end of your program.
 
 Expected Outputs:
-- Inspecting regisers in GDB should show both original numbers and the isolated 4-bit result in any three separate registers. E.x.
+Inspecting regisers in GDB should show both original numbers and the isolated 4-bit result in any three separate registers. E.x.
 TODO: Photo here

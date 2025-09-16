@@ -8,192 +8,269 @@
             <!-- Title Section -->
             <div class="text-center">
                 <h1 class="text-6xl font-extrabold leading-tight text-cs-green">
-                    Lab 2: Tooling Up
+                    Lab 2: Moving and Adding
                 </h1>
                 <h2 class="text-2xl text-bold leading-tight text-cs-green">
-                    Learning how to use makefiles and the gdb debugger
+                    Moving, Adding, Shifting, and intro to the Debugger
                 </h1>
                  <!-- Separator -->
                 <div class="h-px bg-cs-green my-6"></div>
                 <a href="#overview" class="inline-block bg-cs-blue hover:bg-blue-700  hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
                     Overview
                 </a> >>
-                <a href="#instructions" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
-                    Instructions
+                <a href="#mov" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    MOV
+                </a> >>
+                <a href="#add" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    ADD
+                </a> >>
+                <a href="#shifting" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Shifting
+                </a> >>
+                <a href="#debug" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Debugger
                 </a> >>
                 <a href="#conclusion" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
                     Conclusion
-                </a> >>
-                <a href="#code-given" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
-                    Code Given
-                </a> >>
-                <a href="#troubleshooting" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
-                    Troubleshooting
+                </a>>>
+                <a href="#assignment" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Assignment
                 </a>
             </div>
 
-            <!-- Separator -->
-            <div class="h-px bg-cs-green my-6"></div>
-
             <!-- Blog Content -->
-            <div class="prose prose-lg mx-auto dark:text-steel text-[#222222]">
-                <h1 id="overview" class="text-4xl font-extrabold">Overview</h1>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    Welcome to Lab 2! Here, you will learn the basics of a makefile and how to use the debugger to learn more about your program. Both of these skills are CRUCIAL for your success in the course, and you will use both in every single lab after this one. If you don't understand something or want further clarification, let a TA know and we can help you out. Also, if you need a refresher on any of the skills you learned last lab session, you can always check the <a href="lab-1-getting-started" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab 1</a> guide again!
-                </p>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    I am also experimenting with a feedback box this lab, which you should see on the right. xPlease fill out the feedback box with any typos I made in these instructions, anything that doesn't make sense, or any comments you have about the material.</a> All feedback is anonymous.
-                </p>
-                <!-- Separator -->
-                <div class="h-px bg-cs-green my-6"></div>
 
-                <h1 id="instructions" class="text-4xl font-extrabold">Lab Instructions</h1>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    Check out the <a href="#troubleshooting" class="text-lg text-cs-blue hover:text-blue-700 underline">Troubleshooting</a> section below for a some quick fixes. Code from the book can be found in the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">Code Given</a> section at the bottom of this guide.
-                </p>
-                <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">Step 1</h1>                
-                <p class="leading-relaxed text-lg">
-                    First, read through pages 53-56 in the Smith textbook (this is the beginning of chapter 3 to the "GDB" section for those without page numbers) and follow the instructions on creating a makefile. This is similar to the "build" file in the last lab, but it will be much easier to edit if needed. You will likely reuse this same file in every lab from here on out, so make sure it's working properly before continuing. 
-                </p>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    Next, either a make copy of your "HelloWorld.s" (may also be called "main.s") file from Lab 1 or just edit it directly. You want to change the text at the bottom so that it now says <code class="bg-cs-blue px-1 rounded shadow-lg text-base">Hello YourFirstName YourLastName! (built from a makefile)</code>. Be sure to update the length of the string in R2!
-                </p>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    If everything went correctly, you should be able to just type in <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make</code> into the terminal to build the file. If no error pops up on the screen, odds are it worked. If not, ask a TA for assistance.
-                </p>
-                <br/>
-                <p class="leading-relaxed text-lg font-extrabold">
-                    Take a screenshot of your terminal showing that you built the file using <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make</code> and that running <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./HelloWorld</code> (or whatever your filename is) gives the output "Hello YourFirstName YourLastName! (built from a makefile)".
-                </p>
-                <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">Step 2</h1>
-                <p class="leading-relaxed text-lg">
-                    Create a new file called "movexamps.s" and fill it with the code from the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">Code Given</a> section.
-                </p>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    You don't need to fully understand how this code works at this point, but it's helpful to at least know what it's doing. The <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOV</code> command is placing the value "0x6E" in the register R2 in the rightmost 16 bits. The <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOVT</code> command is placing the value "0x4F" in the register R2 in the leftmost 16 bits. The reason we cannot do this with one command is that the MOV command can only take up to eight bits (one byte) as immediate input. Thus, to make the large value "0x4F006E", we need to separate it into two commands. The way we do it here is an uncommon way to do it, and you likely won't see the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOVT</code> instruction again in this course. You will soon learn about the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR</code> instruction, which is much more versatile.
-                </p>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    You will also want to update your "makefile" so that everything named "main" should be replaced with "movexamps". There should be 3 updates total. Make sure to keep the same file extention (i.e. "main.o" should become "movexamps.o" and "main" should become "movexamps").
-                </p>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    Follow the instructions on pages 56-63 (from "GDB" to "Source Control...") in the Smith book. You will become VERY familiar with this process from now on. Commit it to memory, as you will use it in every lab from here on out. As a summary:
-                </p>
-                <br/>
-                <ol class="list-decimal ml-6 text-lg space-y-2">
-                    <li>Use the command <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make -B DEBUG=1</code> to make your file with the debugger enabled. If you do not include "DEBUG=1", then you cannot use the debugger (gdb) on your program. The "-B" just forces your file to re-make. Without it, you may get the message "file is already up to date," which prevents debugging symbols from appearing in the executable.</li>
-                    <li>Type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">gdb FileNameWithoutExtention</code> (an extention is the .s, .o, etc). I shouldn't have to say this, but replace "FileNameWithoutExtention" with the actual name of your file (like "movexamps").This should show the debug shell, denoted by the "(gbd)" at the beginning of the line.</li>
-                    <li>Type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">b _start</code> to set a breakpoint to the start of your program. You can see this breakpoint directly in the code. To set different breakpoints, simply change the command to reflect the name of the breakpoint you want to set.</li>
-                    <li>Type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">r</code> to run the program. It will automatically stop at your first breakpoint. In this case, it is the start of your program.</li>
-                    <li>Here, you will see a line like <code class="bg-cs-blue px-1 rounded shadow-lg text-base">_start: MOV R2, #0x6E</code>. To EXECUTE this line (it has not been done yet), type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">s</code>, which stands for "step." Every time you type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">s</code>, it will execute one line of code. Do this as many times as needed to get where you want (or set a separate breakpoint).</li>
-                    <li>At any time, type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">i r</code> (for "inspect registers") to check what values are stored in all the registers. This screen also contains a lot more helpful information, which you will learn about more in the coming labs.</li>
-                    <li>You can also type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x /4ubfx MemoryAddress</code> to check the contents of the memory at a specific location. You will learn more about this in a later lab.</li>
-                    <li>To quit out of the (gbd) shell, type <code class="bg-cs-blue px-1 rounded shadow-lg text-base">q</code> or <code class="bg-cs-blue px-1 rounded shadow-lg text-base">quit</code>. If it pulls up a yes/no prompt, say <code class="bg-cs-blue px-1 rounded shadow-lg text-base">y</code>.</li>
-                </ol>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    Now, open up your "movexamps.s" file and change the code so that the first four digits of your SMUID appear in the register. So, if your SMUID is 0x12345678, you want it to appear in R2 as 0x120034. You should only need to change two numbers. <a class="italic">Make sure to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make</code> your file again after every edit.</a> Next, use the debug protocol listed above to run this system and show that the value of R2 is 0x120034 (or whatever your ID is). <a class="font-extrabold">Take a screenshot showing the debug process and the first digits of your SMUID in R2.</a>
-                </p>
-                <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">Step 3</h1>
-                <p class="leading-relaxed text-lg">
-                    Update your code to place the same ID number into 4 different registers (R2-R5). This can be done with the following code, where the numbers are from your SMUID like before (using 0x12345678 as example):
-                </p>
-                <br/>
-                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-    MOV R2, #0x34 
-    MOVT R2, #0x12 
-    MOV R3, #0x34 
-    MOVT R3, #0x12 
-    MOV R4, #0x34 
-    MOVT R4, #0x12 
-    MOV R5, #0x34 
-    MOVT R5, #0x12 </pre>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    Next, you want to add a breakpoint to another line. Add a breakpoint tag (hint: this is what <code class="bg-cs-blue px-1 rounded shadow-lg text-base">_start</code> is, but it can be any name) before one of the MOV commands (besides the R2 one). Use the debugging procedure you learned in Step 2 to create a breakpoint at your new tag, run to it, and step over the lines where it is placed.
-                </p>
-                </br>
-                <p class="leading-relaxed text-lg">
-                    You also want to display the contents of the registers AND the contents of memory at the location of your breakpoint (using the command <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x /4ubfi [name of your breakpoint]</code> without the brackets). <a class="font-extrabold">Take a screenshot of your terminal, showing the process of you creating a breakpoint, running to it, stepping over a few lines, and displaying both the registers and memory.</a>
-                </p>
-                </br>
-                <!-- Separator -->
-                <div class="h-px bg-cs-green my-6"></div>
-                <h1 id="conclusion" class="text-4xl font-extrabold">Conclusion</h1>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    Congratulations on finishing Lab 2! I hope this one was a bit quicker than the last and that you are feeling more comfortable with the syntax of ARM. In this lab, you learned how to build files with the special "makefile," load large numbers into registers, and use the debugger (gdb) to analyze your code while it is running. If you have any questions, be sure to ask a TA. We also have office hours if you have more questions. For Cooper's office hours, email him at cshapard@smu.edu to set up a meeting location. Be sure to turn in your lab report before next lab, and have a great rest of your day.
-                </p>
-                <br/>
-                <!-- Separator -->
-                <div class="h-px bg-cs-green my-6"></div>
-                <h1 id="code-given" class="text-4xl font-extrabold">Code Given</h1>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    Code is derived from Stephen Smith's Raspberry Pi Assembly Language Programming book, modified to fit the needs of this course. Credit belongs to the original author.
-                </p>
-                <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">makefile</h1>
-                <p class="leading-relaxed text-lg">
-                    (<a class="font-bold">WARNING: Make sure that the lines that start with "as" and "ld" both have a TAB before them. Copying and pasting will replace it with four spaces, which will not work.</a>):
-                </p>
-                <br/>
-                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-OBJS = movexamps.o
 
-ifdef DEBUG
-DEBUGFLGS = -g
-else
-DEBUGFLGS =
-endif
+<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Overview</h1><br/>
+<p class="leading-relaxed text-lg">Time for Lab 2. In the previous labs, you learned how to navigate the terminal, work with ARM, and get things running on your pitaya. Now, we are going to start learning ARM commands and how to use them. From now on, labs will be less about reading and more about problem solving and learning through experience.</p><br/>
 
-%.o : %.s
-    as $(DEBUGFLGS) $< -o $@
-movexamps: $(OBJS)
-    ld -o movexamps $(OBJS)</pre>
-                <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">movexamps.s</h1>
-                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-@
-@ Examples of the MOV instruction.
-@
-.global _start      @ Provide program starting address
-                    @ Load R2 with 0x4F006E first using MOV and MOVT
-_start: 
-    MOV R2, #0x6E
-    MOVT R2, #0x4F
+<p class="leading-relaxed text-lg">All labs require a lab report. For a comprehensive look on what the TAs are looking for, formatting, and scoring, take a look at the <a href="lab-guide" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab Report Guide</a>.</p><br/>
 
-    MOV R0, #0      @ Use 0 return code
-    MOV R7, #1      @ Service command code 1
-    svc 0           @ Call Linux to terminate</pre>
-                <br/>
-                <!-- Separator -->
-                <div class="h-px bg-cs-green my-6"></div>
-                <h1 id="troubleshooting" class="text-4xl font-extrabold">Troubleshooting</h1>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    Code is derived from Stephen Smith's Raspberry Pi Assembly Language Programming book, modified to fit the needs of this course. Credit belongs to the original author.
-                </p>
-                <ol class="list-decimal ml-6 text-lg space-y-2">
-                    <li>Check the filename. Is it "moveexamps" or "movexamps"? Either works, but it has to stay consistent throughout the program.</li>
-                    <li>Did you write "movexamp.s" instead of "movexamps.s"? This is the most common mistake we see.</li>
-                    <li>If you do <code class="bg-cs-blue px-1 rounded shadow-lg text-base">gdb [filename]</code> and the (gdb) shell says "(no debugging symbols found)" or something like that, you likely forgot to enable debugging with the command <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make -B DEBUG=1</code>.</li>
-                    
-            </div>
-        </div>
-    </div>
+<p class="leading-relaxed text-lg">These lab guides are handmade, and as such may contain errors in logic, spelling, grammar, etc. If you find any issues, please leave a note in the Feedback tab on the right so we can fix it ASAP. This tab can also be used to anonymously submit suggestions, improvements, or complaints about the website. All of these will be reviewed and taken into consideration.</p><br/>
 
-    <!-- Feedback Box -->
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="wrap" class="text-4xl font-extrabold">Wrapper Code</h1><br/>
+<p class="leading-relaxed text-lg">Like most programming languages, ARM has some boilerplate code that you need to put in all files for it to work properly. We will be calling this "wrapper code" (since it wraps around your main logic), and this is what it looks like:</p><br/>
+
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+.global _start
+
+_start:
+
+    @ Main logic here
+
+    MOV R0, #0
+    MOV R7, #1
+    SVC 0
+
+.data
+    @ Memory storage down here   
+</pre><br/>
+
+<p class="leading-relaxed text-lg">Recall from the previous lab that the "MOV, MOV, SVC" block is what ends your program. All code you write in this class will first start with this wrapper code.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="mov" class="text-4xl font-extrabold">The MOV Instruction</h1><br/>
+<p class="leading-relaxed text-lg">As you should have seen in lecture, microcontrollers all come with registers (ARM has 12 you can use), which are places to hold numbers that are currently being used. These are named R0 through R11. One of the most important things you will need to do is place a specific number in a register or move a number between two registers. Here is the ARM instruction for that:</p><br/>
+
+<div class="dark:bg-cs-blue bg-cs-blue rounded-lg p-4 shadow-2xl">
+<p class="leading-relaxed text-lg">Instruction: MOV</p><br/>
+<p class="leading-relaxed text-lg">Usage: MOV destination, number</p><br/>
+<p class="leading-relaxed text-lg">Description: Places ("MOVes") a number into the destination register. If the number is another register, it copies that register's contents into the destination register.</p><br/>
+<p class="leading-relaxed text-lg">Example:</p>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R1, #42     @ Puts the decimal number "42" inside R1
+    MOV R3, #0x84   @ Puts the hex number 0x84 (which is 132 in decimal) into R3
+    MOV R4, R3      @ Puts the value of R3 (0x84) into R4. Now, both R3 and R4 contain 0x84
+    MOV R1, R2      @ A register that has not been modified yet is defaulted to 0...
+                    @ ...Here, the value in R1 (42) is replaced by the value in R2 (0). Now R1 holds the value 0
+</pre></div><br/>
+
+<p class="leading-relaxed text-lg">Take a minute to figure out what value will be in each register after the following code is ran. Assume we are starting from scratch (all registers hold 0x0).</p><br/>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R6, #0x13
+    MOV R7, R6
+    MOV R3, R7
+    MOV R3, #16
+    MOV R6, R8
+    MOV R7, R7
+</pre><br/>
+
+<p class="leading-relaxed text-lg">Here are the correct answers: R3=16, R6=0, R7=0x13 or 19 in decimal, R8=0. You may have been caught off guard by the last one. Note that this is a valid instruction in ARM, and it is just moving a register's content into itself, which makes no change. It may seem useless, and in this example it is, but later it will become a powerful tool.</p><br/>
+
+<p class="leading-relaxed text-lg">IMPORTANT: If the "number" parameter is an actual number (e.x. #12) and not a register (e.x. R2), the the number MUST be one byte or less in length (0xFF in hex or 255 in decimal). The compiler will throw an error if you try a larger number.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="add" class="text-4xl font-extrabold">The ADD Instruction</h1><br/>
+<p class="leading-relaxed text-lg">As you might have guessed, the ADD instruction adds two numbers. It is one of the few raw commands on the microcontroller, and many other commands stem from it (multiplication is just repeated addition, etc). Here is how you use it:</p><br/>
+
+<div class="dark:bg-cs-blue bg-cs-blue rounded-lg p-4 shadow-2xl">
+<p class="leading-relaxed text-lg">Instruction: ADD</p><br/>
+<p class="leading-relaxed text-lg">Usage: ADD destination, number1, number2</p><br/>
+<p class="leading-relaxed text-lg">Description: Adds ("ADDs") number1 and number2 and places the result in the destination register. Note that number1 <a class="italic">must</a> be a register, and number2 can be either a register or a regular number.</p><br/>
+<p class="leading-relaxed text-lg">Example:</p>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R0, #144
+    ADD R1, R0, #40     @ Adds the value in R0 (144) with the value 40. R1 now contains the value 184, and R0 was not changed
+    ADD R3, R0, R1      @ Adds the value in R0 (144) with the value in R1 (184). R3 now contains 328, and neither R0 nor R1 were changed
+    ADD R3, R3, #0x2A   @ Adds the value in R3 (328) with the hex value 0x2A (42 in decimal) and places the result (370) in R3...
+                        @ ... R3 now holds the value 370. The old value of R3 (328) was replaced with the new value.
+</pre></div><br/>
+
+<p class="leading-relaxed text-lg">In the last instruction, you can see how we can add "in-place" by making the destination register one of the operands. You will notice that most ARM instructions require a destination, and since registers are limited, we often want to save space by performing the instruction "in-place." This is an example of how you would do that.</p><br/>
+
+<p class="leading-relaxed text-lg">Like before, take a minute to figure out what the final value of each register will be after this code is run from scratch:</p><br/>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    ADD R0, R1, R2
+    MOV R1, #160
+    ADD R0, R0, R1
+    MOV R1, #80
+    ADD R2, R0, R1
+    ADD R2, R2, R2
+</pre><br/>
+
+<p class="leading-relaxed text-lg">Correct answers: r0=160, R1=80, R2=480. Notice how we can use the same register as many times as we want in a command, and that the old value will only be updated <a class="italic">after</a> the whole command is ran.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">A Quick Note on Binary</h1><br/>
+<p class="leading-relaxed text-lg">You should have seen binary in lecture and how it relates to both hex (hexadecimal) and decimal. For this next section, it will help to be able to convert between decimal and binary. You can use an online calculator for this, but make sure to understand how the conversion works first.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="shifting" class="text-4xl font-extrabold">Shifting and Rotating</h1><br/>
+<p class="leading-relaxed text-lg">Another concept you may have seen in lecture already, Shifting and Rotating are ways to modify binary values in a register. There are many types of shifting, but you only need to know these three for the lab:</p><br/>
+
+<p class="leading-relaxed text-lg">Logical Shift Left (LSL): Moves all bits to the left one, and the leftmost bit "falls off" (disappears). The rightmost bit becomes a zero. Example: "101101" becomes "011010"</p><br/>
+<p class="leading-relaxed text-lg">Logical Shift Right (LSR): Moves all bits to the right one, and the rightmost bit "falls off". The leftmost bit becomes a zero. Example: "11101" becomes "01110"</p><br/>
+<p class="leading-relaxed text-lg">Rotate Right (ROR): Moves all the bits to the right one, and the rightmost bit becomes the leftmost bit. Example: "100001" becomes "110000"</p><br/>
+
+<p class="leading-relaxed text-lg">Here is how you use them in your code:</p><br/>
+<div class="dark:bg-cs-blue bg-cs-blue rounded-lg p-4 shadow-2xl">
+<p class="leading-relaxed text-lg">Instruction: LSL, LSR, or ROR</p><br/>
+<p class="leading-relaxed text-lg">Usage: TYPE destination, number, amount</p><br/>
+<p class="leading-relaxed text-lg">Example:</p>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R3, #0b1101
+    LSL R0, R3, #4      @ R0 now contains the value of R3 (0b1100 or 12 in decimal/0xC in hex) shifted to the left by 4 bits. R0 holds 0b11010000 (or 192 in decimal, 0x12 in hex)
+    LSR R1, R3, #2      @ R1 now contains the value of R3 shifted to the right by 4 bits. R1 holds 0b11 (or 3 in decimal, 0x3 in hex)
+    ROR R2, R3, #12     @ R2 now contains the value of R3 rotated to the right by 12 bits. Remember that the registers are 32 bits long...
+                        @  ...R2 now holds 0b00000000110100000000000000000000 (or 13631488 in decimal, 0x00D00000 in hex)
+</pre></div><br/>
+
+<p class="leading-relaxed text-lg">Note that shifting/rotating is special in that you can combine it with other commands, making it an extension of the "number" operand. Example:</p><br/>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R2, #8, LSL 2   @ R2 now contains the value 8 (0b1000) shifted left 2 bits, which is 0b100000, 32, or 0x20
+</pre><br/>
+
+<p class="leading-relaxed text-lg">You can do this with any command, but note that it can only operate on the <a class="italic">last</a> number in the command. E.x. you can't do <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ADD R3, LSL 3, #4, ROR 18</code>, but you can do <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ADD R3, #4, ROR 18</code>, which would rotate only the #4 by 18 bits.</p><br/>
+
+<p class="leading-relaxed text-lg">When you talked about shifting in class, you should've seen how the shifting type logically affects the output. Shifting to the left 1 bit multiplies a number by 2, and shifting to the right 1 bit divides the number by 2 (and rounds down). There is no easy mapping for rotates.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="debug" class="text-4xl font-extrabold">GDB, the Debugger</h1><br/>
+<p class="leading-relaxed text-lg">Finally, we need to be able to see what is happening when you run your code. In the last lab, your code was designed to print things to the terminal (which is why we used a more complex program for the demonstration). Now, we want to see what is happening line-by-line inside the registers. We can't do this with basic terminal commands, so we need to run a new terminal app: GDB.</p><br/>
+
+<div class="dark:bg-cs-blue bg-cs-blue rounded-lg p-4 shadow-2xl">
+<p class="leading-relaxed text-lg">Command: gdb</p><br/>
+<p class="leading-relaxed text-lg">Usage: gdb executable (where "executable" is the name of the file you want to execute the one with no extension, i.e. not the .s)</p><br/>
+<p class="leading-relaxed text-lg">Description: Runs the terminal app GDB ("Gnu DeBugger"), which allows you to step through and examine code while it is running</p>
+</div>
+
+<p class="leading-relaxed text-lg">Remember, this command is run from the base terminal, not inside ARM or nano.</p><br/>
+
+<p class="leading-relaxed text-lg">When you run gdb, it will look very similar to your regular terminal, except it will say <code class="bg-cs-blue px-1 rounded shadow-lg text-base">gdb></code> on the left. That is your indicator that you are in the app. While in the app, regular terminal commands won't work, so you will need some new, app-specific commands. They are:</p><br/>
+
+<p class="leading-relaxed text-lg">- <code class="bg-cs-blue px-1 rounded shadow-lg text-base">b _start</code>: Creates a "Breakpoint" at the tag "_start", which is from your code. You can replace the _start tag with any other tag to start debugging your program from a different point.</p>
+<p class="leading-relaxed text-lg">- <code class="bg-cs-blue px-1 rounded shadow-lg text-base">r</code>: "Runs" to your breakpoint. In this context, it means execute all the built-in code up to the _start tag and prepare to start executing code.</p>
+<p class="leading-relaxed text-lg">- <code class="bg-cs-blue px-1 rounded shadow-lg text-base">s</code>: "Steps" over a single line of code. This executes the line and waits for the next command. IMPORTANT NOTE: the command you see listed after running <code class="bg-cs-blue px-1 rounded shadow-lg text-base">s</code> is the NEXT command, so it has not yet been executed. To execute that command, you need to step again.</p>
+<p class="leading-relaxed text-lg">- <code class="bg-cs-blue px-1 rounded shadow-lg text-base">i r</code>: Reveals the contents of your registers ("Inspect Registers") in a nice format.</p>
+<p class="leading-relaxed text-lg">- <code class="bg-cs-blue px-1 rounded shadow-lg text-base">quit</code>: Exits gdb and returns to the terminal</p>
+
+<p class="leading-relaxed text-lg">These GDB commands will be listed in the <a href="cheat-sheet" class="text-lg text-cs-blue hover:text-blue-700 underline">Command Cheat Sheet</a> for your convenience. You will be using them often. A normal workflow looks like this:</p>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>Start running GDB</li>
+<li>Set a breakpoint for _start</li>
+<li>Run to the breakpoint</li>
+<li>Step a bunch of times until you get to the line you want to check</li>
+<li>Inspect the registers to see what numbers they contain at that moment</li>
+<li>Step to the next part, inspect again, and so on</li>
+<li>Once you get the info you need, exit the debugger</li></ol>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">One More Terminal Command</h1><br/>
+<p class="leading-relaxed text-lg">Now, I know you just got a lot of gdb commands thrown at you, but here's a terminal command that will save you quite some time.</p><br/>
+
+<div class="dark:bg-cs-blue bg-cs-blue rounded-lg p-4 shadow-2xl">
+<p class="leading-relaxed text-lg">Command: cp</p><br/>
+<p class="leading-relaxed text-lg">Usage: cp file, new_location</p><br/>
+<p class="leading-relaxed text-lg">Description: Copies ("CoPy") a file into a new location. If new_location is a directory, the file is copied exactly. If new_location is a file, the file contents are copied exactly but the name is changed to the new file name.</p><br/>
+<p class="leading-relaxed text-lg">Example: cp makefile ../Lab2</p>
+</div>
+
+<p class="leading-relaxed text-lg">Your makefile from last lab can be reused a lot, but you will want to keep your code from different labs in different directories. The example above is how you would copy the makefile (assuming you are inside a directory called ~/Lab1 and want to copy it to a directory called ~/Lab2). Using this will save you quite a lot of time and typing in the long run.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="conclusion" class="text-4xl font-extrabold">Conclusion</h1><br/>
+<p class="leading-relaxed text-lg">This lab went over Moving, Adding, and working with the debugger. Unlike previous labs, this lab was focused less on reading and more on giving you descriptions and examples of how to use the tools. I encourage you to play around with these a bit before tackling the assignment portion below. Create a new file, add some wrapper code, MOVs and ADDs and Shifting, and then compile the file. Run the file with the debugger and step through it, checking the registers occasionally to see how your commands are affecting the registers. The assignments below are challenging and focused on using the commands and tools you used in fun new ways, so becoming comfortable with the toolset you have is the best way to approach these.</p><br/>
+
+<p class="leading-relaxed text-lg">It may take a minute to settle into these concepts, but know that there are plenty of resources available to you if you are confused. See either Dr. Camp's office hours or preferably the TA office hours for help with labs, homework, or general questions about the course. All that's left to do now is to write your lab report and submit it via Canvas sometime before your next lab session.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="assignment" class="text-4xl font-extrabold">Assignment</h1><br/>
+<p class="leading-relaxed text-lg">The assignment portion of the lab contains all instructions and requirements for your lab report. Any challenges or questions in the sections above were hypothetical and just for your practice. On your lab report, you only need to respond to the assignments in this section. Remember that you can check out the <a href="lab-guide" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab Report Guide</a> to see the expectations the TAs have of your lab reports.</p><br/>
+
+<p class="leading-relaxed text-lg">You should perform all these tasks in a new, blank directory on your red pitaya. Feel free to reference previous labs or the <a href="cheat-sheet" class="text-lg text-cs-blue hover:text-blue-700 underline">Cheat Sheet</a> to refresh on old topics. All tasks should only include ARM instructions you have learned up to this point. Working ahead is fine, but you need to keep the tasks in the scope of the lessons. For questions on this (if something applies, etc), ask a TA.</p><br/>
+
+
+<h2 class="text-2xl text-bold underline text-cs-green">PICK TWO</h2>
+<p class="leading-relaxed text-lg">There are three tasks listed for you below. You can pick any two tasks to attempt for this lab. The unchosen one is available for you to practice or review, but is not required. Submitting all three tasks will not grant you extra credit.</p><br/>
+
+<p class="leading-relaxed text-lg">However, the TAs will still make comments and give feedback on all three tasks, if submitted. If you want to submit a third task for feedback, but do NOT want it to be considered for grading, you must mark it clearly in your lab report with the phrase "DO NOT SCORE." If no task is marked with this phrase, the TAs will roll a random number generator to decide which two tasks to score for your lab grade.</p><br/>
+
+<p class="leading-relaxed text-lg">Additionally, if you come up with a task that you think is of comparable challenge to the ones listed, you may pitch it to one of the TAs. If accepted, your task (bound by the requirements agreed upon by you and the TA) will count towards one of the PICK TWO tasks. The other tasks may be submitted for feedback following the same protocol listed in the paragraphs above.</p><br/>
+
+<h2 class="text-2xl text-bold underline text-cs-green">Task 1</h2>
+<p class="leading-relaxed text-lg">Write a program that makes a register hold your student ID (in hex).</p><br/>
+
+<p class="leading-relaxed text-lg">Additional Requirements:</p>
+<p class="leading-relaxed text-lg">- Your program can only use MOV, ADD, and shifting/rotating commands.</p>
+<p class="leading-relaxed text-lg">- You must show the results by inspecting registers in the debugger.</p><br/>
+
+<p class="leading-relaxed text-lg">Assumptions:</p>
+<p class="leading-relaxed text-lg">- Your student ID will be in hex. That means if your student ID is 12345678, the register should hold 0x12345678. You do not need to use any converter for this, just enter all digits in hex instead of decimal.</p>
+<p class="leading-relaxed text-lg">- Your SMUID is 8 hex digits (32 bits), which is within the 32-bit limit for registers.</p>
+<p class="leading-relaxed text-lg">- Remember that an MOV command can only move one named byte (two hex digits) into a register at a time.</p><br/>
+
+<p class="leading-relaxed text-lg">Expected Outputs:</p>
+<p class="leading-relaxed text-lg">- Inspecting regisers in GDB should show your full student ID in any of the available registers. E.x.</p>
+<p class="leading-relaxed text-lg">- TODO: Photo here</p><br/>
+
+<h2 class="text-2xl text-bold underline text-cs-green">Task 2</h2>
+<p class="leading-relaxed text-lg">Write a program that rotates a number by a variable amount.</p><br/>
+
+<p class="leading-relaxed text-lg">Additional Requirements:</p>
+<p class="leading-relaxed text-lg">- Your program can only use MOV, ADD, and shifting/rotating commands.</p>
+<p class="leading-relaxed text-lg">- You must show the results by inspecting registers in the debugger.</p>
+<p class="leading-relaxed text-lg">- Debugging screenshots must include both the original number and the shift amount.</p><br/>
+
+<p class="leading-relaxed text-lg">Assumptions:</p>
+<p class="leading-relaxed text-lg">- You put the number and the shift amount in two differnet registers of your choice at the start of your program.</p>
+<p class="leading-relaxed text-lg">- Any 32-bit number can be used (but you should stick with 1 byte numbers for ease), and the rotate amount should be less than 32.</p><br/>
+
+<p class="leading-relaxed text-lg">Expected Outputs:</p>
+<p class="leading-relaxed text-lg">- Inspecting regisers in GDB should show the number, shift amount, and result in any three separate registers. E.x.</p>
+<p class="leading-relaxed text-lg">- TODO: Photo here</p><br/>
+
+<h2 class="text-2xl text-bold underline text-cs-green">Task 3</h2>
+<p class="leading-relaxed text-lg">Write a program that adds two numbers, then saves only the last four bits. (e.x. 0x12 + 0xA4 = 0xB6 = 0b10110110. Last 4 bits = 0b0110 = 0x6, so the final register should only have 0x6 in it).</p><br/>
+
+<p class="leading-relaxed text-lg">Additional Requirements:</p>
+<p class="leading-relaxed text-lg">- Your program can only use MOV, ADD, and shifting/rotating commands.</p>
+<p class="leading-relaxed text-lg">- You must show the results by inspecting registers in the debugger.</p>
+<p class="leading-relaxed text-lg">- Debugging screenshots must include both original numbers and the result.</p>
+<p class="leading-relaxed text-lg">- The two original numbers must be greater than 15.</p><br/>
+
+<p class="leading-relaxed text-lg">Assumptions:</p>
+<p class="leading-relaxed text-lg">- You put both original numbers in two different registers of your choice at the start of your program.</p>
+<p class="leading-relaxed text-lg">- Any 32-bit numbers greater than 15 can be used (but you should stick with 1 byte numbers for ease).</p>
+<p class="leading-relaxed text-lg">- The resulting four bits do NOT need to be returned directly after the ADD. You can run as many instructions as you need to achieve this result, and the four bits need only need to be isolated sometime before the end of your program.</p><br/>
+
+<p class="leading-relaxed text-lg">Expected Outputs:</p>
+<p class="leading-relaxed text-lg">- Inspecting regisers in GDB should show both original numbers and the isolated 4-bit result in any three separate registers. E.x.</p>
+<p class="leading-relaxed text-lg">- TODO: Photo here</p><br/>
+
+        </div></div>
+        <!-- Feedback Box -->
     <div id="feedback-box" class="fixed hidden right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 dark:bg-[#444444] border-l-4 border-b-4 border-[#E0E0E0] dark:border-[#3B3B3B] rounded-l-xl shadow-lg w-64 p-4 z-50">
         <h2 class="font-bold text-lg dark:text-white text-gray-800 mb-2 text-center">Feedback</h2>
         <textarea id="feedback-text" class="w-full p-2 border rounded-md dark:bg-[#333333] dark:text-steel text-gray-800" rows="4" placeholder="Feedback, corrections, feature ideas, comments, etc."></textarea>
@@ -204,6 +281,18 @@ _start:
     <button id="feedback-toggle" class="fixed top-1/2 transform -translate-y-1/2 right-0 md:right-64 bg-cs-blue hover:bg-cs-green text-steel rounded-l-md px-1 py-8 shadow-md">
         ||
     </button>
+
+    <!--
+    <body class="flex justify-center items-center h-screen bg-gray-100">
+        <div class="bg-white p-6 rounded shadow-lg">
+            <h1 class="text-2xl mb-4">Report a Problem</h1>
+            <form action="/submit_workorder" method="post">
+                <textarea name="issue" required class="border p-2 w-full rounded" placeholder="Describe your issue..."></textarea>
+                <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+            </form>
+        </div>
+    </body>
+    -->
 
     <script>
         const feedbackBox = document.getElementById('feedback-box');
@@ -308,6 +397,8 @@ _start:
                     Below is an example of a simple Python function:
                 </p>
                 <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+                
+                </pre>
 def greet(name):
     return f"Hello, {name}!"
 
