@@ -224,6 +224,7 @@ Autoindexing is just preindexing and postindexing combined. If you want to get d
 
 .data
 RoadWorkAhead: .ascii "Yeah, I sure hope it does."
+```
 
 As you can see, autoindexing combines both pre and post indexing into one command. It is most useful for jumping around memory without knowing where you are going in advance.
 
