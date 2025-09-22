@@ -64,12 +64,12 @@ def ece1181lab1():
 @app.route("/courses/ECE1181/lab-2")
 def ece1181lab2():
     return render_template("courses/ECE1181/Lab2.html", title_extention="Lab 2 - ")
-'''
+
 # Lab3 Page
 @app.route("/courses/ECE1181/lab-3")
 def ece1181lab3():
     return render_template("courses/ECE1181/Lab3.html", title_extention="Lab 3 - ")
-
+'''
 # Lab4 Page
 @app.route("/courses/ECE1181/lab-4")
 def ece1181lab4():

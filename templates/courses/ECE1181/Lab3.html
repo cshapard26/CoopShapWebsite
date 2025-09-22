@@ -8,167 +8,355 @@
             <!-- Title Section -->
             <div class="text-center">
                 <h1 class="text-6xl font-extrabold leading-tight text-cs-green">
-                    Lab 3: Moving and Adding
+                    Lab 3: Memory
                 </h1>
                 <h2 class="text-2xl text-bold leading-tight text-cs-green">
-                    Move numbers and Add numbers, the two things that run all programs
+                    Loading, Storing, Endianness, and Indexing
                 </h1>
                  <!-- Separator -->
                 <div class="h-px bg-cs-green my-6"></div>
                 <a href="#overview" class="inline-block bg-cs-blue hover:bg-blue-700  hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
                     Overview
                 </a> >>
-                <a href="#instructions" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
-                    Instructions
+                <a href="#mem" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Memory
+                </a> >>
+                <a href="#ldr" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    LDR
+                </a> >>
+                <a href="#end" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Endianness
+                </a> >>
+                <a href="#str" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    STR
+                </a> >>
+                <a href="#indexing" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Indexing
                 </a> >>
                 <a href="#conclusion" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
                     Conclusion
                 </a> >>
-                <a href="#code-given" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
-                    Code Given
+                <a href="#assignment" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Assignment
                 </a>
             </div>
 
-            <!-- Separator -->
-            <div class="h-px bg-cs-green my-6"></div>
-
             <!-- Blog Content -->
-            <div class="prose prose-lg mx-auto dark:text-steel text-[#222222]">
-                <h1 id="overview" class="text-4xl font-extrabold">Overview</h1>
-                <br/>
-                <p class="leading-relaxed text-lg">Welcome to Lab 3! Now that you are familiar with the syntax of ARM and the debugger, we can start analyzing how the ARM processor manipulates data. There are two main takeaways from this lab. First, the ARM processor does not interpret values; only the programmer does. Whether you are doing signed addition, unsigned addition, or something else, the ARM processor behaves the exact same way, using Two's Complement. Thus, the result of an operation may be a signed or unsinged number, but the processor doesn't know which it is. It is up to the programmer to interpret the output using the CPSR condition codes (NZCV), which put to use in this lab. Second, this lab focuses on placing values in registers <a class="font-extrabold">without</a> accessing memory. Though the word "load" is used in the text, this is a misnomer, as "load" is exclusive to accessing memory in ARM. You will learn more about memory management in a future lab, but understand that for now we are only looking at immediate values.</p><br/>
 
-                <p class="leading-relaxed text-lg">If you need any help or clarification, be sure to ask a TA. The old lab guides are avaliable in case you want to freshen up on the skills you have already learned.</p>
+            <div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Overview</h1><br/>
+            <p class="leading-relaxed text-lg">Welcome to Lab 3. Last lab, you learned about moving, adding, and shifting values in registers, as well as how to use the debugger to examine your program. Today, you will be looking at memory in the red pitaya and how to work with it.</p><br/>
+            
+            <p class="leading-relaxed text-lg">All labs require a lab report. For a comprehensive look on what the TAs are looking for, formatting, and scoring, take a look at the <a href="lab-guide" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab Report Guide</a>.</p><br/>
+            
+            <p class="leading-relaxed text-lg">These lab guides are handmade, and as such may contain errors in logic, spelling, grammar, etc. If you find any issues, please leave a note in the Feedback tab on the right so we can fix it ASAP. This tab can also be used to anonymously submit suggestions, improvements, or complaints about the website. All of these will be reviewed and taken into consideration.</p><br/>
+            
+            <div class="h-px bg-cs-green my-6"></div><h1 id="mem" class="text-4xl font-extrabold">What is Memory</h1><br/>
+            <p class="leading-relaxed text-lg">As you should have seen before in lecture, memory is a dedicated spot in the microcontroller that stores information in larger quantities than can be stored in the registers. The memory on your pitaya is used to store both the programs that you are executing and the data that that program executes. There are different sections of memory reserved for different types of data, but you will see that more in lecture. The memory on your red pitaya is RAM, which is a type of volatile memory. This type of memory is erased when you unplug the pitaya. Your pitaya also has storage (what the microSD card is for), which is a type of nonvolatile memory that is slower, but can hold larger amounts of information.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Generally speaking, the more data a type of memory can hold, the slower it is. The registers on your pitaya can only hold around 100 bytes of data at a time, but are extremely fast and can be acted upon in a single cycle. Memory/RAM on your pitaya can hold around 512 KB of data, and is still fast, but not super fast, needing 3 cycles to act on (get address, access address, act). Finally, storage on your pitaya holds around 32 GB of data, but is very slow and is not supposed to be acted on.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Note that the program that you write is placed in storage so that is persists even after unplugging your pitaya. However, when you run the program, the whole thing is loaded into memory, which is where it is actually acted on. You do not run code from storage, even if it is stored there.</p><br/>
+            
+            <p class="leading-relaxed text-lg">All memory has an address (just like a street address) that tells you where a specific byte is located. These addresses are often written in hex (e.x. 0x200C0 or 0xAB4C). To load or store data in memory, you first need to specify the address that the data should be stored at or loaded from.</p><br/>
+            
+            <div class="h-px bg-cs-green my-6"></div><h1 id="ds" class="text-4xl font-extrabold">Data Sizes</h1><br/>
+            <p class="leading-relaxed text-lg">A quick note on data sizes. When talking about data, a "word" means a 32-bit or 4-byte block of data. A "halfword" means a 16-bit or 2-byte block of data. A "byte" means an 8-bit or 1-byte block of data. This will be useful later.</p><br/>
+            
+            <div class="h-px bg-cs-green my-6"></div><h1 id="ma" class="text-4xl font-extrabold">Getting a Memory Address</h1><br/>
+            <p class="leading-relaxed text-lg">Now that you know what a memory address is, we should look at how to get one. You shouldn't have to type the actual numbers (0x200AC, etc) when accessing memory, as that would be a pain. Luckily, ARM has a way around this that you have already seen: tags.</p><br/>
+            
+            <p class="leading-relaxed text-lg">When you create a tag in your program (e.x. "_start:" or "helloworld:"), that tag is actually a pseudonym for the address where the data it marks is stored in memory. For example, in Lab 1, you printed out a message that said "Hello YOURNAME!", and this was marked with the tag "helloworld:". If you wanted to access the data at that tag/address, you need a special command:</p><br/>
+            
+            <div class="dark:bg-cs-blue bg-cs-blue rounded-lg p-4 shadow-2xl">
+            <p class="leading-relaxed text-lg">Instruction: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR</code></p><br/>
+            <p class="leading-relaxed text-lg">Usage: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR destination, =tag</code></p><br/>
+            <p class="leading-relaxed text-lg">Description: Loads ("LoaD into Register") the address named by the tag into the destination register.</p><br/>
+            <p class="leading-relaxed text-lg">Example:</p>
+            <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+.global _start
+_start:
+      
+      @ Look at the .data section at the bottom for addresses and data
+      
+      LDR R0, =hellothere     @ This loads the address of the tag "hellothere:" into register 0
+                        @ R0 now contains the value 0x20000. It does not contain the value "G"
+                        @ However, the value "G" is stored *at* the address 0x20000
 
-                <div class="h-px bg-cs-green my-6"></div><h1 id="instructions" class="text-4xl font-extrabold">Instructions</h1>
-                <br/>
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 1 & 2</h1>
-                <p class="leading-relaxed text-lg">Read pages 27-41 in the Smith textbook. Please actually do this. Many of the topics will be familiar from lecture, but it is cruicial to get another perspective before continuing with the lab. </p><br/>
+      LDR R1, =perry          @ This loads the address of the tag "perry:" into register 0
+                        @ R0 now contains the value 0x200BC. It does not contain the value "t"
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 3</h1>
-                <p class="leading-relaxed text-lg">Following the book, create a file using the code from Listing 2-1 (also found in the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">Code Given</a> section). Be sure to update your "makefile" file with the new name of your file. There should be 3 updates. This is the same makefile you used in the previous lab. Build the file with the command <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make DEBUG=1</code>. Next, use the command <code class="bg-cs-blue px-1 rounded shadow-lg text-base">objdump -s -d NameOfYourFile.o</code> to object dump the file. Please please please replace the word "NameOfYourFile" with the actual name of your file (likely "movexamps"). This is the #1 issue people have. <a class="font-extrabold">Take a screenshot of the objdump output and include it in your lab report.</a></p><br/>
+      MOV R0, #0
+      MOV R7, #1
+      SVC 0
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 4</h1>
-                <p class="leading-relaxed text-lg">Take your code from step 3 and change all of the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOV</code> instructions to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOVS</code>. Ignore the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOVN</code> line. Adding the S makes the program update the CPSR (Current Program Status Register) flags, which you should remember from lecture. These are the NZCV bits. For this step, we only care about the C (carry) bit and can examine it with the debugger. </p><br/>
-                <ol class="list-decimal ml-6 text-lg space-y-2"><li>Add breakpoints in front of the first 7 <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOVS</code> lines (not including the commented one). This is similar to what you did last lab. I recommend you name the breakpoints <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mv1:</code>, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mv2:</code>, etc. </li>
-                <li>Enter the program using the debugger (gdb). Set breakpoints for each line and step over each breakpoint. After you step over a MOVS line, display the registers. There is a register named CSPR, which is where the CPSR flags are stored. <a class="font-extrabold">For each of these MOVS lines, include a screenshot of the registers/CPSR.</a> You should have 7 screenshots for this step.</li>
-                <li>Now, you want to check the C bit of your CPSR. This can get confusing, so read carefully and ask a TA if you have questions. You learned from lecture that there are 4 CPSR flags we want to pay attention to: NZCV. These 4 bits are the <a class="italic">leftmost</a> bits of the CPSR. However, in your program, the CPSR will be displayed in hexadecimal. You will need to extract the binary flags from the hexadecimal notation. Since 4 bits turn into 1 character in hex, we can do this easily by <u>converting just the very first character of the CPSR register from hex to binary</u>. So if the register contains "0x90000010", then we would just take the 9, convert it into binary—1001—and assign each bit to its flag NZCV in that order. So in this example, the N and V flags are on/1 and the Z and C flags are off/0. Another example: "0xB681EF21". We take the leftmost character "B", convert it to binary "1011", and assign the flags "N_CV". <u>You may occationally see a shortened CPSR like "0x10" that does not have all 8 characters. This means that all the flags are off/0.</u> <a class="font-extrabold">Under each of the 7 screenshots, explain why each MOVS command gave the resulting C value.</a></li></ol>
+.data
+hellothere:       .ascii "General Kenobi"       @ Pretend this starts at the address 0x20000
+perry:            .ascii "the platypus"         @ Pretend this starts at the address 0x200BC
+anothertag: .word 0x12345678        @ Pretend this starts at the address 0x20108
+onemore:    .byte 0x12345678
+            </pre><br/></div>
+            
+            <p class="leading-relaxed text-lg">Note that this is actually a secondary use of the LDR command, which you will see in the next section of this lab. What it is doing here is actually creating a "literal pool," the topic of our next lab. For now, just know that you can get a memory address of a tag using <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR reg, =tag</code>.</p><br/>
+            
+            
+            <div class="h-px bg-cs-green my-6"></div><h1 id="ldr" class="text-4xl font-extrabold">LDR</h1><br/>
+            <p class="leading-relaxed text-lg">You've seen how to get the address of a section in memory. But this is useless on it's own. You don't want to know where "perry:" is. You want to know the "the platypus." Similarly to how we got the memory address, we can use the LDR command to get the value AT the memory address. This is the primary usage of the LDR instruction.</p><br/>
+            
+            <div class="dark:bg-cs-blue bg-cs-blue rounded-lg p-4 shadow-2xl">
+            <p class="leading-relaxed text-lg">Instruction: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR</code></p><br/>
+            <p class="leading-relaxed text-lg">Usage: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDRx destination, [address]</code></p><br/>
+            <p class="leading-relaxed text-lg">Description: Loads ("LoaD into Register") a value from the specified memory address into the destination register. Here, the "x" specifies the size of the data to be loaded, where replacing "x" with "B" loads a byte, "H" loads a halfword, and removing the "x" loads a full word. "LDRx" is not a valid command, and you need to replace the x to make a working instruction.</p><br/>
+            <p class="leading-relaxed text-lg">Example:</p><br/>
+            <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+.global _start
+_start:
+      
+      @ Look at the .data section at the bottom for addresses and data
+      
+      LDR R0, =hellothere     @ This loads the address of the tag "hellothere:" (0x20000) into register 0
+      LDRB R1, [R0]           @ This goes to the address held in R0 (0x20000) and places one byte of that data
+                        @ into register 1. R1 now contains "0x47", which is the ASCII value for "G"
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 5</h1>
-                <p class="leading-relaxed text-lg">Read pages 45-49 in the Smith book. These concepts should be familiar from lecture and HW1.</p><br/>
+      ADD R0, R0, #0x1  @ Adds 1 to the memory address
+      LDRB R2, [R0]           @ Loads one byte from the address in R0 (0x20001) into R2
+                        @ This is "0x65", the ASCII value of "e" (the second letter of "General")
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 6</h1>
-                <p class="leading-relaxed text-lg">Create a new file called "mvnaddexamp.s" and fill it with the code from Listing 2-3 (also in the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">Code Given</a> section). Update your "makefile" with the new filename; there should be three updates. Build the file with the debugger enabled. Now, use the debugging procedure (gdb) to examine your file. Step, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">s</code>, to the very last line (SVC 0), but don't go further. Then, print the registers with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">i r</code>. What value is in register R0? <a class="font-extrabold">Include a screenshot of the registers from this step in your lab report and explain why your R0 value is what it is.</a></p><br/>
+      LDR R0, =perry          @ Overwrites R0 with the address of "perry" (0x200BC)
+      LDRB R0, [R0]           @ Replaces the contents of R0 with one byte stored at the address in R0,
+                        @ which is "0x74" or the ASCII value for "t". R0 now contains "0x74", and the address
+                        @ that R0 had in it before was overwritten. This is a quick way to get the value at an address
+                        @ without using up too many of your registers
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 7</h1>
-                <p class="leading-relaxed text-lg">Create a new file called "addsadcexamp.s" and fill it with the code from Listing 2-4 (also in the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">Code Given</a> section). Update your "makefile" with the new filename; there should be three updates. Build the file with the debugger enabled.</p><br/>
+      LDR R5, =anothertag
+      LDR R3, [R5]            @ R3 now contains one WORD of data from the address held in 5 (0x20108)
+                        @ R3 now contains the value 0x12345678
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 8</h1>
-                <p class="leading-relaxed text-lg">We are now going to do something similar to step 4, but now we care about all 4 CPSR flags, NZCV. Using your code from step 7, change the line <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R3, =0xFFFFFFFF </code> to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R3, =0xYourSMUID</code>, so if your ID was 12345678, you would have <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R3, =0x12345678</code>. This number will be added to the number in R5. Your goal is to change the number in R5 to achieve <a class="italic">each/all</a> condition code value, NZCV. You will want a situation where N = 0, one where N = 1, one where C = 0, one where C = 1, etc. Since you can have multiple condition codes, you do not necessarily need 8 screenshots/8 R5 values. Ideally, you could do this in 2 runs, but use as many as you need to complete this step.</p><br/>
+      LDR R6, =perry
+      LDRH R4, [R6]           @ R4 now contains one WORD of data from the address held in R6 (0x200BC)
+                        @ R4 now contains the value "0x6874", or the ASCII values for "ht"
+                        @ Why is it backwards? Keep reading.
 
-                <p class="leading-relaxed text-lg">To do this, I would recommend placing a breakpoint at the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ADC</code> line. Each time you change R5, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make DEBUG=1</code> the program, open the debugger, run to your breakpoint, then print the registers to check the CPSR value. </p><br/>
+      MOV R0, #0
+      MOV R7, #1
+      SVC 0
 
-                <a class="font-extrabold">For each CPSR value you generate, take a screenshot of the registers and include it in your lab report. We should be able to see both the value of R5 and the CPSR in the screenshot.</a>
+.data
+hellothere:       .ascii "General Kenobi"       @ Pretend this starts at the address 0x20000
+perry:            .ascii "the platypus"         @ Pretend this starts at the address 0x200BC
+anothertag: .word 0x12345678        @ Pretend this starts at the address 0x20108
+            </pre><br/></div>
+            
+            <p class="leading-relaxed text-lg">A few things to note:</p><br/>
+            <ol class="list-decimal ml-12 text-lg space-y-2"><li>You cannot skip steps and do something like <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R2, [=anothertag]</code>. Why? The ARM philosophy says we can only do one thing at a time.</li>
+            <li>As in the second example, you can add or subtract from the address in a register to get new addresses. This is useful for getting one character at a time from a string of text</li>
+            <li>You may have noticed that when loading a halfword of ascii text, the letters were reversed ("ht" instead of "th" like it was written). That is because ARM is a little endian system.</li></ol>
+            
+            <div class="h-px bg-cs-green my-6"></div><h1 id="end" class="text-4xl font-extrabold">Endianness</h1><br/>
+            <p class="leading-relaxed text-lg">You should have heard about this in lecture, but here is a recap: Big Endian means that the most significant bit (MSB) comes first when loading or storing data. Little Endian means that the least significant bit (LSB) comes first when loading or storing data.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Generally, you write numbers with the MSB first. 0x100 is a large number, and 0x001 is a small number. However, in little endian systems, the LSB comes first (when in memory). This can seem counterintuitive, so why do it? ARM is built for efficiency.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Think about it this way. You have a stack of 100 paper plates. You want to move the plates from one cabinet to another. What do you do? like a sane person, you will pick up the entire stack of plates and move it to the new cabinet. The order of the plates is the same, even when moved to a new location. This is like a Big Endian system. But data is not a paper plate. It is not super light and easy to move.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Now assume you have a stack of 100 lead plates. You know, the ones that give you lead poisoning when you eat acidic food on them? Pretend that each plate weighs 20 pounds. If you wanted to move all the plates from one cabinet to another, you wouldn't pick up the entire stack and move it. You would take one plate from the top of the pile, move it to the new cabinet, and then repeat for all the plates. Now, the order in the plates in the new cabinet will be reversed from that of the original cabinet. This is like a Little Endian system.</p><br/>
+            
+            <p class="leading-relaxed text-lg">One important thing to note is that you will only be moving data between registers and memory. If you have data in a register, it flips when it goes into memory, then it flips again when you take it out of memory. In that way, when you are working with data, you generally don't have to worry about endianness, as it sorts itself out as you use it. Where it becomes important is with data sizes.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Little endian takes effect on a single chunk of data at a time. These chunks range between bytes and words. If you store data as a byte, it performs no flip, since a byte is the smallest unit of data in memory (you can't reverse the order of one object). If you store it as a halfword, it flips the two bytes, and if you store it as a word, it flips all four bytes. This means that, when you are loading and storing data in memory, you need to be consistent with the data size. If you store a piece of data as a word, then try to load it as a halfword, it will jumble up the data. ASCII characters are only meant to be loaded or stored a single byte at a time. That is why the "th" was reversed when it was loaded as a halfword in the previous example.</p><br/>
+            
+            <div class="h-px bg-cs-green my-6"></div><h1 id="svu" class="text-4xl font-extrabold">Signed vs Unsigned</h1><br/>
+            <p class="leading-relaxed text-lg">One additional argument that the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR</code> instruction takes is whether a number is signed or unsigned (integer or whole number). This is not very important and you likely won't have to apply it in this class. It is mostly used to set Condition Codes, which you will learn about in our next lab session. LDR commands are unsigned by default, and you can make them signed by adding the letter <code class="bg-cs-blue px-1 rounded shadow-lg text-base">S</code> after it. E.x. <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDRS</code> for a signed word, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDRSB</code> for a signed byte, and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDRSH</code> for a signed halfword. Again, you won't need to use this, but it's good to know in case you see it in code given to you.</p><br/>
+            
+            <div class="h-px bg-cs-green my-6"></div><h1 id="str" class="text-4xl font-extrabold">STR</h1><br/>
+            <p class="leading-relaxed text-lg">You read about loading data from memory and the effects of endianness, so now it's time to learn about storing data into memory.</p><br/>
+            
+            <div class="dark:bg-cs-blue bg-cs-blue rounded-lg p-4 shadow-2xl">
+            <p class="leading-relaxed text-lg">Instruction: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">STR</code></p><br/>
+            <p class="leading-relaxed text-lg">Usage: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">STRx number, [destination]</code></p><br/>
+            <p class="leading-relaxed text-lg">Description: Stores ("StoRe into Register") a the given number/data into the address "destination". Here, the "x" specifies the size of the data to be stored, where replacing "x" with "B" stores a byte, "H" stores a halfword, and removing the "x" stores a full word. "STRx" is not a valid command, and you need to replace the x to make a working instruction.</p><br/>
+            <p class="leading-relaxed text-lg">Example:</p><br/>
+            <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+      LDR R2, =emptyarea
+      MOV R5, #0x6C
+      STRB R5, [R2]           @ Stores a byte from the value in R5 (0x6C) into the memory address in R2
+                        @ No changes occured to any of the registers, but now the data at "emptyarea"
+                        @ is 0x6C000000 instead of 0x00000000
+      
+      ADD R4, R2, #2
+      MOV R5, #0xA7F3         
+      STRH R5, [R4]           @ Stores a halfword from the value in R5 (0xA7F3) into the memory address in R4
+                        @ which is 2 addresses after "emptyarea". No registers changed, and the data in
+                        @ "emptyarea" is now 0x6C00F3A7 (remember little endian)
+      
+      LDR R0, [R2]            @ Loads a word from the address in R2 (still "emptyarea") into register 0
+                        @ R0 now contains 0xA7F3006C
+
+.data
+emptyarea:  .word 0x00000000
+            </pre><br/></div>
+            
+            <p class="leading-relaxed text-lg">Important Note: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">STR</code> is one of the few commands that don't follow the pattern of starting with the destination. Remember that the destination is the memory address. It is the exact opposite of an <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR</code>.</p><br/>
+            
+            <p class="leading-relaxed text-lg">The example code given also shows what happens when you mix up your data sizes (stored a byte and a halfword, loaded a word, now the data is mixed up).</p><br/>
+            
+            <div class="h-px bg-cs-green my-6"></div><h1 id="indexing" class="text-4xl font-extrabold">Indexing</h1><br/>
+            <p class="leading-relaxed text-lg">Indexing is a bit of an annoying topic, but it is important. In ARM, you often are working with data larger than a byte or a word. Take the strings above, for example. "the platypus" is 12 characters long, so 12 bytes or 3 words. However, the tag "perry:" only reveals the address of the first byte. How do we access the next bytes? In the previous examples, I manually added a byte or two to the address using an ADD command. However, this is inefficient and doesn't always give us the behavior that we want. Since viewing a range of addresses is so common, ARM gives us options to do so automatically upon loading or storing. This is called Indexing.</p><br/>
+            
+            <p class="leading-relaxed text-lg">There are 3 types of indexing in ARM: preindexing, postindexing, and autoindexing. When loading or storing, the address you are working with will <a class="italic">always</a> be in a register. However, in some indexing types, the address you are loading or storing to is offset from the actual address in the register. This offset address is called the "effective address" and it may be the same or different than the address stored in the register.</p><br/>
+            
+            <h2 class="text-2xl text-bold underline text-cs-green">Preindexing</h2>
+            <p class="leading-relaxed text-lg">Preindexing means that when loading or storing to an address, you specify an offset, and the data is stored to the new effective address. The address in the register is not updated. It looks like this:</p><br/>
+            <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+      LDR R0, =somebody
+      LDRB R1, [R0, #3] @ This is preindexing notation. It gets one byte from the address "somebody" PLUS
+                        @ the value 3. This is three bytes after the original one, so it gets the value "e".
+                        @ The value in R0 is not changed.
+
+      LDRB R1, [R0, #8] @ Preindexing to get the character 8 bytes after the first one, which is a "d". R0 is
+                        @ not changed
+
+      LDRB R1, [R0, #0] @ Gets the character from the original address plus 0 bytes, which is still the first
+                        @ character, "o". Note that this is equivalent to "LDRB R1, [R0]". R0 is not updated
+      
+.data
+somebody: .ascii "once told me"
+            </pre><br/>
+            
+            <p class="leading-relaxed text-lg">Preindexing is useful for getting a byte at a specific, unnamed location without changing the state of any of your registers.</p><br/>
+            
+            <h2 class="text-2xl text-bold underline text-cs-green">Postindexing</h2>
+            <p class="leading-relaxed text-lg">Postindexing means that when loading or storing to an address, you do not specify an offset, and the data is stored at the original address (which is the same as the effective address. However, you do specify a number, which is how much to change the original address stored in your register after the command is executed. This is better explained with an example:</p><br/>
+            <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+      LDR R0, =somebody
+      LDRB R1, [R0], #2 @ This is postindexing notation. It gets one byte from the address "somebody" without
+                        @ any offset. This is the first letter "o". Next, the value 2 is added to R0 and stored
+                        @ back into R0. If "somebody" has the address 0x20000, the R0 originally held 0x20000 but now
+                        @ holds 0x20002.
+
+      LDRB R1, [R0], #2 @ This is the same command. However, since R0 was updated in the previous command, we are now
+                        @ getting the value at 0x20002, which is the "c". After we get that value, 2 is added to R0
+                        @ and stored back in R0. Thus, R0 now holds 0x20004
+
+      LDRH R2, [R0], #-3     @ (Note the LDRH instead of LDRB, meaning Load Halfword instead of Load Byte) 
+                        @ This gets two characters (reversed because of little endian) from the address in R0,
+                        @ which is still 0x20004. R2 now holds ascii for "t ". R0 is now updated to 0x20001
+
+      LDR R0, =somebody @ Note that you can reset the address in R0 back to 0x20000 (a.k.a "somebody") at any point
+                        @ with this command.
+
+      
+.data
+somebody: .ascii "once told me"
+            </pre><br/>
+            
+            <p class="leading-relaxed text-lg">As you may have noticed, you can also use negative numbers as indexes. This works for all types of indexing. Post indexing is useful for code that is repeated or getting a large set of data that is evenly spaced (like one byte characters in a string).</p><br/>
+            
+            <h2 class="text-2xl text-bold underline text-cs-green">Autoindexing</h2>
+            <p class="leading-relaxed text-lg">Autoindexing is just preindexing and postindexing combined. If you want to get data at an offset, then change the value of the stored address, you can do both at the same time. This is like saying <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDRB R6, [R7, #4], #2</code>. HOWEVER, due to limitations in ARM, the offset and the address update MUST be the same value. That means the previous example cannot exist, but <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDRB R6, [R7, #4], #4</code> is allowed. Because the two numbers are the same, ARM simplifies the command to be <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDRB R6, [R7, #4]!</code> with the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">!</code> at the end. This is the syntax for autoindexing, as seen in the example below:</p><br/>
+            <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+      LDR R3, =RoadWordAhead
+      LDRB R8, [R3, #6]!      @ This is autoindexing notation. It gets one byte from the address "RoadWorkAhead" in R3 PLUS
+                        @ the value 6. Assuming that "RoadWorkAhead" is at 0x14C00, the effective address is
+                        @ 0x14C06, which puts the ascii "I" into R8. Next, R3 is updated to be the old effective
+                        @ address, 0x14C06. R8 now holds "I" and R3 now holds 0x14C06
+
+      LDRB R9, [R3, #4]!      @ Another autoindex, but with a 4. Since R3 is still 0x14C06, this will get the character at
+                        @ 0x14C06 PLUS 4, which is 0x14C0A, and put that character into R9. R9 holds "r", and R3 is     
+                        @ updated to the old effective address, 0x14C0A
 
 
+.data
+RoadWorkAhead: .ascii "Yeah, I sure hope it does."
+            </pre><br/>
+            
+            <p class="leading-relaxed text-lg">As you can see, autoindexing combines both pre and post indexing into one command. It is most useful for jumping around memory without knowing where you are going in advance.</p><br/>
+            
+            <h2 class="text-2xl text-bold underline text-cs-green">Final Notes on Indexing</h2>
+            <p class="leading-relaxed text-lg">Though most of the examples above showed large numbers as offsets and address additions, you will almost always be using either "1" to move to the next byte or "4" to move to the next word. When working with text, you will mostly be using postindexing with an update of 1. Get a character, move to the next one, repeat. All in one command.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Also, though all the examples I gave used <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR</code>, all of these topics apply exactly the same with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">STR</code> commands.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Since indexing has historically been a tough topic for students, I have made this little animation to show you the different indexing types in action.</p><br/>
+            
+            <p class="leading-relaxed text-lg">TODO: Add gif (probably will forget to add this ~Cooper, August 29th 2025)</p><br/>
+            
+            <div class="h-px bg-cs-green my-6"></div><h1 id="gdb" class="text-4xl font-extrabold">Memory and GDB</h1><br/>
+            <p class="leading-relaxed text-lg">Remember your old friend GDB? As the debugger's best friend, you get to learn another command to interact with it. You used the command <code class="bg-cs-blue px-1 rounded shadow-lg text-base">i r</code> to view the contents of registers. Now you get the command to view the memory at a specified address:</p><br/>
+            
+            <p class="leading-relaxed text-lg"><code class="bg-cs-blue px-1 rounded shadow-lg text-base">x /4ubfx ADDRESS</code>: This displays four bytes in memory starting at ADDRESS (which is replaced with the memory address you want to see). This command can be modified a bit to display different information, but I find this the cleanest way. If you are interested in other ways to display memory check out TODO:page_number in the Smith book.</p>
+            
+            <p class="leading-relaxed text-lg">Remember that gdb commands can only be run when in the debugger. Check last lab for reminders on that. Also, you may not know what memory address you need. The best way to find this address is to first do <code class="bg-cs-blue px-1 rounded shadow-lg text-base">i r</code> to check your registers, then find the memory address that you put in one of the registers (in the command <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R3, =idunno</code>, this would be R3). You can add or subtract from that value to view a different window of memory.</p><br/>
+            
+            
+            <div class="h-px bg-cs-green my-6"></div><h1 id="conclusion" class="text-4xl font-extrabold">Conclusion</h1><br/>
+            <p class="leading-relaxed text-lg">This lab went over Loading, Storing, and indexing types. This lab was focused less on reading and more on giving you descriptions and examples of how to use the tools. I encourage you to play around with these a bit before tackling the assignment portion below. Create a new file, add some wrapper code, LDRs and STRs with Indexing and Datasizes, and then compile the file. Run the file with the debugger and step through it, checking memory occasionally to see how your commands are affecting the pitaya's memory. The assignments below are challenging and focused on using the commands and tools you used in fun new ways, so becoming comfortable with the toolset you have is the best way to approach these.</p><br/>
+            
+            <p class="leading-relaxed text-lg">It may take a minute to settle into these concepts, but know that there are plenty of resources available to you if you are confused. See either Dr. Camp's office hours or preferably the TA office hours for help with labs, homework, or general questions about the course. All that's left to do now is to write your lab report and submit it via Canvas sometime before your next lab session.</p><br/>
+            
+            <div class="h-px bg-cs-green my-6"></div><h1 id="assignment" class="text-4xl font-extrabold">Assignment</h1><br/>
+            <p class="leading-relaxed text-lg">The assignment portion of the lab contains all instructions and requirements for your lab report. Any challenges or questions in the sections above were hypothetical and just for your practice. On your lab report, you only need to respond to the assignments in this section. Remember that you can check out the <a href="lab-guide" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab Report Guide</a> to see the expectations the TAs have of your lab reports.</p><br/>
+            
+            <p class="leading-relaxed text-lg">You should perform all these tasks in a new, blank directory on your red pitaya. Feel free to reference previous labs or the <a href="cheat-sheet" class="text-lg text-cs-blue hover:text-blue-700 underline">Cheat Sheet</a> to refresh on old topics. All tasks should only include ARM instructions you have learned up to this point. Working ahead is fine, but you need to keep the tasks in the scope of the lessons. For questions on this (if something applies, etc), ask a TA.</p><br/>
+            
+            <h2 class="text-2xl text-bold underline text-cs-green">PICK TWO</h2>
+            <p class="leading-relaxed text-lg">There are three tasks listed for you below. You can pick any two tasks to attempt for this lab. The unchosen one is available for you to practice or review, but is not required. Submitting all three tasks will not grant you extra credit.</p><br/>
+            
+            <p class="leading-relaxed text-lg">However, the TAs will still make comments and give feedback on all three tasks, if submitted. If you want to submit a third task for feedback, but do NOT want it to be considered for grading, you must mark it clearly in your lab report with the phrase "DO NOT SCORE." If no task is marked with this phrase, the TAs will roll a random number generator to decide which two tasks to score for your lab grade.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Additionally, if you come up with a task that you think is of comparable challenge to the ones listed, you may pitch it to one of the TAs. If accepted, your task (bound by the requirements agreed upon by you and the TA) will count towards one of the PICK TWO tasks. The other tasks may be submitted for feedback following the same protocol listed in the paragraphs above.</p><br/>
+            
+            <h2 class="text-2xl text-bold underline text-cs-green">Task 1</h2>
+            <p class="leading-relaxed text-lg">Write a program that takes a number stored in memory and adds your student ID to it, then puts it back in the same place.</p><br/>
 
-                <div class="h-px bg-cs-green my-6"></div><h1 id="conclusion" class="text-4xl font-extrabold">Conclusion</h1>
-                <br/>
-                <p class="leading-relaxed text-lg">In this lab, you examined how the ARM processor manipulates data through moving and adding. You gained experience with the CPSR and navigating the debugger. You should be starting to feel more comforable with the syntax of ARM and how to apply the lecture topics directly to your code. If you have any questions, be sure to ask a TA. We also have office hours if you have more questions. Be sure to turn in your lab report before next lab, and have a great weekend.</p>
+            <p class="leading-relaxed text-lg">Additional Requirements:</p>
+            <p class="leading-relaxed text-lg">- The number you add to your student ID must be a word in length (4 bytes).</p>
+            <p class="leading-relaxed text-lg">- You must show the results by inspecting memory in the debugger.</p><br/>
 
-                <div class="h-px bg-cs-green my-6"></div>
-                <h1 id="code-given" class="text-4xl font-extrabold">Code Given</h1>
-                <br/>
-                <p class="leading-relaxed text-lg">
-                    Code is derived from Stephen Smith's Raspberry Pi Assembly Language Programming book, modified to fit the needs of this course. Credit belongs to the original author.
-                </p>
-                <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">Listing 2-1:</h1>
-                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-@
-@ Examples of the MOV instruction.
-@
-.global _start          @ Provide program starting address
-                        @ Load R2 with 0x4F5D6E3A first using MOV and MOVT
-_start: 
-    LDR R2, =0x4F5D6E3A
-                        @ Just move R2 into R1
-    MOV R1, R2
-                        @ Now let’s see all the shift versions of MOV
-    MOV R1, R2, LSL #1  @ Logical shift left
-    MOV R1, R2, LSR #1  @ Logical shift right
-    MOV R1, R2, ASR #1  @ Arithmetic shift right
-    MOV R1, R2, ROR #1  @ Rotate right
-    MOV R1, R2, RRX     @ Rotate extended right
-                        @ Repeat the above shifts using
-                        @ the Assembler mnemonics.
-    LSL R1, R2, #1      @ Logical shift left
-    LSR R1, R2, #1      @ Logical shift right
-    ASR R1, R2, #1      @ Arithmetic shift right
-    ROR R1, R2, #1      @ Rotate right
-    RRX R1, R2          @ Rotate extended right
-                        @ Example that works with 8 bit immediate and shift
-     @MOV R1, #0xABCDEF11 @ Too big for #imm16
-                        @ Example that can't be represented and
-                        @ results in an error
-                        @ Uncomment the instruction if you want to
-                        @ see the error
-                        @ Example of MVN
-    MVN R1, #45
-                        @ Example of a MOV that the Assembler will
-                        @ change to MVN
-    MOV R1, #0xFFFFFFFE @ (-2)
-                        @ Set up the parameters to exit the program
-                        @ and then call Linux to do it.
-    MOV R0, #0          @ Use 0 return code
-    MOV R7, #1          @ Service command code 1
-    SVC 0               @ Call Linux to terminate</pre>
-                <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">Listing 2-3:</h1>
-                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-@
-@ Example of the ADD/ADC instructions.
-@
-.global _start  @ Provide program starting address
-                @ Multiply 2 by –1 by using MVN and then adding 1
-_start: 
-    MVN R0, #2
-    ADD R0, #1
-                @ Set up the parameters to exit the program
-                @ and then call Linux to do it.
-                @ R0 is the return code and will be what we
-                @ calculated above.
-    MOV R7, #1  @ Service command code 1
-    SVC 0       @ Call Linux to terminate</pre>
-                <br/><h1 class="text-2xl text-bold underline text-cs-green">Listing 2-4:</h1>
-                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-@
-@ Example of 64-bit addition with
-@ the ADD/ADC instructions.
-@
-.global _start          @ Provide program starting address
-                        @ Load the registers with some data
-                        @ First 64-bit number is 0x00000003FFFFFFFF
-_start: 
-    MOV R2, #0x00000003
-    LDR R3, =0xFFFFFFFF 
-                        @ Second 64-bit number is 0x0000000500000001
-    MOV R4, #0x00000005
-    LDR R5, =0x00000001
-    ADDS R1, R3, R5     @ Lower order word
-    ADC R0, R2, R4      @ Higher order word
-                        @ Set up the parameters to exit the program
-                        @ and then call Linux to do it.
-                        @ R0 is the return code and will be what we
-                        @ calculated above.
-    MOV R7, #1          @ Service command code 1
-    SVC 0               @ Call Linux to terminate</pre>
-                <br/>
-            </div>
-        </div>
-    </div>
+            <p class="leading-relaxed text-lg">Assumptions:</p>
+            <p class="leading-relaxed text-lg">- Your student ID will be in hex. That means if your student ID is 12345678, the value should be 0x12345678.</p>
+            <p class="leading-relaxed text-lg">- Your SMUID is 8 hex digits (32 bits), which is within the 32-bit limit for registers.</p>
+            <p class="leading-relaxed text-lg">- Both your student ID and the 4 byte number will be hardcoded/manually stored in the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">.data</code> section of your code before the program runs. Remember that you can specify that some data in memory is a word with the directive <code class="bg-cs-blue px-1 rounded shadow-lg text-base">.word</code> (instead of <code class="bg-cs-blue px-1 rounded shadow-lg text-base">.ascii</code>, for example).</p>
+            <p class="leading-relaxed text-lg">- The sum of the two numbers should be stored in the same memory location as your chosen 4-byte number.</p><br/>
 
-    <!-- Feedback Box -->
+            <p class="leading-relaxed text-lg">Expected Outputs:</p>
+            <p class="leading-relaxed text-lg">- Displaying memory in GDB should show the value of your student ID plus another number (with word-length addition, not byte-by-byte). Note that the value will be displayed in reverse due to little endianness. The same screenshot should also show your student ID and your 4-byte number in your registers somewhere. E.x.</p>
+            <p class="leading-relaxed text-lg">- TODO: Photo here</p><br/>
+
+            <h2 class="text-2xl text-bold underline text-cs-green">Task 2</h2>
+            <p class="leading-relaxed text-lg">Write a program that demonstrates how data is altered if data sizes are inconsistent. Explain what is happening in your lab report.</p><br/>
+
+            <p class="leading-relaxed text-lg">Additional Requirements:</p>
+            <p class="leading-relaxed text-lg">- You must show examples by inspecting memory in the debugger.</p>
+            <p class="leading-relaxed text-lg">- Your program must include at least one mistake in the data and an explanation of what went wrong and how to fix it.</p>
+            <p class="leading-relaxed text-lg">- Your report must mention how endianness affects the results.</p><br/>
+
+            <p class="leading-relaxed text-lg">Assumptions:</p>
+            <p class="leading-relaxed text-lg">- You can place any type of data (numbers, ascii/text, etc.) in the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">.data</code> section of your code to use in your program.</p>
+            <p class="leading-relaxed text-lg">- You can use as many or few examples and explanations as needed to fully convey your point.</p><br/>
+
+            <p class="leading-relaxed text-lg">Expected Outputs:</p>
+            <p class="leading-relaxed text-lg">- A demonstration and explanation of the requirements above.</p><br/>
+
+            <h2 class="text-2xl text-bold underline text-cs-green">Task 3</h2>
+            <p class="leading-relaxed text-lg">Write a program that fills the first 8 registers (R0-R7) with 16 bytes of data stored in memory, 2-bytes per register, in order.</p><br/>
+
+            <p class="leading-relaxed text-lg">Additional Requirements:</p>
+            <p class="leading-relaxed text-lg">- You must show the result by inspecting registers in the debugger.</p>
+            <p class="leading-relaxed text-lg">- The 16 bytes of data you use must be <code class="bg-cs-blue px-1 rounded shadow-lg text-base">0x00112233445566778899AABBCCDDEEFF</code>. After your program executes, R0 will contain <code class="bg-cs-blue px-1 rounded shadow-lg text-base">0x0011</code>, R1 will contain <code class="bg-cs-blue px-1 rounded shadow-lg text-base">0x2233</code>, and so on.</p>
+            <p class="leading-relaxed text-lg">- You must use at least one type of indexing.</p><br/>
+
+            <p class="leading-relaxed text-lg">Assumptions:</p>
+            <p class="leading-relaxed text-lg">- You can place the given 16-bytes in the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">.data</code> section of your code to use in your program.</p>
+            <p class="leading-relaxed text-lg">- You can use whatever directive you would like to define the data in the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">.data</code> section (.word, .ascii, .byte, etc)</p><br/>
+
+            <p class="leading-relaxed text-lg">Expected Outputs:</p>
+            <p class="leading-relaxed text-lg">- Displaying the registers in GDB should show the value of 0x0011 in R0, 0x2233 in R1, and so on up to 0xEEFF in R7. E.x.</p>
+            <p class="leading-relaxed text-lg">- TODO: Photo here</p><br/>
+
+            
+
+        </div></div>
+        <!-- Feedback Box -->
     <div id="feedback-box" class="fixed hidden right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 dark:bg-[#444444] border-l-4 border-b-4 border-[#E0E0E0] dark:border-[#3B3B3B] rounded-l-xl shadow-lg w-64 p-4 z-50">
         <h2 class="font-bold text-lg dark:text-white text-gray-800 mb-2 text-center">Feedback</h2>
         <textarea id="feedback-text" class="w-full p-2 border rounded-md dark:bg-[#333333] dark:text-steel text-gray-800" rows="4" placeholder="Feedback, corrections, feature ideas, comments, etc."></textarea>
@@ -179,6 +367,18 @@ _start:
     <button id="feedback-toggle" class="fixed top-1/2 transform -translate-y-1/2 right-0 md:right-64 bg-cs-blue hover:bg-cs-green text-steel rounded-l-md px-1 py-8 shadow-md">
         ||
     </button>
+
+    <!--
+    <body class="flex justify-center items-center h-screen bg-gray-100">
+        <div class="bg-white p-6 rounded shadow-lg">
+            <h1 class="text-2xl mb-4">Report a Problem</h1>
+            <form action="/submit_workorder" method="post">
+                <textarea name="issue" required class="border p-2 w-full rounded" placeholder="Describe your issue..."></textarea>
+                <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+            </form>
+        </div>
+    </body>
+    -->
 
     <script>
         const feedbackBox = document.getElementById('feedback-box');
@@ -283,6 +483,8 @@ _start:
                     Below is an example of a simple Python function:
                 </p>
                 <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+                
+                </pre>
 def greet(name):
     return f"Hello, {name}!"
 

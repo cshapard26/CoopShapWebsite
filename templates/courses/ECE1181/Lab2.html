@@ -135,9 +135,9 @@ _start:
 <div class="h-px bg-cs-green my-6"></div><h1 id="shifting" class="text-4xl font-extrabold">Shifting and Rotating</h1><br/>
 <p class="leading-relaxed text-lg">Another concept you may have seen in lecture already, Shifting and Rotating are ways to modify binary values in a register. There are many types of shifting, but you only need to know these three for the lab:</p><br/>
 
-<p class="leading-relaxed text-lg">Logical Shift Left (LSL): Moves all bits to the left one, and the leftmost bit "falls off" (disappears). The rightmost bit becomes a zero. Example: "101101" becomes "011010"</p><br/>
+<p class="leading-relaxed text-lg">Logical Shift Left (LSL): Moves all bits to the left one, and the leftmost bit "falls off" (disappears) if it exceeds the register size. The rightmost bit becomes a zero. Example: "101101" becomes "1011010", but if the registers were only 6 bits wide, "101101" would become "011010".</p><br/>
 <p class="leading-relaxed text-lg">Logical Shift Right (LSR): Moves all bits to the right one, and the rightmost bit "falls off". The leftmost bit becomes a zero. Example: "11101" becomes "01110"</p><br/>
-<p class="leading-relaxed text-lg">Rotate Right (ROR): Moves all the bits to the right one, and the rightmost bit becomes the leftmost bit. Example: "100001" becomes "110000"</p><br/>
+<p class="leading-relaxed text-lg">Rotate Right (ROR): Moves all the bits to the right one, and the rightmost bit becomes the leftmost bit. Example (for six bit wide registers): "100001" becomes "110000"</p><br/>
 
 <p class="leading-relaxed text-lg">Here is how you use them in your code:</p><br/>
 <div class="dark:bg-cs-blue bg-cs-blue rounded-lg p-4 shadow-2xl">
@@ -147,14 +147,15 @@ _start:
 <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
     MOV R3, #0b1101
     LSL R0, R3, #4      @ R0 now contains the value of R3 (0b1100 or 12 in decimal/0xC in hex) shifted to the left by 4 bits. R0 holds 0b11010000 (or 192 in decimal, 0x12 in hex)
-    LSR R1, R3, #2      @ R1 now contains the value of R3 shifted to the right by 4 bits. R1 holds 0b11 (or 3 in decimal, 0x3 in hex)
+    LSR R1, R3, #2      @ R1 now contains the value of R3 shifted to the right by 2 bits. R1 holds 0b11 (or 3 in decimal, 0x3 in hex)
     ROR R2, R3, #12     @ R2 now contains the value of R3 rotated to the right by 12 bits. Remember that the registers are 32 bits long...
                         @  ...R2 now holds 0b00000000110100000000000000000000 (or 13631488 in decimal, 0x00D00000 in hex)
 </pre></div><br/>
 
 <p class="leading-relaxed text-lg">Note that shifting/rotating is special in that you can combine it with other commands, making it an extension of the "number" operand. Example:</p><br/>
 <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-    MOV R2, #8, LSL 2   @ R2 now contains the value 8 (0b1000) shifted left 2 bits, which is 0b100000, 32, or 0x20
+    MOV R1, #8
+    MOV R2, R1, LSL 2   @ R2 now contains the value 8 (0b1000) shifted left 2 bits, which is 0b100000, 32, or 0x20
 </pre><br/>
 
 <p class="leading-relaxed text-lg">You can do this with any command, but note that it can only operate on the <a class="italic">last</a> number in the command. E.x. you can't do <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ADD R3, LSL 3, #4, ROR 18</code>, but you can do <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ADD R3, #4, ROR 18</code>, which would rotate only the #4 by 18 bits.</p><br/>

@@ -27,30 +27,7 @@ Instruction: `LDR`
 Usage: `LDR destination, =tag`
 Description: Loads ("LoaD into Register") the address named by the tag into the destination register.
 Example:
-```arm
-.global _start
-_start:
-      
-      @ Look at the .data section at the bottom for addresses and data
-      
-      LDR R0, =hellothere     @ This loads the address of the tag "hellothere:" into register 0
-                        @ R0 now contains the value 0x20000. It does not contain the value "G"
-                        @ However, the value "G" is stored *at* the address 0x20000
-
-      LDR R1, =perry          @ This loads the address of the tag "perry:" into register 0
-                        @ R0 now contains the value 0x200BC. It does not contain the value "t"
-
-      MOV R0, #0
-      MOV R7, #1
-      SVC 0
-
-.data
-hellothere:       .ascii "General Kenobi"       @ Pretend this starts at the address 0x20000
-perry:            .ascii "the platypus"         @ Pretend this starts at the address 0x200BC
-anothertag: .word 0x12345678        @ Pretend this starts at the address 0x20108
-onemore:    .byte 0x12345678
-      
-```
+1
 
 Note that this is actually a secondary use of the LDR command, which you will see in the next section of this lab. What it is doing here is actually creating a "literal pool," the topic of our next lab. For now, just know that you can get a memory address of a tag using `LDR reg, =tag`.
 
@@ -62,47 +39,8 @@ You've seen how to get the address of a section in memory. But this is useless o
 Instruction: `LDR`
 Usage: `LDRx destination, [address]`
 Description: Loads ("LoaD into Register") a value from the specified memory address into the destination register. Here, the "x" specifies the size of the data to be loaded, where replacing "x" with "B" loads a byte, "H" loads a halfword, and removing the "x" loads a full word. "LDRx" is not a valid command, and you need to replace the x to make a working instruction.
-
 Example:
-```arm
-.global _start
-_start:
-      
-      @ Look at the .data section at the bottom for addresses and data
-      
-      LDR R0, =hellothere     @ This loads the address of the tag "hellothere:" (0x20000) into register 0
-      LDRB R1, [R0]           @ This goes to the address held in R0 (0x20000) and places one byte of that data
-                        @ into register 1. R1 now contains "0x47", which is the ASCII value for "G"
-
-      ADD R0, R0, #0x1  @ Adds 1 to the memory address
-      LDRB R2, [R0]           @ Loads one byte from the address in R0 (0x20001) into R2
-                        @ This is "0x65", the ASCII value of "e" (the second letter of "General")
-
-      LDR R0, =perry          @ Overwrites R0 with the address of "perry" (0x200BC)
-      LDRB R0, [R0]           @ Replaces the contents of R0 with one byte stored at the address in R0,
-                        @ which is "0x74" or the ASCII value for "t". R0 now contains "0x74", and the address
-                        @ that R0 had in it before was overwritten. This is a quick way to get the value at an address
-                        @ without using up too many of your registers
-
-      LDR R5, =anothertag
-      LDR R3, [R5]            @ R3 now contains one WORD of data from the address held in 5 (0x20108)
-                        @ R3 now contains the value 0x12345678
-
-      LDR R6, =perry
-      LDRH R4, [R6]           @ R4 now contains one WORD of data from the address held in R6 (0x200BC)
-                        @ R4 now contains the value "0x6874", or the ASCII values for "ht"
-                        @ Why is it backwards? Keep reading.
-
-      MOV R0, #0
-      MOV R7, #1
-      SVC 0
-
-.data
-hellothere:       .ascii "General Kenobi"       @ Pretend this starts at the address 0x20000
-perry:            .ascii "the platypus"         @ Pretend this starts at the address 0x200BC
-anothertag: .word 0x12345678        @ Pretend this starts at the address 0x20108
-      
-```
+2
 
 A few things to note:
 1. You cannot skip steps and do something like `LDR R2, [=anothertag]`. Why? The ARM philosophy says we can only do one thing at a time.
@@ -132,26 +70,7 @@ Instruction: `STR`
 Usage: `STRx number, [destination]`
 Description: Stores ("StoRe into Register") a the given number/data into the address "destination". Here, the "x" specifies the size of the data to be stored, where replacing "x" with "B" stores a byte, "H" stores a halfword, and removing the "x" stores a full word. "STRx" is not a valid command, and you need to replace the x to make a working instruction.
 Example:
-```arm
-      LDR R2, =emptyarea
-      MOV R5, #0x6C
-      STRB R5, [R2]           @ Stores a byte from the value in R5 (0x6C) into the memory address in R2
-                        @ No changes occured to any of the registers, but now the data at "emptyarea"
-                        @ is 0x6C000000 instead of 0x00000000
-      
-      ADD R4, R2, #2
-      MOV R5, #0xA7F3         
-      STRH R5, [R4]           @ Stores a halfword from the value in R5 (0xA7F3) into the memory address in R4
-                        @ which is 2 addresses after "emptyarea". No registers changed, and the data in
-                        @ "emptyarea" is now 0x6C00F3A7 (remember little endian)
-      
-      LDR R0, [R2]            @ Loads a word from the address in R2 (still "emptyarea") into register 0
-                        @ R0 now contains 0xA7F3006C
-
-.data
-emptyarea:  .word 0x00000000
-
-```
+3
 
 Important Note: `STR` is one of the few commands that don't follow the pattern of starting with the destination. Remember that the destination is the memory address. It is the exact opposite of an `LDR`.
 
@@ -164,67 +83,19 @@ There are 3 types of indexing in ARM: preindexing, postindexing, and autoindexin
 
 ## Preindexing
 Preindexing means that when loading or storing to an address, you specify an offset, and the data is stored to the new effective address. The address in the register is not updated. It looks like this:
-```arm
-      LDR R0, =somebody
-      LDRB R1, [R0, #3] @ This is preindexing notation. It gets one byte from the address "somebody" PLUS
-                        @ the value 3. This is three bytes after the original one, so it gets the value "e".
-                        @ The value in R0 is not changed.
-
-      LDRB R1, [R0, #8] @ Preindexing to get the character 8 bytes after the first one, which is a "d". R0 is
-                        @ not changed
-
-      LDRB R1, [R0, #0] @ Gets the character from the original address plus 0 bytes, which is still the first
-                        @ character, "o". Note that this is equivalent to "LDRB R1, [R0]". R0 is not updated
-      
-.data
-somebody: .ascii "once told me"
-```
+4
 
 Preindexing is useful for getting a byte at a specific, unnamed location without changing the state of any of your registers.
 
 ## Postindexing
 Postindexing means that when loading or storing to an address, you do not specify an offset, and the data is stored at the original address (which is the same as the effective address. However, you do specify a number, which is how much to change the original address stored in your register after the command is executed. This is better explained with an example:
-```arm
-      LDR R0, =somebody
-      LDRB R1, [R0], #2 @ This is postindexing notation. It gets one byte from the address "somebody" without
-                        @ any offset. This is the first letter "o". Next, the value 2 is added to R0 and stored
-                        @ back into R0. If "somebody" has the address 0x20000, the R0 originally held 0x20000 but now
-                        @ holds 0x20002.
-
-      LDRB R1, [R0], #2 @ This is the same command. However, since R0 was updated in the previous command, we are now
-                        @ getting the value at 0x20002, which is the "c". After we get that value, 2 is added to R0
-                        @ and stored back in R0. Thus, R0 now holds 0x20004
-
-      LDRH R2, [R0], #-3      @ This gets two characters (reversed because of little endian) from the address in R0,
-                        @ which is still 0x20004. R2 now holds ascii for "t ". R0 is now updated to 0x20001
-
-      LDR R0, =somebody @ Note that you can reset the address in R0 back to 0x20000 (a.k.a "somebody") at any point
-                        @ with this command.
-
-      
-.data
-somebody: .ascii "once told me"
-```
+5
 
 As you may have noticed, you can also use negative numbers as indexes. This works for all types of indexing. Post indexing is useful for code that is repeated or getting a large set of data that is evenly spaced (like one byte characters in a string).
 
 ## Autoindexing
 Autoindexing is just preindexing and postindexing combined. If you want to get data at an offset, then change the value of the stored address, you can do both at the same time. This is like saying `LDRB R6, [R7, #4], #2`. HOWEVER, due to limitations in ARM, the offset and the address update MUST be the same value. That means the previous example cannot exist, but `LDRB R6, [R7, #4], #4` is allowed. Because the two numbers are the same, ARM simplifies the command to be `LDRB R6, [R7, #4]!` with the `!` at the end. This is the syntax for autoindexing, as seen in the example below:
-```arm
-      LDR R3, =RoadWordAhead
-      LDRB R8, [R3, #6]!      @ This is autoindexing notation. It gets one byte from the address "RoadWorkAhead" in R3 PLUS
-                        @ the value 6. Assuming that "RoadWorkAhead" is at 0x14C00, the effective address is
-                        @ 0x14C06, which puts the ascii "I" into R8. Next, R3 is updated to be the old effective
-                        @ address, 0x14C06. R8 now holds "I" and R3 now holds 0x14C06
-
-      LDRB R9, [R3, #4]!      @ Another autoindex, but with a 4. Since R3 is still 0x14C06, this will get the character at
-                        @ 0x14C06 PLUS 4, which is 0x14C0A, and put that character into R9. R9 holds "r", and R3 is     
-                        @ updated to the old effective address, 0x14C0A
-
-
-.data
-RoadWorkAhead: .ascii "Yeah, I sure hope it does."
-```
+6
 
 As you can see, autoindexing combines both pre and post indexing into one command. It is most useful for jumping around memory without knowing where you are going in advance.
 
@@ -235,7 +106,7 @@ Also, though all the examples I gave used `LDR`, all of these topics apply exact
 
 Since indexing has historically been a tough topic for students, I have made this little animation to show you the different indexing types in action.
 
-TODO: Add gif
+TODO: Add gif (probably will forget to add this ~Cooper, August 29th 2025)
 
 # Memory and GDB
 Remember your old friend GDB? As the debugger's best friend, you get to learn another command to interact with it. You used the command `i r` to view the contents of registers. Now you get the command to view the memory at a specified address:
@@ -266,46 +137,46 @@ Additionally, if you come up with a task that you think is of comparable challen
 Write a program that takes a number stored in memory and adds your student ID to it, then puts it back in the same place.
 
 Additional Requirements:
-- The number you add to your student ID must be a word in length (4 bytes).
-- You must show the results by inspecting memory in the debugger.
+The number you add to your student ID must be a word in length (4 bytes).
+You must show the results by inspecting memory in the debugger.
 
 Assumptions:
-- Your student ID will be in hex. That means if your student ID is 12345678, the value should be 0x12345678.
-- Your SMUID is 8 hex digits (32 bits), which is within the 32-bit limit for registers.
-- Both your student ID and the 4 byte number will be hardcoded/manually stored in the `.data` section of your code before the program runs. Remember that you can specify that some data in memory is a word with the directive `.word` (instead of `.ascii`, for example).
-- The sum of the two numbers should be stored in the same memory location as your chosen 4-byte number.
+Your student ID will be in hex. That means if your student ID is 12345678, the value should be 0x12345678.
+Your SMUID is 8 hex digits (32 bits), which is within the 32-bit limit for registers.
+Both your student ID and the 4 byte number will be hardcoded/manually stored in the `.data` section of your code before the program runs. Remember that you can specify that some data in memory is a word with the directive `.word` (instead of `.ascii`, for example).
+The sum of the two numbers should be stored in the same memory location as your chosen 4-byte number.
 
 Expected Outputs:
-- Displaying memory in GDB should show the value of your student ID plus another number (with word-length addition, not byte-by-byte). Note that the value will be displayed in reverse due to little endianness. The same screenshot should also show your student ID and your 4-byte number in your registers somewhere. E.x.
+Displaying memory in GDB should show the value of your student ID plus another number (with word-length addition, not byte-by-byte). Note that the value will be displayed in reverse due to little endianness. The same screenshot should also show your student ID and your 4-byte number in your registers somewhere. E.x.
 TODO: Photo here
 
 ## Task 2
 Write a program that demonstrates how data is altered if data sizes are inconsistent. Explain what is happening in your lab report.
 
 Additional Requirements:
-- You must show examples by inspecting memory in the debugger.
-- Your program must include at least one mistake in the data and an explanation of what went wrong and how to fix it.
-- Your report must mention how endianness affects the results.
+You must show examples by inspecting memory in the debugger.
+Your program must include at least one mistake in the data and an explanation of what went wrong and how to fix it.
+Your report must mention how endianness affects the results.
 
 Assumptions:
-- You can place any type of data (numbers, ascii/text, etc.) in the `.data` section of your code to use in your program.
-- You can use as many or few examples and explanations as needed to fully convey your point.
+You can place any type of data (numbers, ascii/text, etc.) in the `.data` section of your code to use in your program.
+You can use as many or few examples and explanations as needed to fully convey your point.
 
 Expected Outputs:
-- A demonstration and explanation of the requirements above.
+A demonstration and explanation of the requirements above.
 
 ## Task 3
 Write a program that fills the first 8 registers (R0-R7) with 16 bytes of data stored in memory, 2-bytes per register, in order.
 
 Additional Requirements:
-- You must show the result by inspecting registers in the debugger.
-- The 16 bytes of data you use must be `0x00112233445566778899AABBCCDDEEFF`. After your program executes, R0 will contain `0x0011`, R1 will contain `0x2233`, and so on.
-- You must use at least one type of indexing.
+You must show the result by inspecting registers in the debugger.
+The 16 bytes of data you use must be `0x00112233445566778899AABBCCDDEEFF`. After your program executes, R0 will contain `0x0011`, R1 will contain `0x2233`, and so on.
+You must use at least one type of indexing.
 
 Assumptions:
-- You can place the given 16-bytes in the `.data` section of your code to use in your program.
-- You can use whatever directive you would like to define the data in the `.data` section (.word, .ascii, .byte, etc)
+You can place the given 16-bytes in the `.data` section of your code to use in your program.
+You can use whatever directive you would like to define the data in the `.data` section (.word, .ascii, .byte, etc)
 
 Expected Outputs:
-- Displaying the registers in GDB should show the value of 0x0011 in R0, 0x2233 in R1, and so on up to 0xEEFF in R7. E.x.
+Displaying the registers in GDB should show the value of 0x0011 in R0, 0x2233 in R1, and so on up to 0xEEFF in R7. E.x.
 TODO: Photo here
