@@ -283,7 +283,7 @@ RoadWorkAhead: .ascii "Yeah, I sure hope it does."
             <div class="h-px bg-cs-green my-6"></div><h1 id="gdb" class="text-4xl font-extrabold">Memory and GDB</h1><br/>
             <p class="leading-relaxed text-lg">Remember your old friend GDB? As the debugger's best friend, you get to learn another command to interact with it. You used the command <code class="bg-cs-blue px-1 rounded shadow-lg text-base">i r</code> to view the contents of registers. Now you get the command to view the memory at a specified address:</p><br/>
             
-            <p class="leading-relaxed text-lg"><code class="bg-cs-blue px-1 rounded shadow-lg text-base">x /4ubfx ADDRESS</code>: This displays four bytes in memory starting at ADDRESS (which is replaced with the memory address you want to see). This command can be modified a bit to display different information, but I find this the cleanest way. If you are interested in other ways to display memory check out TODO:page_number in the Smith book.</p>
+            <p class="leading-relaxed text-lg"><code class="bg-cs-blue px-1 rounded shadow-lg text-base">x /4ubfx ADDRESS</code>: This displays four hex bytes in memory starting at ADDRESS (which is replaced with the memory address you want to see). This command can be modified a bit to display different information, but I find this the cleanest way. If you are interested in other ways to display memory check out pages 61-62 in the Smith book.</p>
             
             <p class="leading-relaxed text-lg">Remember that gdb commands can only be run when in the debugger. Check last lab for reminders on that. Also, you may not know what memory address you need. The best way to find this address is to first do <code class="bg-cs-blue px-1 rounded shadow-lg text-base">i r</code> to check your registers, then find the memory address that you put in one of the registers (in the command <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R3, =idunno</code>, this would be R3). You can add or subtract from that value to view a different window of memory.</p><br/>
             
@@ -319,8 +319,10 @@ RoadWorkAhead: .ascii "Yeah, I sure hope it does."
             <p class="leading-relaxed text-lg">- The sum of the two numbers should be stored in the same memory location as your chosen 4-byte number.</p><br/>
 
             <p class="leading-relaxed text-lg">Expected Outputs:</p>
-            <p class="leading-relaxed text-lg">- Displaying memory in GDB should show the value of your student ID plus another number (with word-length addition, not byte-by-byte). Note that the value will be displayed in reverse due to little endianness. The same screenshot should also show your student ID and your 4-byte number in your registers somewhere. E.x.</p>
-            <p class="leading-relaxed text-lg">- TODO: Photo here</p><br/>
+            <p class="leading-relaxed text-lg">- Displaying memory in GDB should show the value of your student ID plus another number (with word-length addition, not byte-by-byte). Note that the value will be displayed in reverse due to little endianness. The same screenshot should also show your student ID and your 4-byte number in your registers somewhere. E.x. (R2 holds the student ID 12345678, R3 holds the arbitrary number 0x11111111, the memory address 0x200a4 at the bottom of the screenshot shows 0x23456789, reversed because of Little Endian)</p>
+            <div class="flex justify-center">
+                <img src="/static/images/featured/ECE1181/Lab3Task1.png" alt="Image not Loading, see TA" class="md:w-4/5 w-1/2 rounded-lg shadow-lg">
+            </div>
 
             <h2 class="text-2xl text-bold underline text-cs-green">Task 2</h2>
             <p class="leading-relaxed text-lg">Write a program that demonstrates how data is altered if data sizes are inconsistent. Explain what is happening in your lab report.</p><br/>
@@ -351,7 +353,9 @@ RoadWorkAhead: .ascii "Yeah, I sure hope it does."
 
             <p class="leading-relaxed text-lg">Expected Outputs:</p>
             <p class="leading-relaxed text-lg">- Displaying the registers in GDB should show the value of 0x0011 in R0, 0x2233 in R1, and so on up to 0xEEFF in R7. E.x.</p>
-            <p class="leading-relaxed text-lg">- TODO: Photo here</p><br/>
+            <div class="flex justify-center">
+                <img src="/static/images/featured/ECE1181/Lab3Task3.png" alt="Image not Loading, see TA" class="md:w-4/5 w-1/2 rounded-lg shadow-lg">
+            </div>
 
             
 
