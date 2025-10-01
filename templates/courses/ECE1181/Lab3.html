@@ -75,26 +75,26 @@
             <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
 .global _start
 _start:
-      
-      @ Look at the .data section at the bottom for addresses and data
-      
-      LDR R0, =hellothere     @ This loads the address of the tag "hellothere:" into register 0
-                        @ R0 now contains the value 0x20000. It does not contain the value "G"
-                        @ However, the value "G" is stored *at* the address 0x20000
 
-      LDR R1, =perry          @ This loads the address of the tag "perry:" into register 0
-                        @ R0 now contains the value 0x200BC. It does not contain the value "t"
+    @ Look at the .data section at the bottom for addresses and data
 
-      MOV R0, #0
-      MOV R7, #1
-      SVC 0
+    LDR R0, =hellothere @ This loads the address of the tag "hellothere:" into register 0
+                        @ R0 now contains the value 0x20000. It does not contain the value "G"
+                        @ However, the value "G" is stored *at* the address 0x20000
+
+    LDR R1, =perry      @ This loads the address of the tag "perry:" into register 0
+                        @ R0 now contains the value 0x200BC. It does not contain the value "t"
+
+    MOV R0, #0
+    MOV R7, #1
+    SVC 0
 
 .data
-hellothere:       .ascii "General Kenobi"       @ Pretend this starts at the address 0x20000
-perry:            .ascii "the platypus"         @ Pretend this starts at the address 0x200BC
-anothertag: .word 0x12345678        @ Pretend this starts at the address 0x20108
-onemore:    .byte 0x12345678
-            </pre><br/></div>
+hellothere: .ascii "General Kenobi" @ Pretend this starts at the address 0x20000
+perry:      .ascii "the platypus"   @ Pretend this starts at the address 0x200BC
+anothertag: .word 0x12345678        @ Pretend this starts at the address 0x20108
+onemore:    .byte 0x12345678
+</pre><br/></div>
             
             <p class="leading-relaxed text-lg">Note that this is actually a secondary use of the LDR command, which you will see in the next section of this lab. What it is doing here is actually creating a "literal pool," the topic of our next lab. For now, just know that you can get a memory address of a tag using <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR reg, =tag</code>.</p><br/>
             
@@ -110,40 +110,40 @@ onemore:    .byte 0x12345678
             <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
 .global _start
 _start:
-      
-      @ Look at the .data section at the bottom for addresses and data
-      
-      LDR R0, =hellothere     @ This loads the address of the tag "hellothere:" (0x20000) into register 0
-      LDRB R1, [R0]           @ This goes to the address held in R0 (0x20000) and places one byte of that data
-                        @ into register 1. R1 now contains "0x47", which is the ASCII value for "G"
 
-      ADD R0, R0, #0x1  @ Adds 1 to the memory address
-      LDRB R2, [R0]           @ Loads one byte from the address in R0 (0x20001) into R2
-                        @ This is "0x65", the ASCII value of "e" (the second letter of "General")
+    @ Look at the .data section at the bottom for addresses and data
 
-      LDR R0, =perry          @ Overwrites R0 with the address of "perry" (0x200BC)
-      LDRB R0, [R0]           @ Replaces the contents of R0 with one byte stored at the address in R0,
-                        @ which is "0x74" or the ASCII value for "t". R0 now contains "0x74", and the address
-                        @ that R0 had in it before was overwritten. This is a quick way to get the value at an address
-                        @ without using up too many of your registers
+    LDR R0, =hellothere     @ This loads the address of the tag "hellothere:" (0x20000) into register 0
+    LDRB R1, [R0]           @ This goes to the address held in R0 (0x20000) and places one byte of that data
+                            @ into register 1. R1 now contains "0x47", which is the ASCII value for "G"
 
-      LDR R5, =anothertag
-      LDR R3, [R5]            @ R3 now contains one WORD of data from the address held in 5 (0x20108)
-                        @ R3 now contains the value 0x12345678
+    ADD R0, R0, #0x1    @ Adds 1 to the memory address
+    LDRB R2, [R0]       @ Loads one byte from the address in R0 (0x20001) into R2
+                        @ This is "0x65", the ASCII value of "e" (the second letter of "General")
 
-      LDR R6, =perry
-      LDRH R4, [R6]           @ R4 now contains one WORD of data from the address held in R6 (0x200BC)
-                        @ R4 now contains the value "0x6874", or the ASCII values for "ht"
-                        @ Why is it backwards? Keep reading.
+    LDR R0, =perry      @ Overwrites R0 with the address of "perry" (0x200BC)
+    LDRB R0, [R0]       @ Replaces the contents of R0 with one byte stored at the address in R0,
+                        @ which is "0x74" or the ASCII value for "t". R0 now contains "0x74", and the address
+                        @ that R0 had in it before was overwritten. This is a quick way to get the value at an address
+                        @ without using up too many of your registers
 
-      MOV R0, #0
-      MOV R7, #1
-      SVC 0
+   LDR R5, =anothertag
+   LDR R3, [R5]         @ R3 now contains one WORD of data from the address held in 5 (0x20108)
+                        @ R3 now contains the value 0x12345678
+
+   LDR R6, =perry
+   LDRH R4, [R6]        @ R4 now contains one WORD of data from the address held in R6 (0x200BC)
+                        @ R4 now contains the value "0x6874", or the ASCII values for "ht"
+                        @ Why is it backwards? Keep reading.
+
+   MOV R0, #0
+   MOV R7, #1
+   SVC 0
 
 .data
-hellothere:       .ascii "General Kenobi"       @ Pretend this starts at the address 0x20000
-perry:            .ascii "the platypus"         @ Pretend this starts at the address 0x200BC
-anothertag: .word 0x12345678        @ Pretend this starts at the address 0x20108
+hellothere:    .ascii "General Kenobi"    @ Pretend this starts at the address 0x20000
+perry:      .ascii "the platypus"     @ Pretend this starts at the address 0x200BC
+anothertag: .word 0x12345678    @ Pretend this starts at the address 0x20108
             </pre><br/></div>
             
             <p class="leading-relaxed text-lg">A few things to note:</p><br/>
@@ -176,23 +176,23 @@ anothertag: .word 0x12345678        @ Pretend this starts at t
             <p class="leading-relaxed text-lg">Description: Stores ("StoRe into Register") a the given number/data into the address "destination". Here, the "x" specifies the size of the data to be stored, where replacing "x" with "B" stores a byte, "H" stores a halfword, and removing the "x" stores a full word. "STRx" is not a valid command, and you need to replace the x to make a working instruction.</p><br/>
             <p class="leading-relaxed text-lg">Example:</p><br/>
             <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-      LDR R2, =emptyarea
-      MOV R5, #0x6C
-      STRB R5, [R2]           @ Stores a byte from the value in R5 (0x6C) into the memory address in R2
-                        @ No changes occured to any of the registers, but now the data at "emptyarea"
-                        @ is 0x6C000000 instead of 0x00000000
-      
-      ADD R4, R2, #2
-      MOV R5, #0xA7F3         
-      STRH R5, [R4]           @ Stores a halfword from the value in R5 (0xA7F3) into the memory address in R4
-                        @ which is 2 addresses after "emptyarea". No registers changed, and the data in
-                        @ "emptyarea" is now 0x6C00F3A7 (remember little endian)
-      
-      LDR R0, [R2]            @ Loads a word from the address in R2 (still "emptyarea") into register 0
-                        @ R0 now contains 0xA7F3006C
+    LDR R2, =emptyarea
+    MOV R5, #0x6C
+    STRB R5, [R2]   @ Stores a byte from the value in R5 (0x6C) into the memory address in R2
+                    @ No changes occured to any of the registers, but now the data at "emptyarea"
+                    @ is 0x6C000000 instead of 0x00000000
+
+    ADD R4, R2, #2
+    MOV R5, #0xA7F3 
+    STRH R5, [R4]   @ Stores a halfword from the value in R5 (0xA7F3) into the memory address in R4
+                    @ which is 2 addresses after "emptyarea". No registers changed, and the data in
+                    @ "emptyarea" is now 0x6C00F3A7 (remember little endian)
+    
+    LDR R0, [R2]    @ Loads a word from the address in R2 (still "emptyarea") into register 0
+                    @ R0 now contains 0xA7F3006C
 
 .data
-emptyarea:  .word 0x00000000
+emptyarea: .word 0x00000000
             </pre><br/></div>
             
             <p class="leading-relaxed text-lg">Important Note: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">STR</code> is one of the few commands that don't follow the pattern of starting with the destination. Remember that the destination is the memory address. It is the exact opposite of an <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR</code>.</p><br/>
@@ -208,16 +208,16 @@ emptyarea:  .word 0x00000000
             <p class="leading-relaxed text-lg">Preindexing means that when loading or storing to an address, you specify an offset, and the data is stored to the new effective address. The address in the register is not updated. It looks like this:</p><br/>
             <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
       LDR R0, =somebody
-      LDRB R1, [R0, #3] @ This is preindexing notation. It gets one byte from the address "somebody" PLUS
-                        @ the value 3. This is three bytes after the original one, so it gets the value "e".
-                        @ The value in R0 is not changed.
+   LDRB R1, [R0, #3]    @ This is preindexing notation. It gets one byte from the address "somebody" PLUS
+                        @ the value 3. This is three bytes after the original one, so it gets the value "e".
+                        @ The value in R0 is not changed.
 
-      LDRB R1, [R0, #8] @ Preindexing to get the character 8 bytes after the first one, which is a "d". R0 is
-                        @ not changed
+   LDRB R1, [R0, #8]    @ Preindexing to get the character 8 bytes after the first one, which is a "d". R0 is
+                        @ not changed
 
-      LDRB R1, [R0, #0] @ Gets the character from the original address plus 0 bytes, which is still the first
-                        @ character, "o". Note that this is equivalent to "LDRB R1, [R0]". R0 is not updated
-      
+   LDRB R1, [R0, #0]    @ Gets the character from the original address plus 0 bytes, which is still the first
+                        @ character, "o". Note that this is equivalent to "LDRB R1, [R0]". R0 is not updated
+   
 .data
 somebody: .ascii "once told me"
             </pre><br/>
@@ -227,24 +227,24 @@ somebody: .ascii "once told me"
             <h2 class="text-2xl text-bold underline text-cs-green">Postindexing</h2>
             <p class="leading-relaxed text-lg">Postindexing means that when loading or storing to an address, you do not specify an offset, and the data is stored at the original address (which is the same as the effective address. However, you do specify a number, which is how much to change the original address stored in your register after the command is executed. This is better explained with an example:</p><br/>
             <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-      LDR R0, =somebody
-      LDRB R1, [R0], #2 @ This is postindexing notation. It gets one byte from the address "somebody" without
-                        @ any offset. This is the first letter "o". Next, the value 2 is added to R0 and stored
-                        @ back into R0. If "somebody" has the address 0x20000, the R0 originally held 0x20000 but now
-                        @ holds 0x20002.
+   LDR R0, =somebody
+   LDRB R1, [R0], #2    @ This is postindexing notation. It gets one byte from the address "somebody" without
+                        @ any offset. This is the first letter "o". Next, the value 2 is added to R0 and stored
+                        @ back into R0. If "somebody" has the address 0x20000, the R0 originally held 0x20000 but now
+                        @ holds 0x20002.
 
-      LDRB R1, [R0], #2 @ This is the same command. However, since R0 was updated in the previous command, we are now
-                        @ getting the value at 0x20002, which is the "c". After we get that value, 2 is added to R0
-                        @ and stored back in R0. Thus, R0 now holds 0x20004
+   LDRB R1, [R0], #2    @ This is the same command. However, since R0 was updated in the previous command, we are now
+                        @ getting the value at 0x20002, which is the "c". After we get that value, 2 is added to R0
+                        @ and stored back in R0. Thus, R0 now holds 0x20004
 
-      LDRH R2, [R0], #-3     @ (Note the LDRH instead of LDRB, meaning Load Halfword instead of Load Byte) 
-                        @ This gets two characters (reversed because of little endian) from the address in R0,
-                        @ which is still 0x20004. R2 now holds ascii for "t ". R0 is now updated to 0x20001
+   LDRH R2, [R0], #-3   @ (Note the LDRH instead of LDRB, meaning Load Halfword instead of Load Byte) 
+                        @ This gets two characters (reversed because of little endian) from the address in R0,
+                        @ which is still 0x20004. R2 now holds ascii for "t ". R0 is now updated to 0x20001
 
-      LDR R0, =somebody @ Note that you can reset the address in R0 back to 0x20000 (a.k.a "somebody") at any point
-                        @ with this command.
+   LDR R0, =somebody    @ Note that you can reset the address in R0 back to 0x20000 (a.k.a "somebody") at any point
+                        @ with this command.
 
-      
+   
 .data
 somebody: .ascii "once told me"
             </pre><br/>
@@ -254,15 +254,15 @@ somebody: .ascii "once told me"
             <h2 class="text-2xl text-bold underline text-cs-green">Autoindexing</h2>
             <p class="leading-relaxed text-lg">Autoindexing is just preindexing and postindexing combined. If you want to get data at an offset, then change the value of the stored address, you can do both at the same time. This is like saying <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDRB R6, [R7, #4], #2</code>. HOWEVER, due to limitations in ARM, the offset and the address update MUST be the same value. That means the previous example cannot exist, but <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDRB R6, [R7, #4], #4</code> is allowed. Because the two numbers are the same, ARM simplifies the command to be <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDRB R6, [R7, #4]!</code> with the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">!</code> at the end. This is the syntax for autoindexing, as seen in the example below:</p><br/>
             <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-      LDR R3, =RoadWordAhead
-      LDRB R8, [R3, #6]!      @ This is autoindexing notation. It gets one byte from the address "RoadWorkAhead" in R3 PLUS
-                        @ the value 6. Assuming that "RoadWorkAhead" is at 0x14C00, the effective address is
-                        @ 0x14C06, which puts the ascii "I" into R8. Next, R3 is updated to be the old effective
-                        @ address, 0x14C06. R8 now holds "I" and R3 now holds 0x14C06
+   LDR R3, =RoadWordAhead
+   LDRB R8, [R3, #6]!   @ This is autoindexing notation. It gets one byte from the address "RoadWorkAhead" in R3 PLUS
+                        @ the value 6. Assuming that "RoadWorkAhead" is at 0x14C00, the effective address is
+                        @ 0x14C06, which puts the ascii "I" into R8. Next, R3 is updated to be the old effective
+                        @ address, 0x14C06. R8 now holds "I" and R3 now holds 0x14C06
 
-      LDRB R9, [R3, #4]!      @ Another autoindex, but with a 4. Since R3 is still 0x14C06, this will get the character at
-                        @ 0x14C06 PLUS 4, which is 0x14C0A, and put that character into R9. R9 holds "r", and R3 is     
-                        @ updated to the old effective address, 0x14C0A
+   LDRB R9, [R3, #4]!   @ Another autoindex, but with a 4. Since R3 is still 0x14C06, this will get the character at
+                        @ 0x14C06 PLUS 4, which is 0x14C0A, and put that character into R9. R9 holds "r", and R3 is   
+                        @ updated to the old effective address, 0x14C0A
 
 
 .data

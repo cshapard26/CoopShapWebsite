@@ -8,173 +8,137 @@
             <!-- Title Section -->
             <div class="text-center">
                 <h1 class="text-6xl font-extrabold leading-tight text-cs-green">
-                    Lab 4: Thanks for the Memories!
+                    Lab 4: CPSR and Literal Pools
                 </h1>
                 <h2 class="text-2xl text-bold leading-tight text-cs-green">
-                    Start touching memory and implement different types of indexing
-                </h2>
+                    Title says it all
+                </h1>
                  <!-- Separator -->
                 <div class="h-px bg-cs-green my-6"></div>
                 <a href="#overview" class="inline-block bg-cs-blue hover:bg-blue-700  hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
                     Overview
                 </a> >>
-                <a href="#instructions" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
-                    Instructions
+                <a href="#cpsr" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    CPSR
+                </a> >>
+                <a href="#lp" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Literal Pools
                 </a> >>
                 <a href="#conclusion" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
                     Conclusion
                 </a> >>
-                <a href="#code-given" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
-                    Code Given
+                <a href="#assignment" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Assignment
                 </a>
             </div>
 
-            <!-- Separator -->
-            <div class="h-px bg-cs-green my-6"></div>
-
             <!-- Blog Content -->
-            <div class="prose prose-lg mx-auto dark:text-steel text-[#222222]">
-                <h1 id="overview" class="text-4xl font-extrabold">Overview</h1><br/>
-                
-                <p class="leading-relaxed text-lg">Welcome to Lab 4! Here, you will learn about loading and storing. Be warned, this lab needs quite a lot of screenshots. If you need any help or clarification, be sure to ask a TA. The old lab guides are avaliable in case you want to freshen up on the skills you have already learned.</p>
-                <div class="h-px bg-cs-green my-6"></div><h1 id="instructions" class="text-4xl font-extrabold">Instructions</h1><br/>
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 1</h2>
-                <p class="leading-relaxed text-lg">Read through pages 87-91 (Chapter 5 beginning to Loading a Register) in the Smith book (please actually do this). Note that you do not have to act on anything in the book, just read for context. This is the beginning of Chapter 5 to the "Loading a Register" section for those without page numbers.</p><br/>
+            <div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Overview</h1><br/>
+            <p class="leading-relaxed text-lg">Welcome to Lab 4. Last lab, you learned about loading and storing data inthe memory of your microcontroller. Today, you will learn about the CPSR and literal pools and how these are handled in your ARM processor. This will be a shorter lab, so enjoy the break!</p><br/>
+            
+            <p class="leading-relaxed text-lg">All labs require a lab report. For a comprehensive look on what the TAs are looking for, formatting, and scoring, take a look at the <a href="lab-guide" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab Report Guide</a>.</p><br/>
+            
+            <p class="leading-relaxed text-lg">These lab guides are handmade, and as such may contain errors in logic, spelling, grammar, etc. If you find any issues, please leave a note in the Feedback tab on the right so we can fix it ASAP. This tab can also be used to anonymously submit suggestions, improvements, or complaints about the website. All of these will be reviewed and taken into consideration.</p><br/>
+            
+            <div class="h-px bg-cs-green my-6"></div><h1 id="cpsr" class="text-4xl font-extrabold">CPSR</h1><br/>
+            <p class="leading-relaxed text-lg">The CPSR, or Current Program Status Register, is a register in you ARM microcontroller that keeps track of certain processes while the program runs. This behavior allows for some very unique solutions to problems, but you first must understand how to use it. While the CPSR contains 32 bits of information, we will only look at the first four in this class, also known as the Condition Codes. These are NZCV, in that order. They stand for Negative, Zero, Carry, and oVerflow, respectively.</p><br/>
+            
+            <p class="leading-relaxed text-lg">These flags can be set by any command in ARM, and the bits are set based on the result. Assume we add the numbers 10 and -10. The result will be Zero, and no carry/overflow occured, so the NZCV bits will be set to 0100. If we add 4 and -8, the result is -4, so the NZCV bits are 1000. Let's pretend we are in a 4-bit, unsigned system. If we add 0b1111 (15) with 0b1000 (8), we get 0b0111 (7). This is because the leftmost bit gets carried and there is no space for it in the 4-bit system. Thus, the NZCV bits of this example would be 0010.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Wondering the difference between Carry and Overflow? If you are adding 2 numbers with the same sign and the result doesn't make sense (add two negatives and get a positive, etc), then it is a carry. If you are adding 2 numbers with different signs and teh result doesn't make sense (large positive number + small negative number = negative number, etc), then it is an overflow.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Multiple bits can be set at the same time, too. In the same 4-bit system, what if we add 0b1111 (15) and 0b0001 (1). The result is 0b0000 (0) with a carry. So both the C bit and the Z bit are set. The CPSR flags would be 0110.</p><br/>
+            
+            <h2 class="text-2xl text-bold underline text-cs-green">How to set CPSR flags</h2>
+            <p class="leading-relaxed text-lg">Some ARM commands automatically set CPSR flags when run. Others need to be set manually. To manually force the CPSR flags to be set, you add an "S" to the end of the command name. For example, if you want to set the condition codes when performing an ADD, you would write the command as ADDS. MOV and ADD are examples of commands you need to force set, and LDR is an example of a command that sets them automatically.</p><br/>
+            
+            <h2 class="text-2xl text-bold underline text-cs-green">How to view CPSR flags</h2>
+            <p class="leading-relaxed text-lg">In the debugger, the CPSR register can be seen at the bottom of your register list when you run <code class="bg-cs-blue px-1 rounded shadow-lg text-base">i r</code> (it is a register, after all). NOTE: The 4 bits are the LEFTMOST four bits of the 32 bit register. If you see 0xb00000010, then the CPSR flags are 0xb, which is 0x1100 in binary, so N and Z are on. If you see the cpsr register as <code class="bg-cs-blue px-1 rounded shadow-lg text-base">0x10</code>, remember that those are the RIGHTMOST bits (leading zeros are removed), so the four CPSR bits are 0000.</p><br/>
+            
+            <div class="h-px bg-cs-green my-6"></div><h1 id="lp" class="text-4xl font-extrabold">Literal Pools</h1><br/>
+            <p class="leading-relaxed text-lg">Remember Lab 2 where you were asked to put a 32 bit number into a register, and you had to shift+add+shift+add a million times? That's annoying to write and also inefficient. If only there were a better way to declare a 32 bit number and place it in a register.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Boom. Literal Pools.</p><br/>
+            
+            <p class="leading-relaxed text-lg">A literal pool is a place in memory directly between your program code and the .data section with user defined memory locations. The pool is reserved (and only exists) for any declared numbers that are too big for an immediate value. What the microcontroller does is, when compiling, replaces the large number in your code with the address for the literal pool and then puts the value at that address into a register. Essentially, it performs a load (LDR). </p><br/>
+            
+            <p class="leading-relaxed text-lg">So, how does this magic work? Instead of saying <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOV R0, #0xFFFFFFFF</code>, which will throw an error on compile, you write <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R0, =0xFFFFFFFF</code>. Notice that there is an <code class="bg-cs-blue px-1 rounded shadow-lg text-base">=</code> instead of a <code class="bg-cs-blue px-1 rounded shadow-lg text-base">#</code>, and that the command is LDR instead of MOV. If you write it like this, then you only need one line to place a 32-bit number in a register.</p><br/>
+            
+            <div class="h-px bg-cs-green my-6"></div><h1 id="lplim" class="text-4xl font-extrabold">Literal Limitations</h1><br/>
+            <p class="leading-relaxed text-lg">Literal pools are very helpful, but they do have limitations. When locating where a literal (the number you are loading) is, the code only knows the distance between the command and the memory location where the literal is held. So the ARM processor says "oh, the literal is 60 bytes down, I'll go there, get the number, then come back." It doesn't know the objective address.</p><br/>
+            
+            <p class="leading-relaxed text-lg">It does that because the address of the literal pool command is an immediate value, while memory addresses are too long to be used as an immediate value. An offset can fit. But only up to a certain amount.</p><br/>
+            
+            <p class="leading-relaxed text-lg">In the ARM processor in your microcontroller, that limitation is 4096 bytes. That means that if there is more than 4096 bytes between a command and it's literal (stored right before the .data section), then the compiler will throw an error when you run <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make</code>.</p><br/>
+            
+            <p class="leading-relaxed text-lg">One way to add a bunch of bytes is with the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">.fill</code> directive. The syntax for that is <code class="bg-cs-blue px-1 rounded shadow-lg text-base">.fill blocksize, numberofblocks, value</code>. This fills a section of memory with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">numberofblocks</code> number of <code class="bg-cs-blue px-1 rounded shadow-lg text-base">blocksize</code> sized sections which all contain the number <code class="bg-cs-blue px-1 rounded shadow-lg text-base">value</code>. Note that blocksize must be <=8, and your value must fit in the blocksize.</p><br/>
+            
+            
+            <div class="h-px bg-cs-green my-6"></div><h1 id="conclusion" class="text-4xl font-extrabold">Conclusion</h1><br/>
+            <p class="leading-relaxed text-lg">Here, you reviewed and learned about the CPSR flags and how literal pools work in ARM. In future labs, you will see how both of these can be applied to do some really cool things. For now, enjoy the short lab and good luck on the assignments!</p><br/>
+            
+            <p class="leading-relaxed text-lg">It may take a minute to settle into these concepts, but know that there are plenty of resources available to you if you are confused. See either Dr. Camp's office hours or preferably the TA office hours for help with labs, homework, or general questions about the course. All that's left to do now is to write your lab report and submit it via Canvas sometime before your next lab session.</p><br/>
+            
+            <div class="h-px bg-cs-green my-6"></div><h1 id="assignment" class="text-4xl font-extrabold">Assignment</h1><br/>
+            <p class="leading-relaxed text-lg">The assignment portion of the lab contains all instructions and requirements for your lab report. Any challenges or questions in the sections above were hypothetical and just for your practice. On your lab report, you only need to respond to the assignments in this section. Remember that you can check out the <a href="lab-guide" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab Report Guide</a> to see the expectations the TAs have of your lab reports.</p><br/>
+            
+            <p class="leading-relaxed text-lg">You should perform all these tasks in a new, blank directory on your red pitaya. Feel free to reference previous labs or the <a href="cheat-sheet" class="text-lg text-cs-blue hover:text-blue-700 underline">Cheat Sheet</a> to refresh on old topics. All tasks should only include ARM instructions you have learned up to this point. Working ahead is fine, but you need to keep the tasks in the scope of the lessons. For questions on this (if something applies, etc), ask a TA.</p><br/>
+            
+            <h2 class="text-2xl text-bold underline text-cs-green">PICK TWO</h2>
+            <p class="leading-relaxed text-lg">There are three tasks listed for you below. You can pick any two tasks to attempt for this lab. The unchosen one is available for you to practice or review, but is not required. Submitting all three tasks will not grant you extra credit.</p><br/>
+            
+            <p class="leading-relaxed text-lg">However, the TAs will still make comments and give feedback on all three tasks, if submitted. If you want to submit a third task for feedback, but do NOT want it to be considered for grading, you must mark it clearly in your lab report with the phrase "DO NOT SCORE." If no task is marked with this phrase, the TAs will roll a random number generator to decide which two tasks to score for your lab grade.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Additionally, if you come up with a task that you think is of comparable challenge to the ones listed, you may pitch it to one of the TAs. If accepted, your task (bound by the requirements agreed upon by you and the TA) will count towards one of the PICK TWO tasks. The other tasks may be submitted for feedback following the same protocol listed in the paragraphs above.</p><br/>
+            
+            <h2 class="text-2xl text-bold underline text-cs-green">Task 1</h2>
+            <p class="leading-relaxed text-lg">Write code that produces the compiler error "invalid literal constant: pool needs to be closer."</p><br/>
+            
+            <p class="leading-relaxed text-lg">Additional Requirements:</p>
+            <p class="leading-relaxed text-lg">- None</p><br/>
+            
+            <p class="leading-relaxed text-lg">Assumptions:</p>
+            <p class="leading-relaxed text-lg">- Your program does not need to perform any action.</p>
+            <p class="leading-relaxed text-lg">- Your program will not be able to compile because of the error.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Expected Outputs:</p>
+            <p class="leading-relaxed text-lg">- A screenshot of the error message after you try to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make</code> the file.</p><br/>
+            
+            <h2 class="text-2xl text-bold underline text-cs-green">Task 2</h2>
+            <p class="leading-relaxed text-lg">Write code that produces all CPSR flags at least once when adding a number to your student ID.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Additional Requirements:</p>
+            <p class="leading-relaxed text-lg">- Your student ID must be loaded in a register using a literal pool.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Assumptions:</p>
+            <p class="leading-relaxed text-lg">- The number you add to your student ID is up to you, and you can change it as needed to get the correct flags.</p>
+            <p class="leading-relaxed text-lg">- Multiple bits can be set at any given time and can count for multiple examples. E.x. getting the CPSR values 0110 will count as both your Z and C bits.</p>
+            <p class="leading-relaxed text-lg">- All CPSR bits needs to be '1' at some point, and you can use as many programs/screenshots needed to show this occurring.</p>
+            <p class="leading-relaxed text-lg">- You can view the CPSR bits using the debugger.</p>
+            <p class="leading-relaxed text-lg">- You can do all the examples in a single program or update the file with new numbers for each example.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Expected Outputs:</p>
+            <p class="leading-relaxed text-lg">- One or more screenshots showing each CPSR bit set at least once, as well as the number you added to your ID to get that result.</p><br/>
+            
+            <h2 class="text-2xl text-bold underline text-cs-green">Task 3</h2>
+            <p class="leading-relaxed text-lg">Find the memory address of a literal in your code.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Additional Requirements:</p>
+            <p class="leading-relaxed text-lg">- You cannot use a tag to mark the start of the literal pool.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Assumptions:</p>
+            <p class="leading-relaxed text-lg">- Your code includes at least one line that loads a number into a register using the literal pool.</p>
+            <p class="leading-relaxed text-lg">- The result will have the memory address held in a register.</p>
+            <p class="leading-relaxed text-lg">- You can choose which literal's address to find if you have more than one in your code.</p><br/>
+            
+            <p class="leading-relaxed text-lg">Expected Outputs:</p>
+            <p class="leading-relaxed text-lg">- You should use the debugger to list the address of the literal contained in a register with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">i r</code> and display the content of that memory address with an <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x</code> command to show that it really does contain the literal.</p><br/>
+            
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 2</h2>
-                <p class="leading-relaxed text-lg">Observe Table 5-3 on page 93 and note how the B, SB, H, and SH letters affect the LDR instruction.</p><br/>
+            
 
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 3</h2>
-                <p class="leading-relaxed text-lg">Read pages 95-96 (Loading from Memory to Indexing Through Memory). "Wrap" the given code from Listing 5-2 (also in the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">Code Given</a> section) in the starting and ending code you have seen in previous labs. Most coding languages have something called "wrapper" code. Like a candy wrapper, it surrounds the code and tells you something about what is inside. There are many variations of wrapper code, but for the ARM Assembly Language in this class, we use the following:</p><br/>
-                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-.global _start
-
-_start: 
-
-    @ Your code goes here!
-
-    MOV R0, #0
-    MOV R7, #1
-    SVC 0
-
-@ Any .data or other information goes down here!</pre><br/>
-
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 4</h2>
-                <p class="leading-relaxed text-lg">Compile the code from Step 3 using the familiar <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make DEBUG=1</code> command. Make sure to update your makefile with the new filename before using the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make</code> command. Get used to the process of Step 3 and 4, as you will be using it in every lab from here on out. <a class="font-extrabold">After completing this step, take a screenshot of your code from Step 3 and the terminal showing that it compiles with no errors.</a></p><br/>
-
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 5</h2>
-                <p class="leading-relaxed text-lg">Run the debugger (gdb) with your new code.</p><br/>
-
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 6</h2>
-                <p class="leading-relaxed text-lg">Repeat the debugger process you have used in previous labs to check the value of R1 after the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R2, [R1]</code> line. This is the memory address of <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mynumber</code>. Stay in the debugger for the next step.</p><br/>
-
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 7</h2>
-                <p class="leading-relaxed text-lg">Use the command <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x /4ubfx TheNumberYouFoundInR1</code> (replacing TheNumberYouFoundInR1 with the actual number, in hex) to check what is stored in the memory address held in R1. <a class="font-extrabold">After completing this step, take a screenshot showing the values stored at R1's memory address.</a> These should be in the reverse order of the values you had in the "mynumber" line because of Little Endianness. Stay in the debugger for the next step.</p><br/>
-
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 8</h2>
-                <p class="leading-relaxed text-lg">Step over the next line of code and make sure R2 contains the reverse of the value you saw using the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x</code> command (aka, the same order as <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mynumber</code>). You can now leave the debugger.</p><br/>
-
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 9</h2>
-                <p class="leading-relaxed text-lg">Like in previous labs, change <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mynumber</code> to your student ID in hexadecimal, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make DEBUG=1</code> the file, and disassemble your program using the command <code class="bg-cs-blue px-1 rounded shadow-lg text-base">objdump -s -d NameOfYourFile.o</code>. <a class="font-extrabold">After this step, take a screeenshot showing the disassembled code. In your lab report, note which memory addresses hold your student ID.</a></p><br/>
-
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 10</h2>
-                <p class="leading-relaxed text-lg">You should have gone over different types of index addressing in class. This is your time to implement them on your own! For this part, you should have 4 groups of lines. I have added a template for this under "Step 10 Code" in the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">Code Given</a> section of this page, which you should use to replace the code in the same file as the last few steps. <u>If you are copy and pasting my given template, make sure to change the value of <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mynumber</code> back to your student ID</u>. You should have 4 total comparisons, following this format:</p>
-                <ol class="list-decimal ml-12 text-lg space-y-2">
-                    <li>Compare a Byte using <code class="bg-cs-blue px-1 rounded shadow-lg">[R1, #1]</code> vs <code class="bg-cs-blue px-1 rounded shadow-lg text-base">[R1], #1</code></li>
-                    <li>Compare a Signed Byte using<code class="bg-cs-blue px-1 rounded shadow-lg">[R1, #1]!</code> vs <code class="bg-cs-blue px-1 rounded shadow-lg text-base">[R1], #1</code> (note the ! symbol)</li>
-                    <li>Compare a Halfword using <code class="bg-cs-blue px-1 rounded shadow-lg">[R1, #2]</code> vs <code class="bg-cs-blue px-1 rounded shadow-lg text-base">[R1], #2</code></li>
-                    <li>Compare a Signed Halfword using <code class="bg-cs-blue px-1 rounded shadow-lg ">[R1, #2]!</code> vs <code class="bg-cs-blue px-1 rounded shadow-lg text-base">[R1], #2</code> (note the ! symbol)</li>
-                </ol>
-                <p class="leading-relaxed text-lg"><a class="font-extrabold">Take a screenshot of your code and include it in your lab report.</a></p><br/>
-
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 11</h2>
-                <p class="leading-relaxed text-lg">Run the code in the previous step with the debugger, and show the values of R2 for each comparison (as in, you should have 2 screenshots/displays per comparison. One with the first R2, and one with the second. They may be the same value). Remember that the line being displayed in the debugger has not been executed, and you need to step over it to execute it. <a class="font-extrabold">Take a screenshot of each comparison (there should be 4 comparisons for this part)</a>. If you can't fit both examples in one screenshot, then that is okay. <a class="font-extrabold">Make sure to discuess the differences in your lab report.</a></p><br/>
-
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 12</h2>
-                <p class="leading-relaxed text-lg">Stores (STR) are like loads (LDR), except reversed. Instead of grabbing values from memory, they place values into memory at the designated address. Remember: LDR changes registers, STR changes memory. There is no action needed for this step. </p><br/>
-
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 13</h2>
-                <p class="leading-relaxed text-lg">Now, make a new file with the code given in "Step 13 Code" in the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">Code Given</a>. Update your makefile with the name, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make DEBUG=1</code>, and run the debugger. Once you step PAST the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">STR R2, [R1]</code>, check the registers, find the value in <code class="bg-cs-blue px-1 rounded shadow-lg text-base">R1</code> (the memory address for <code class="bg-cs-blue px-1 rounded shadow-lg text-base">mynumber</code>), then run <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x /4ubfx TheNumberYouFoundInR1</code>. What are the values at the memory address? <a class="font-extrabold">Discuss this in your lab report.</a></p><br/>
-
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 14</h2>
-                <p class="leading-relaxed text-lg">Now, BETWEEN the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R1</code> and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">STR R2</code> lines in your code file, add the following lines:</p>
-                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-LDR R2, [R1]
-LDR R3, =0x01010101 
-ADD R2, R2, R3 </pre><br/>
-                <p class="leading-relaxed text-lg">This code adds the number 0x01010101 to your student ID, then stores it back in the original memory address. Go through the same process as Step 13 and <a class="font-extrabold">in your lab report, discuss what values are stored at the memory address.</a></p><br/>
-
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 15</h2>
-                <p class="leading-relaxed text-lg">Go back to your file from Step 10/11. Under the line <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R1, =mynumber</code>, add <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R2, [R1]</code>. This will put your student ID into R2. Next, you are going to do exactly what you did in Step 10, but with STR commands. Simply replace all the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR</code>s with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">STR</code>s (besides the ones in <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R1, =mynumber</code>) BELOW the line <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDR R2, [R1]</code>. Update the lengths (B, SB, etc) as follows:</p>
-                <ol class="list-decimal ml-12 text-lg space-y-2"><li>Byte</li>
-                <li>Byte</li>
-                <li>Halfword</li>
-                <li>Halfword</li></ol><br/>
-
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 16</h2>
-                <p class="leading-relaxed text-lg">Make sure you update the correct file in your makefile, then make it. Run the code in the previous step with the debugger, and show the values of at the memory address of R1 for each comparison (as in, you should have 2 screenshots/displays per comparison. One with the first memory address, and one with the second. They may be the same value). Remember that, to view the data at a memory address, you need to check the value of <code class="bg-cs-blue px-1 rounded shadow-lg text-base">R1</code>,  then run <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x /4ubfx TheNumberYouFoundInR1</code>. <a class="font-extrabold">Take a screenshot of each comparison (there should be 4 comparisons for this part)</a>. If you can't fit both examples in one screenshot, then that is okay. <a class="font-extrabold">Make sure to discuess the differences in your lab report.</a></p><br/>
-
-                <h2 class="text-2xl text-bold underline text-cs-green">Step 17</h2>
-                <p class="leading-relaxed text-lg"><a class="font-extrabold">In your lab report, explain why there is no signed STR instruction.</a></p>
-
-                <div class="h-px bg-cs-green my-6"></div><h1 id="conclusion" class="text-4xl font-extrabold">Conclusion</h1><br/>
-                <p class="leading-relaxed text-lg">In this lab, you applied your knowledge of loading and storing values in memory. This is a very important concept you will use in every lab from now on. You should also now have a concrete understanding of pre, post, and auto indexing and how it effects the addresses you load and store from. This lab was a bit harder than the last, so if you have any questions, be sure to ask a TA. We also have office hours if you have more questions. Be sure to turn in your lab report before next lab, and have a great weekend.</p>
-
-                <div class="h-px bg-cs-green my-6"></div><h1 id="code-given" class="text-4xl font-extrabold">Code Given</h1><br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">Listing 5-2:</h1>
-                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-@ load the address of mynumber into R1
-    LDR R1, =mynumber
-@ load the word stored at mynumber into R2
-    LDR R2, [R1] 
-
-
-@ Put this in the .data section of the wrapper, below everything else
-.data
-    mynumber: .WORD 0x1234ABCD</pre>
-                <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">Step 10 Code:</h1>
-                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-.global _start
-
-_start:
-    LDR R1, =mynumber
-
-    @Comparison Template:
-    @ Line that loads a {byte/halfbyte/etc} into R2 from [R1, #1]
-    @ Line that resets R1 to the address of mynumber if the address changes
-    @ Line that loads a {byte/halfbyte/etc} into R2 from [R1], #1
-    @ Line that resets R1 to the address of mynumber if the address changes
-
-    MOV R0, #0
-    MOV R7, #1
-    SVC 1
-
-
-.data
-mynumber: .word 0x12345678</pre>
-                <br/>
-                <h1 class="text-2xl text-bold underline text-cs-green">Step 13 Code:</h1>
-                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
-.global _start
-
-_start:
-    LDR R1, =mynumber @Make sure to update mynumber in the .data section with your student ID
-    STR R2, [R1] 
-
-    MOV R0, #0
-    MOV R7, #1
-    SVC 0
-
-.data
-mynumber: .word 0xYourStudentID</pre>
-                <br/>
-                
-            </div>
-        </div>
-    </div>
-
-    <!-- Feedback Box -->
+        </div></div>
+        <!-- Feedback Box -->
     <div id="feedback-box" class="fixed hidden right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 dark:bg-[#444444] border-l-4 border-b-4 border-[#E0E0E0] dark:border-[#3B3B3B] rounded-l-xl shadow-lg w-64 p-4 z-50">
         <h2 class="font-bold text-lg dark:text-white text-gray-800 mb-2 text-center">Feedback</h2>
         <textarea id="feedback-text" class="w-full p-2 border rounded-md dark:bg-[#333333] dark:text-steel text-gray-800" rows="4" placeholder="Feedback, corrections, feature ideas, comments, etc."></textarea>
@@ -185,6 +149,18 @@ mynumber: .word 0xYourStudentID</pre>
     <button id="feedback-toggle" class="fixed top-1/2 transform -translate-y-1/2 right-0 md:right-64 bg-cs-blue hover:bg-cs-green text-steel rounded-l-md px-1 py-8 shadow-md">
         ||
     </button>
+
+    <!--
+    <body class="flex justify-center items-center h-screen bg-gray-100">
+        <div class="bg-white p-6 rounded shadow-lg">
+            <h1 class="text-2xl mb-4">Report a Problem</h1>
+            <form action="/submit_workorder" method="post">
+                <textarea name="issue" required class="border p-2 w-full rounded" placeholder="Describe your issue..."></textarea>
+                <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+            </form>
+        </div>
+    </body>
+    -->
 
     <script>
         const feedbackBox = document.getElementById('feedback-box');
@@ -289,6 +265,8 @@ mynumber: .word 0xYourStudentID</pre>
                     Below is an example of a simple Python function:
                 </p>
                 <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+                
+                </pre>
 def greet(name):
     return f"Hello, {name}!"
 
@@ -300,7 +278,3 @@ print(greet("World"))
 
 </code>
 -->
-
-
-
-
