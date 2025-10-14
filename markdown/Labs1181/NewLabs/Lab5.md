@@ -6,9 +6,62 @@ All labs require a lab report. For a comprehensive look on what the TAs are look
 
 These lab guides are handmade, and as such may contain errors in logic, spelling, grammar, etc. If you find any issues, please leave a note in the Feedback tab on the right so we can fix it ASAP. This tab can also be used to anonymously submit suggestions, improvements, or complaints about the website. All of these will be reviewed and taken into consideration.
 
+# Conditional Execution
+Conditional Execution is a way to use ARM code so that some lines are executed *if and only if* a condition is true. This works very similarly to an "if" statment in higher-level languages like Python or C++. This is a very, very powerful tool. However, these conditional executions are structured a bit differently than "if" statements in other languages, which might take some getting used to.
 
+Here is an example of a very basic condtional execution in ARM. I will explain what it does line-by-line:
+1
 
+1. The first two 2 `MOV` lines: You should know what these do by now. It puts the number 1 into R0 and the number 2 into R1.
+2. `CMP R0, R1`: In the given code, this line compares the numbers in R0 in R1. It uses the CPSR flags to remember this comparison. A comparison is the first step for all conditional executions.
+3. `MOVGT R2, #42`: This looks a bit familiar. Remove the `GT` and you get `MOV R2, #42`. You know what that does. But what about the `GT`? That stands for "Greater Than." So, if in the previous CMP statement, the first number was 'greater than' the second number, this line executes like normal. If the first number is NOT greater than the second number, then this line is completely ignored. In this example, 1 is compared to 2. 1 is NOT greater than 2, so this line is ignored. The MOV does not execute and R2 is still empty.
+4. `MOVLE R2, #69`: Similar to the last line, but with an `LE`. This stands for "Less Than or Equal To," so this line only executes if the first number compared is less than or equal to the second number. NOTE: The same CMP can work for multiple conditional statements in a row. The CMP only goes away when the CPSR flags are overwritten by another command. In this example, we use the CMP from two lines ago and compare 1 to 2. 1 IS less than or equal to 2, so this line executes. Now, R2 contains the number 69.
 
+These are the basics of conditional execution, and hopefully you can already see how powerful it can be. You can ignore a whole block of code unless a comparison is true, or you could choose exactly which number to put in a register based on the state of your program.
+
+For your reference:
+Instruction: CMP
+Usage: CMP number1, number2
+Description: Compares (CoMPares) two numbers and sets the CPSR flags accordingly.
+
+# Notes on CMP
+A couple things to note on the CMP command. First was mentioned above, which is that the same CMP takes effect until the CPSR flags are overwritten (often by another CMP, but not always). 
+
+Second is that ANY command can have a condition code on it. I used MOV in the last example, but you could slap a `GT` on an ADD, LDR, or even an LSL. It is very versatile. 
+
+Next, you might wonder how CMP knows which CPSR flags to set. Under the hood, CMP is actually just SUBS. It subtracts the second number from the first number and sets the condition codes based on the resulting number (but that number is not saved to a register, unlike a regular SUB command). This isn't something you should worry about, so don't think too deep into it when decided which condition code to use, but it's always good to know what it's actually doing in the system.
+
+Finally, you might already notice how CMP differs from a regular "if" statement in code. In code, you would write `1 > 2` or `x != y`. However, in ARM, you declare the two numbers/registers first, THEN say what comparison should be used. It would be like writing `1 2, >` or `x y, !=`. The advantage of this is that the two numbers can be reused with many different comparators. 
+
+# Condition Codes
+In the last example, I showed you `GT` and `LE`, but those are only the beginning. Here is a list of the most useful condition codes and what they do. I will also include the CPSR flags that make these conditions "true", but don't worry about those and work based on the word logic, not the binary. I will use 1, 0, and x for the condition codes, where "x" means "doesn't matter whether it's 1 or zero."
+
+1. `EQ`, "equal to," x1xx: The line executes if the first number and the second number are equal to each other, or the same value.
+2. `NE`, "not equal to," x0xx: The line executes if the first number and the second number are NOT equal to each other, or NOT the same value.
+3. `LT`, "signed less than", 1xx0 or 0xx1: The line executes if the first number is less than the second number, assuming you interpret the system as signed.
+4. `LE`, "signed less than or equal to", 11x0 or 01x1: Same as `LT` but the line also executes if the two numbers are equal.
+5. `GT`, "signed greater than", 10x1 or 00x0: The line executes if the first number is greater than the second number, assuming you interpret the system as signed.
+6. `GE`, "signed greater than or equal to", 1xx1 or 0xx0: Same as `GT` but the line also executes if the two numbers are equal.
+7. `LO`, "unsigned less than", xx0x: The line executes if the first number is less than the second number, assuming you interpret the system as unsigned.
+8. `LS`, "unsigned less than or equal to", x10x: Same as `LO` but the line also executes if the two numbers are equal.
+9. `HI`, "unsigned greater than", x01x: The line executes if the first number is greater than the second number, assuming you interpret the system as unsigned.
+10. `HS`, "unsigned greater than or equal to", xx1x: Same as `HI` but the line also executes if the two numbers are equal.
+11. `AL`, "always execute", xxxx: Alawys executes the line. The same as putting no condition code at all.
+
+Generally, you will only use the first six. They should be pretty intuitive, but these will always be here for reference if you need it.
+
+# Common Patterns
+Here are some common patterns you will see in condition codes. I will use ADD for all the examples, but any command can be used.
+
+ADDEQ, ADDNE. If you see something like this, it is working like an "if-else" statement from other programming languages. The first ADD is executed if the compared numbers are equal, and the second add is executed if the compared numbers are not equal. In every case, exactly one of these lines are executed. No more, no less.
+
+ADDGT, ADDLE. This is just like the above. It says "if the first number is greater than the second, do the first add. Otherwise (if the number is less than or equal to the first), do the second add." Again, exactly one line is executed in every case. This can be used with any *complementary* pair of > and < signs (GE+LT or GT+LE)
+
+ADDGT, ADDLT. This is similar to the aboves, but it leaves out the case where the two numbers on the same. Occasionally, you will want to ignore all code if the CMP numbers are the same. An example would be trying to match up two numbers. If the first number is greater than the second, subtract one. If it is less than the second, add one. And if they are the same, do nothing.
+
+ADDGT, ADDEQ, ADDLT. A three way branch (like an "if, else if, else" statement). I bet you can figure this one out. It covers all cases, and exactly one will always execute.
+
+You won't always use these patterns, but they are quite common and a good starting place for shaping your program's flow.
 
 # Conclusion
 Here, you reviewed and learned about logic and conditional execution in ARM using the CPSR flags. In future labs, you will extend this behavior to branches to allow for loop-like behavior or larger if-then-like statements. Good luck on your assignments, and have a great fall break!
@@ -60,7 +113,7 @@ Where R1 holds the starting address of your message and R2 holds the number of c
 
 
 Expected Outputs:
-Four examples of you running your program with `./your_executable_name` (not gdb). They should be the first letter of your first name and last name, each with a different case, as well as the letters "A" and "z" with those specific cases. E.x.
+Four examples of you running your program with `./your_executable_name` (not gdb). They should be the first letter of your first name and last name, each with a different case, as well as the letters "A" and "z" with those specific cases. E.x. with one flip:
 [Image here](TODO)
 
 ## Task 2
@@ -74,12 +127,12 @@ No branching, only conditional execution
 
 Assumptions:
 The two numbers can be placed in a register directly in the program code and do not need to be inputted from the terminal.
-Before outputting the number, you will need to add 0x30 to it so that it formats correctly with ascii (0x31 is a text character '1' in ascii, etc).
+Before outputting the number, you will need to add 0x30 to it so that it formats correctly with ascii (0x31 is a text character '1' in ascii, etc). 
 The user can input any single text character.
 You can use both code snippets from Task 1 to input and output from the terminal.
 
 Expected Outputs:
-A screenshot showing examples with +, -, and something else, ran using `./your_executable_name` (not gdb). The two numbers you use should be included in the screenshot of your code. E.x.
+A screenshot showing examples with +, -, and something else, ran using `./your_executable_name` (not gdb). The two numbers you use should be included in the screenshot of your code. E.x. with one addition (uses 6 and 3 as the)
 [Image here](TODO)
 
 ## Task 3

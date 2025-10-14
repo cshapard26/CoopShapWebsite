@@ -1,0 +1,13 @@
+1
+MOV R0, #1
+MOV R1, #2
+
+CMP R0, R1
+MOVGT R2, #42
+MOVLE R2, #69
+
+
+
+
+2
+CMP R0
