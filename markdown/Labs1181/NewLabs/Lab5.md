@@ -11,7 +11,7 @@ Conditional Execution is a way to use ARM code so that some lines are executed *
 
 Here is an example of a very basic condtional execution in ARM. I will explain what it does line-by-line:
 1
-
+ 
 1. The first two 2 `MOV` lines: You should know what these do by now. It puts the number 1 into R0 and the number 2 into R1.
 2. `CMP R0, R1`: In the given code, this line compares the numbers in R0 in R1. It uses the CPSR flags to remember this comparison. A comparison is the first step for all conditional executions.
 3. `MOVGT R2, #42`: This looks a bit familiar. Remove the `GT` and you get `MOV R2, #42`. You know what that does. But what about the `GT`? That stands for "Greater Than." So, if in the previous CMP statement, the first number was 'greater than' the second number, this line executes like normal. If the first number is NOT greater than the second number, then this line is completely ignored. In this example, 1 is compared to 2. 1 is NOT greater than 2, so this line is ignored. The MOV does not execute and R2 is still empty.

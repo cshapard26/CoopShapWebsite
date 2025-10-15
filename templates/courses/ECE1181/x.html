@@ -1,70 +1,104 @@
-<p class="leading-relaxed text-lg">Logic</p><br/>
+<p class="leading-relaxed text-lg">Branching and Linking</p><br/>
 <div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Overview</h1><br/>
-<p class="leading-relaxed text-lg">Welcome to Lab 5. Last lab, you learned about literal pools and the CPSR flags. Today, you will use those flags for "conditional execution", which is similar to the "if statements" you see in other programming languages.</p><br/>
+<p class="leading-relaxed text-lg">Welcome to Lab 6. Last lab, you learned about conditional execution. Today, you will pair that conditional execution with a new type of statement: branching. Branching allows you to jump between lines of code and break the PC+4 behaviour you are used to seeing.</p><br/>
 
 <p class="leading-relaxed text-lg">All labs require a lab report. For a comprehensive look on what the TAs are looking for, formatting, and scoring, take a look at the <a href="lab-guide" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab Report Guide</a>.</p><br/>
 
 <p class="leading-relaxed text-lg">These lab guides are handmade, and as such may contain errors in logic, spelling, grammar, etc. If you find any issues, please leave a note in the Feedback tab on the right so we can fix it ASAP. This tab can also be used to anonymously submit suggestions, improvements, or complaints about the website. All of these will be reviewed and taken into consideration.</p><br/>
 
-<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Conditional Execution</h1><br/>
-<p class="leading-relaxed text-lg">Conditional Execution is a way to use ARM code so that some lines are executed <a class="italic">if and only if</a> a condition is true. This works very similarly to an "if" statment in higher-level languages like Python or C++. This is a very, very powerful tool. However, these conditional executions are structured a bit differently than "if" statements in other languages, which might take some getting used to.</p><br/>
+<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Branching</h1><br/>
+<p class="leading-relaxed text-lg">Branching is a method in ARM that allows you to move the program counter to any arbitrary memory location. As you have seen in lecture, the program counter, or PC, is what tells ARM which line to run at any given time. On its own, it follows something called "PC+4" behaviour, which is where the the PC moves 4 bytes down after every line executed. Because instructions are 4 bytes long, this just means the PC executes one line after another, in order, and continues to do this through the whole program.</p><br/>
 
-<p class="leading-relaxed text-lg">Here is an example of a very basic condtional execution in ARM. I will explain what it does line-by-line:</p><br/>
+<p class="leading-relaxed text-lg">When you perform a branch, you move the PC to another location. You can use this to execute different blocks of code at different times without needing to put them all right next to each other in your program. Think of this like making function in higher-level programming languages. You can set a block of code that you execute many times without having to type it over and over. However, branching is much, much more versatile than just functions and makes up everything from loops to recursion to subroutines.</p><br/>
+
+<p class="leading-relaxed text-lg">Here is a minimal code example using a branch, followed by an explanation of each line:</p><br/>
 <p class="leading-relaxed text-lg">1</p><br/>
 
-<ol class="list-decimal ml-12 text-lg space-y-2"><li>The first two 2 <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOV</code> lines: You should know what these do by now. It puts the number 1 into R0 and the number 2 into R1.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">CMP R0, R1</code>: In the given code, this line compares the numbers in R0 in R1. It uses the CPSR flags to remember this comparison. A comparison is the first step for all conditional executions.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOVGT R2, #42</code>: This looks a bit familiar. Remove the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">GT</code> and you get <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOV R2, #42</code>. You know what that does. But what about the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">GT</code>? That stands for "Greater Than." So, if in the previous CMP statement, the first number was 'greater than' the second number, this line executes like normal. If the first number is NOT greater than the second number, then this line is completely ignored. In this example, 1 is compared to 2. 1 is NOT greater than 2, so this line is ignored. The MOV does not execute and R2 is still empty.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOVLE R2, #69</code>: Similar to the last line, but with an <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LE</code>. This stands for "Less Than or Equal To," so this line only executes if the first number compared is less than or equal to the second number. NOTE: The same CMP can work for multiple conditional statements in a row. The CMP only goes away when the CPSR flags are overwritten by another command. In this example, we use the CMP from two lines ago and compare 1 to 2. 1 IS less than or equal to 2, so this line executes. Now, R2 contains the number 69.</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOV R0, #12</code>: Places the number 12 in register 0.</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">B tagname</code>: This is your branch. You provide the branch instruction, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">B</code>, with a single input: the name of any tag. The program counter then moves to that tag and starts executing code there. Here, the PC moves to the ADD command at <code class="bg-cs-blue px-1 rounded shadow-lg text-base">tagname</code> and skips all lines in between.</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">tagname</code>: This is just a tag that marks the location of a line</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">ADD R1, R0, #30</code>: This line adds the value in R0 and the number 30 and places the result in R1. Here, R0 contains 12, not 16, because the branch skipped that line. Thus, this line adds 12 and 30, and the result is the number 42 in R1.</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">B end</code>: Another branch. This time, it jumps to the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOV R0, #0</code> line in the middle, which is marked by the tag <code class="bg-cs-blue px-1 rounded shadow-lg text-base">end</code>.</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOV, MOV, SVC 0</code>: You know this set of 3 lines as the Linux command that terminates your program.</li></ol>
 
-<p class="leading-relaxed text-lg">These are the basics of conditional execution, and hopefully you can already see how powerful it can be. You can ignore a whole block of code unless a comparison is true, or you could choose exactly which number to put in a register based on the state of your program.</p><br/>
+<p class="leading-relaxed text-lg">This basic example just showed how to use branching to jump between spots in code. Notice that the line <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOV R0, #16</code> was <a class="italic">never executed</a> due to the way the branches were set up. Branches on their own aren't super useful besides just organizing code. Their strength, however, comes from their interactions with other ARM systems.</p><br/>
 
-<p class="leading-relaxed text-lg">For your reference:</p><br/>
-<p class="leading-relaxed text-lg">Instruction: CMP</p><br/>
-<p class="leading-relaxed text-lg">Usage: CMP number1, number2</p><br/>
-<p class="leading-relaxed text-lg">Description: Compares (CoMPares) two numbers and sets the CPSR flags accordingly.</p><br/>
+<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Conditional Branching</h1><br/>
+<p class="leading-relaxed text-lg">One of the most powerful tools in all of ARM is a conditional branch. As you might expect, this happens when you put a condition code on a <code class="bg-cs-blue px-1 rounded shadow-lg text-base">B</code> command, such as <code class="bg-cs-blue px-1 rounded shadow-lg text-base">BGT</code> or <code class="bg-cs-blue px-1 rounded shadow-lg text-base">BEQ</code>. Here is an example of one reason to do that:</p><br/>
+<p class="leading-relaxed text-lg">2</p><br/>
 
-<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Notes on CMP</h1><br/>
-<p class="leading-relaxed text-lg">A couple things to note on the CMP command. First was mentioned above, which is that the same CMP takes effect until the CPSR flags are overwritten (often by another CMP, but not always). </p><br/>
+<p class="leading-relaxed text-lg">Without going line-by-line, lets follow the program.</p><br/>
 
-<p class="leading-relaxed text-lg">Second is that ANY command can have a condition code on it. I used MOV in the last example, but you could slap a <code class="bg-cs-blue px-1 rounded shadow-lg text-base">GT</code> on an ADD, LDR, or even an LSL. It is very versatile. </p><br/>
+<p class="leading-relaxed text-lg">First, we put some number into R0. Let's say we take that number as input from the terminal, so we don't know what it is by the time we run this code. Then, we go to the next line, marked by <code class="bg-cs-blue px-1 rounded shadow-lg text-base">beginning</code>. We compare a the input number to 0. If it is greater than zero, we jump to the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">positive</code> tag. In the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">positive</code> area, we subtract 1 from R0 and jump back to the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">beginning</code> block, repeating the process. If R0 is less than zero, we jump to the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">negative</code> tag. In there we add 1 to R0 and branch back to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">beginning</code>. If the number is equal to zero, then we branch to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ending</code>, which terminates the program.</p><br/>
 
-<p class="leading-relaxed text-lg">Next, you might wonder how CMP knows which CPSR flags to set. Under the hood, CMP is actually just SUBS. It subtracts the second number from the first number and sets the condition codes based on the resulting number (but that number is not saved to a register, unlike a regular SUB command). This isn't something you should worry about, so don't think too deep into it when decided which condition code to use, but it's always good to know what it's actually doing in the system.</p><br/>
+<p class="leading-relaxed text-lg">So, let's say that R0 starts at the number 7. Take a second to figure out what will happen as the program progresses. Answer: 7 is greater than zero, so we subtract 1 and start over. R0 continues this pattern, becoming 6,5,4,3,2,1, all the way down to 0. Once it hits zero, we branch and end the program.</p><br/>
 
-<p class="leading-relaxed text-lg">Finally, you might already notice how CMP differs from a regular "if" statement in code. In code, you would write <code class="bg-cs-blue px-1 rounded shadow-lg text-base">1 > 2</code> or <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x != y</code>. However, in ARM, you declare the two numbers/registers first, THEN say what comparison should be used. It would be like writing <code class="bg-cs-blue px-1 rounded shadow-lg text-base">1 2, ></code> or <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x y, !=</code>. The advantage of this is that the two numbers can be reused with many different comparators. </p><br/>
+<p class="leading-relaxed text-lg">Now try starting at the number -42. What will happen? Answer: We count upwards from -42 up to 0, i.e. -42,-41,-40,...-2,-1,0. Once we hit zero, we jump to the end of the program.</p><br/>
 
-<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Condition Codes</h1><br/>
-<p class="leading-relaxed text-lg">In the last example, I showed you <code class="bg-cs-blue px-1 rounded shadow-lg text-base">GT</code> and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LE</code>, but those are only the beginning. Here is a list of the most useful condition codes and what they do. I will also include the CPSR flags that make these conditions "true", but don't worry about those and work based on the word logic, not the binary. I will use 1, 0, and x for the condition codes, where "x" means "doesn't matter whether it's 1 or zero."</p><br/>
+<p class="leading-relaxed text-lg">Hopefully you can now see how useful conditional branching can be, opening up tons of new doors for program functionality including looping and conditional code blocks.</p><br/>
 
-<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">EQ</code>, "equal to," x1xx: The line executes if the first number and the second number are equal to each other, or the same value.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">NE</code>, "not equal to," x0xx: The line executes if the first number and the second number are NOT equal to each other, or NOT the same value.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">LT</code>, "signed less than", 1xx0 or 0xx1: The line executes if the first number is less than the second number, assuming you interpret the system as signed.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">LE</code>, "signed less than or equal to", 11x0 or 01x1: Same as <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LT</code> but the line also executes if the two numbers are equal.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">GT</code>, "signed greater than", 10x1 or 00x0: The line executes if the first number is greater than the second number, assuming you interpret the system as signed.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">GE</code>, "signed greater than or equal to", 1xx1 or 0xx0: Same as <code class="bg-cs-blue px-1 rounded shadow-lg text-base">GT</code> but the line also executes if the two numbers are equal.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">LO</code>, "unsigned less than", xx0x: The line executes if the first number is less than the second number, assuming you interpret the system as unsigned.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">LS</code>, "unsigned less than or equal to", x10x: Same as <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LO</code> but the line also executes if the two numbers are equal.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">HI</code>, "unsigned greater than", x01x: The line executes if the first number is greater than the second number, assuming you interpret the system as unsigned.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">HS</code>, "unsigned greater than or equal to", xx1x: Same as <code class="bg-cs-blue px-1 rounded shadow-lg text-base">HI</code> but the line also executes if the two numbers are equal.</li></ol>
-<ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">AL</code>, "always execute", xxxx: Alawys executes the line. The same as putting no condition code at all.</li></ol>
+<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Linking</h1><br/>
+<p class="leading-relaxed text-lg">One very common way to use branching involves jumping to a block of code, then going right back to where you branched from and continuing on from there. Because this is so common, the inventors of ARM have a built-in way to do so. It is called Linking. How it works is that instead of using <code class="bg-cs-blue px-1 rounded shadow-lg text-base">B</code>, you use <code class="bg-cs-blue px-1 rounded shadow-lg text-base">BL</code> (for Branch and Link). When you do this, the current address plus 4 is placed in a special register called the Link Register (a.k.a LR, you can see it in the debugger when you do <code class="bg-cs-blue px-1 rounded shadow-lg text-base">i r</code>). </p><br/>
 
-<p class="leading-relaxed text-lg">Generally, you will only use the first six. They should be pretty intuitive, but these will always be here for reference if you need it.</p><br/>
+<p class="leading-relaxed text-lg">Then, whenever you want to return to the line after your branch, you just run <code class="bg-cs-blue px-1 rounded shadow-lg text-base">BX LR</code>, which takes you back and clears the Link Register for new use.</p><br/>
+
+<p class="leading-relaxed text-lg">For example:</p><br/>
+<p class="leading-relaxed text-lg">3</p><br/>
+
+<p class="leading-relaxed text-lg">Take a moment to think through what this program does (note that "MUL" is the ARM command to multiply two numbers). What is the final number in R1 before the program ends? Answer: 88. The program starts with the number 10 in R1, then jumps to the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">doubleR1</code> section, which multiplies the number in R1 by 2 and then jumps back to the branch it just used to get there. R1 is 20 at this point. We then add 2 to get 22 in R1, and then double R1 twice in a row using the same branch as before. At that point, the program ends with 88 in R1.</p><br/>
+
+<p class="leading-relaxed text-lg">Linking is very useful for creating the same functionality as a "function" in higher level languages like Python or C.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">A Warning</h1><br/>
+<p class="leading-relaxed text-lg">Take a second to think about what the following code block will do:</p><br/>
+<p class="leading-relaxed text-lg">4</p><br/>
+
+<p class="leading-relaxed text-lg">Answer: Starting at the top, we enter the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">loophead</code> block. We put the number 0 into R0, then we branch to the top of the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">loophead</code> block. There, we put the number 0 into R0 and branch to the top of the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">loophead</code> block. There, we put the number 0 into R0...</p><br/>
+
+<p class="leading-relaxed text-lg">You get the point. Using branches, it is possible to get stuck in an <a class="italic">infinite loop</a>. Always make sure to check for this as a possibility. If it is occuring in your code, whay you will see is that you run <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./executable_name</code> to start your program, then the terminal gives no output and does not give a new shell prompt. This is similar to how it looks when it is waiting for user input. However, no matter what you type in the terminal, nothing will happen. Higher-level languages are smart enough to crash when you go into an infinite loop. ARM is not. It will literally run forever if you let it. How do you stop it? In the terminal, press <code class="bg-cs-blue px-1 rounded shadow-lg text-base">Ctrl+C</code> (for Mac users, this is still control, not command C). This does not mean "copy" in the terminal, it means "cancel" and will immediately terminate any running program. Use it as needed.</p><br/>
 
 <div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Common Patterns</h1><br/>
-<p class="leading-relaxed text-lg">Here are some common patterns you will see in condition codes. I will use ADD for all the examples, but any command can be used.</p><br/>
+<h2 class="text-2xl text-bold underline text-cs-green">Creating a loop</h2>
+<p class="leading-relaxed text-lg">To create a loop that runs a block of code for <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x</code> number of times, first, decide on a register to be your index, which will keep track of what loop you are on and start at 0. Then place the code you want to repeat in a tag. At the end of the group in the tag, you want to compare your index to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x</code>. If it is greater than or equal to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x</code>, you will leave the loop and go to the next block of code. If your index is less than <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x</code>, you will add 1 and branch back to the start of the tag marking your loop. Example:</p><br/>
+<p class="leading-relaxed text-lg">5</p><br/>
 
-<p class="leading-relaxed text-lg">ADDEQ, ADDNE. If you see something like this, it is working like an "if-else" statement from other programming languages. The first ADD is executed if the compared numbers are equal, and the second add is executed if the compared numbers are not equal. In every case, exactly one of these lines are executed. No more, no less.</p><br/>
+<h2 class="text-2xl text-bold underline text-cs-green">Blocked Ifs</h2>
+<p class="leading-relaxed text-lg">If you want an "if-elseif-else statement" with a lot of lines in each part, then you might want to use a system like the following, which executes one of three blocks of code depending on a condition, then makes sure all paths end up back on a main path (<code class="bg-cs-blue px-1 rounded shadow-lg text-base">other_code</code> here):</p><br/>
+<p class="leading-relaxed text-lg">6</p><br/>
 
-<p class="leading-relaxed text-lg">ADDGT, ADDLE. This is just like the above. It says "if the first number is greater than the second, do the first add. Otherwise (if the number is less than or equal to the first), do the second add." Again, exactly one line is executed in every case. This can be used with any <a class="italic">complementary</a> pair of > and < signs (GE+LT or GT+LE)</p><br/>
+<h2 class="text-2xl text-bold underline text-cs-green">Functions</h2>
+<p class="leading-relaxed text-lg">See the Linking section for an example of how to make a function. These don't take any inputs (yet! that's next lab), but can execute the same block multiple times without deviating from your main path of code. They are typically done with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">BL</code> and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">BX LR</code> commands.</p><br/>
 
-<p class="leading-relaxed text-lg">ADDGT, ADDLT. This is similar to the aboves, but it leaves out the case where the two numbers on the same. Occasionally, you will want to ignore all code if the CMP numbers are the same. An example would be trying to match up two numbers. If the first number is greater than the second, subtract one. If it is less than the second, add one. And if they are the same, do nothing.</p><br/>
+<h2 class="text-2xl text-bold underline text-cs-green">Fall Through Conditions</h2>
+<p class="leading-relaxed text-lg">One very important thing to note is that, if a conditional branch doesn't execute (because the condition is false), then ARM continues with PC+4 behavior and executes the next line in the program. This can either be very helpful or very problematic.</p><br/>
 
-<p class="leading-relaxed text-lg">ADDGT, ADDEQ, ADDLT. A three way branch (like an "if, else if, else" statement). I bet you can figure this one out. It covers all cases, and exactly one will always execute.</p><br/>
+<p class="leading-relaxed text-lg">Here is an example of an INCORRECT way to use fall-through conditions:</p><br/>
+<p class="leading-relaxed text-lg">7</p><br/>
 
-<p class="leading-relaxed text-lg">You won't always use these patterns, but they are quite common and a good starting place for shaping your program's flow.</p><br/>
+<p class="leading-relaxed text-lg">See the issue? When the BLT is run, it will branch to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">number<a class="underline">less</a>than</code> if the condition is true. But if it is not true, the Branch is skipped, and we run the next line. The next line is in the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">number<a class="underline">less</a>than</code> section too!! This means that no matter if R0 is more or less than 1, we always go to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">number<a class="underline">less</a>than</code>, which is obviously not what we intended.</p><br/>
+
+<p class="leading-relaxed text-lg">Here is an example of a CORRECT and clever way to use fall-through conditions:</p><br/>
+<p class="leading-relaxed text-lg">8</p><br/>
+
+<p class="leading-relaxed text-lg">Subtle difference, right? The ordering of the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">number<a class="underline">less</a>than</code> and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">number<a class="underline">more</a>than</code> are different. Now what happens at the BLT? If the number is less than 1, we skip over <code class="bg-cs-blue px-1 rounded shadow-lg text-base">number<a class="underline">more</a>than</code> and go to the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">number<a class="underline">less</a>than</code> section, just like we intend. If the number is NOT less than 1, then we ignore the branch and run the next line, which is in the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">number<a class="underline">more</a>than</code> section. This is exactly where we want to be, and by using a fall-through condition instead of a separate <code class="bg-cs-blue px-1 rounded shadow-lg text-base">BGT number<a class="underline">greater</a>than</code> line, we have saved a line of code AND reduced the number of branches in our program, which noticeably speeds it up (it's the difference between 0.001 microseconds and 0.0011 microseconds, but still, that compounds over time).</p><br/>
+
+<p class="leading-relaxed text-lg">Fall-through conditions are very useful if you use them right, but always make sure you are ending a code block with a branch unless you intend to fall-through. Else, you may do so by accident and mess up your program logic.</p><br/>
+
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Reference Linux Commands</h1><br/>
+<h2 class="text-2xl text-bold underline text-cs-green">Take input from the terminal</h2>
+<p class="leading-relaxed text-lg">9</p><br/>
+
+<p class="leading-relaxed text-lg">Where R1 holds the address where you want to store the input from the terminal and R2 holds the number of characters you want to accept.</p><br/>
+
+<h2 class="text-2xl text-bold underline text-cs-green">Print text to the terminal</h2>
+<p class="leading-relaxed text-lg">10</p><br/>
+
+<p class="leading-relaxed text-lg">Where R1 holds the starting address of your message and R2 holds the number of characters you want to output to the terminal.</p><br/>
+
 
 <div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Conclusion</h1><br/>
-<p class="leading-relaxed text-lg">Here, you reviewed and learned about logic and conditional execution in ARM using the CPSR flags. In future labs, you will extend this behavior to branches to allow for loop-like behavior or larger if-then-like statements. Good luck on your assignments, and have a great fall break!</p><br/>
+<p class="leading-relaxed text-lg">Here, you reviewed and learned about braching and linking in ARM, as well as how to tie it with conditional execution. In future labs, you will learn how to nest branches using the stack.</p><br/>
 
 <p class="leading-relaxed text-lg">It may take a minute to settle into these concepts, but know that there are plenty of resources available to you if you are confused. See either Dr. Camp's office hours or preferably the TA office hours for help with labs, homework, or general questions about the course. All that's left to do now is to write your lab report and submit it via Canvas sometime before your next lab session.</p><br/>
 
@@ -81,58 +115,53 @@
 <p class="leading-relaxed text-lg">Additionally, if you come up with a task that you think is of comparable challenge to the ones listed, you may pitch it to one of the TAs. If accepted, your task (bound by the requirements agreed upon by you and the TA) will count towards one of the PICK TWO tasks. The other tasks may be submitted for feedback following the same protocol listed in the paragraphs above.</p><br/>
 
 <h2 class="text-2xl text-bold underline text-cs-green">Task 1</h2>
-<p class="leading-relaxed text-lg">Write a program that takes a one-letter input from the terminal and outputs the same letter with the opposite case (m -> M or T -> t, etc).</p><br/>
+<p class="leading-relaxed text-lg">Write a program that prints the numbers 0 to 9 to the terminal.</p><br/>
 
 <p class="leading-relaxed text-lg">Additional Requirements:</p><br/>
-<p class="leading-relaxed text-lg">Your program cannot use branching.</p><br/>
-<p class="leading-relaxed text-lg">Your program must use conditional execution, as the case of the letter will not be hardcoded into your program.</p><br/>
-<p class="leading-relaxed text-lg">Your program must format the output nicely.</p><br/>
+<p class="leading-relaxed text-lg">Each number must be on its own line, formatted nicely.</p><br/>
+<p class="leading-relaxed text-lg">You cannot just write the same print statement 10 times. You need to use a branch like a loop.</p><br/>
 
 <p class="leading-relaxed text-lg">Assumptions:</p><br/>
-<p class="leading-relaxed text-lg">You can assume that the input will always be a single alphabetic character</p><br/>
-<p class="leading-relaxed text-lg">You can look at an ASCII table to find the relation between upper and lowercaes numbers (they are stored as hex values in the pitaya).</p><br/>
-<p class="leading-relaxed text-lg">You can use this Linux operator in your ARM code to take an input from the terminal:</p><br/>
-
-<p class="leading-relaxed text-lg">Where R1 holds the address where you want to store the input from the terminal and R2 holds the number of characters you want to accept.</p><br/>
-
-<p class="leading-relaxed text-lg">As a reminder from Lab 1, you can use this Linux operator to output text to the terminal:</p><br/>
-
-<p class="leading-relaxed text-lg">Where R1 holds the starting address of your message and R2 holds the number of characters you want to output to the terminal.</p><br/>
+<p class="leading-relaxed text-lg">Your program will take no input.</p><br/>
+<p class="leading-relaxed text-lg">You understand the difference between the number 1 and an ascii "1" (one of them is 0x1, the other is 0x31). Use an ascii table if needed. Output to the terminal must be in ascii format or it won't be displayed correctly.</p><br/>
 
 
 <p class="leading-relaxed text-lg">Expected Outputs:</p><br/>
-<p class="leading-relaxed text-lg">Four examples of you running your program with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./your<a class="underline">executable</a>name</code> (not gdb). They should be the first letter of your first name and last name, each with a different case, as well as the letters "A" and "z" with those specific cases. E.x. with one flip:</p><br/>
-<a href="TODO" class="text-lg text-cs-blue hover:text-blue-700 underline">Image here</a>
+<p class="leading-relaxed text-lg">Running your program with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./your<a class="underline">executable</a>name</code> (not gdb) should print the numbers 0-9 in order, each on its own line. Example:</p><br/>
+<a href="/static/images/featured/ECE1181/Lab6Task1.png" class="text-lg text-cs-blue hover:text-blue-700 underline">Image here</a>
+
 
 <h2 class="text-2xl text-bold underline text-cs-green">Task 2</h2>
-<p class="leading-relaxed text-lg">Write a program that takes a '+' or '-' from the terminal and outputs the sum or difference of two hardcoded numbers, respectively.</p><br/>
+<p class="leading-relaxed text-lg">Write a program that takes a text input from the terminal and outputs the same text, but all in uppercase.</p><br/>
 
 <p class="leading-relaxed text-lg">Additional Requirements:</p><br/>
-<p class="leading-relaxed text-lg">If the user inputs something other than + or -, the output should be the letter <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x</code>.</p><br/>
-<p class="leading-relaxed text-lg">Both the sum and the difference of the two numbers must be positive and a single digit (0-9). I suggest using 5 and 2.</p><br/>
-<p class="leading-relaxed text-lg">The output should be formatted nicely.</p><br/>
-<p class="leading-relaxed text-lg">No branching, only conditional execution</p><br/>
+<p class="leading-relaxed text-lg">Numbers, symbols, and already uppercase characters should not be affected.</p><br/>
+<p class="leading-relaxed text-lg">In your output, you must include at least one edge case with the characters "@" and "[".</p><br/>
+<p class="leading-relaxed text-lg">The output must be formatted nicely.</p><br/>
 
 <p class="leading-relaxed text-lg">Assumptions:</p><br/>
-<p class="leading-relaxed text-lg">The two numbers can be placed in a register directly in the program code and do not need to be inputted from the terminal.</p><br/>
-<p class="leading-relaxed text-lg">Before outputting the number, you will need to add 0x30 to it so that it formats correctly with ascii (0x31 is a text character '1' in ascii, etc). </p><br/>
-<p class="leading-relaxed text-lg">The user can input any single text character.</p><br/>
-<p class="leading-relaxed text-lg">You can use both code snippets from Task 1 to input and output from the terminal.</p><br/>
+<p class="leading-relaxed text-lg">The user will input between 1 and 50 characters.</p><br/>
+<p class="leading-relaxed text-lg">You can look at an ASCII table to find the relation between upper and lowercaes numbers (they are stored as hex values in the pitaya).</p><br/>
 
 <p class="leading-relaxed text-lg">Expected Outputs:</p><br/>
-<p class="leading-relaxed text-lg">A screenshot showing examples with +, -, and something else, ran using <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./your<a class="underline">executable</a>name</code> (not gdb). The two numbers you use should be included in the screenshot of your code. E.x. with one addition (uses 6 and 3 as the two numbers)</p><br/>
-<a href="TODO" class="text-lg text-cs-blue hover:text-blue-700 underline">Image here</a>
+<p class="leading-relaxed text-lg">Three screenshots showing you running your program with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./your<a class="underline">executable</a>name</code> (not gdb), entering a text input, and getting an all-uppercase output. You can include all three tests in the same screenshot if they fit. Example:</p><br/>
+<a href="/static/images/featured/ECE1181/Lab6Task2.png" class="text-lg text-cs-blue hover:text-blue-700 underline">Image here</a>
 
 <h2 class="text-2xl text-bold underline text-cs-green">Task 3</h2>
-<p class="leading-relaxed text-lg">Explain what would happen if you put a condition code on a CMP statement (e.x. CMPEQ).</p><br/>
+<p class="leading-relaxed text-lg">Write a program that continues to prompt the user "Would you like to quit?" until the user types "y", then says "Goodbye!".</p><br/>
 
-<p class="leading-relaxed text-lg">Additonal Requirements:</p><br/>
-<p class="leading-relaxed text-lg">Include a tree-like diagram of the possible outcomes of a 3-level conditional CMP (you can use: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">CMP R1, R2; CMPLT R2, R3; CMPGE R1, R3</code> or your own version like it), and include what we know after each stage.</p><br/>
-<p class="leading-relaxed text-lg">Explain why this behavior would or would not be useful in an actual program.</p><br/>
+<p class="leading-relaxed text-lg">Additional Requirements:</p><br/>
+<p class="leading-relaxed text-lg">If the user types anything other than "y", the prompt will be displayed again on a new line.</p><br/>
+<p class="leading-relaxed text-lg">The user's input must be shown on the same line as the prompt.</p><br/>
+<p class="leading-relaxed text-lg">The outputs must be formatted nicely.</p><br/>
 
 <p class="leading-relaxed text-lg">Assumptions:</p><br/>
-<p class="leading-relaxed text-lg">You can make a digital drawing or a physical one and take a picture.</p><br/>
+<p class="leading-relaxed text-lg">If the user types a phrase longer than 1 character, but it begins with "y", this can be considered a way to end the program.</p><br/>
+<p class="leading-relaxed text-lg">The user will input between 0 and 50 characters.</p><br/>
+<p class="leading-relaxed text-lg">The program will terminate after "Goodbye!" is displayed.</p><br/>
 
 <p class="leading-relaxed text-lg">Expected Outputs:</p><br/>
-<p class="leading-relaxed text-lg">An illustration and explanation as listed in the requirements above.</p><br/>
+<p class="leading-relaxed text-lg">Three screenshots showing you running your program with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./your<a class="underline">executable</a>name</code> (not gdb), entering any number of non-"y" characters, then ending with a "y". The three screenshots should include different numbers of non-"y" inputs, with one being at least 5 prompts long. Example with three non-"y" responses and ended with a "y":</p><br/>
+<a href="/static/images/featured/ECE1181/Lab6Task3.png" class="text-lg text-cs-blue hover:text-blue-700 underline">Image here</a>
+
 

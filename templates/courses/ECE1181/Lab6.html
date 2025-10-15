@@ -1,0 +1,490 @@
+{% extends 'base.html' %}
+{% block content %}
+<body class="bg-gray-100 dark:text-steel text-[#222222]">
+    <!-- Blog Post Wrapper -->
+    <div class="max-w-screen-md px-4 py-8 mx-auto">
+        <!-- Thinner Centered Bar -->
+        <div class="dark:bg-[#444444] bg-[#CCCCCC] rounded-3xl shadow-2xl dark:shadow-white p-6 mx-auto">
+            <!-- Title Section -->
+            <div class="text-center">
+                <h1 class="text-6xl font-extrabold leading-tight text-cs-green">
+                    Lab 6: Branching
+                </h1>
+                <h2 class="text-2xl text-bold leading-tight text-cs-green">
+                    Loops, Linking, and Functions
+                </h1>
+                 <!-- Separator -->
+                <div class="h-px bg-cs-green my-6"></div>
+                <a href="#overview" class="inline-block bg-cs-blue hover:bg-blue-700  hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Overview
+                </a> >>
+                <a href="#branching" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Branching
+                </a> >>
+                <a href="#linking" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Linking
+                </a> >>
+                <a href="#patterns" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Patterns
+                </a> >>
+                <a href="#conclusion" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Conclusion
+                </a> >>
+                <a href="#assignment" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Assignment
+                </a>
+            </div>
+
+            <div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Overview</h1><br/>
+            <p class="leading-relaxed text-lg">Welcome to Lab 6. Last lab, you learned about conditional execution. Today, you will pair that conditional execution with a new type of statement: branching. Branching allows you to jump between lines of code and break the PC+4 behaviour you are used to seeing.</p><br/>
+
+            <p class="leading-relaxed text-lg">All labs require a lab report. For a comprehensive look on what the TAs are looking for, formatting, and scoring, take a look at the <a href="lab-guide" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab Report Guide</a>.</p><br/>
+
+            <p class="leading-relaxed text-lg">These lab guides are handmade, and as such may contain errors in logic, spelling, grammar, etc. If you find any issues, please leave a note in the Feedback tab on the right so we can fix it ASAP. This tab can also be used to anonymously submit suggestions, improvements, or complaints about the website. All of these will be reviewed and taken into consideration.</p><br/>
+
+            <div class="h-px bg-cs-green my-6"></div><h1 id="branching" class="text-4xl font-extrabold">Branching</h1><br/>
+            <p class="leading-relaxed text-lg">Branching is a method in ARM that allows you to move the program counter to any arbitrary memory location. As you have seen in lecture, the program counter, or PC, is what tells ARM which line to run at any given time. On its own, it follows something called "PC+4" behaviour, which is where the the PC moves 4 bytes down after every line executed. Because instructions are 4 bytes long, this just means the PC executes one line after another, in order, and continues to do this through the whole program.</p><br/>
+
+            <p class="leading-relaxed text-lg">When you perform a branch, you move the PC to another location. You can use this to execute different blocks of code at different times without needing to put them all right next to each other in your program. Think of this like making function in higher-level programming languages. You can set a block of code that you execute many times without having to type it over and over. However, branching is much, much more versatile than just functions and makes up everything from loops to recursion to subroutines.</p><br/>
+
+            <p class="leading-relaxed text-lg">Here is a minimal code example using a branch, followed by an explanation of each line:</p><br/>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R0, #12
+    B tagname
+
+    MOV R0, #16
+
+end:
+    MOV R0, #0
+    MOV R7, #1
+    SVC 0
+
+tagname:
+    ADD R1, R0, #30
+    B end
+</pre><br/>
+
+            <ol class="list-decimal ml-12 text-lg space-y-2"><li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOV R0, #12</code>: Places the number 12 in register 0.</li>
+            <li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">B tagname</code>: This is your branch. You provide the branch instruction, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">B</code>, with a single input: the name of any tag. The program counter then moves to that tag and starts executing code there. Here, the PC moves to the ADD command at <code class="bg-cs-blue px-1 rounded shadow-lg text-base">tagname</code> and skips all lines in between.</li>
+            <li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">tagname</code>: This is just a tag that marks the location of a line</li>
+            <li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">ADD R1, R0, #30</code>: This line adds the value in R0 and the number 30 and places the result in R1. Here, R0 contains 12, not 16, because the branch skipped that line. Thus, this line adds 12 and 30, and the result is the number 42 in R1.</li>
+            <li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">B end</code>: Another branch. This time, it jumps to the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOV R0, #0</code> line in the middle, which is marked by the tag <code class="bg-cs-blue px-1 rounded shadow-lg text-base">end</code>.</li>
+            <li><code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOV, MOV, SVC 0</code>: You know this set of 3 lines as the Linux command that terminates your program.</li></ol>
+                <br/>
+            <p class="leading-relaxed text-lg">This basic example just showed how to use branching to jump between spots in code. Notice that the line <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOV R0, #16</code> was <a class="italic">never executed</a> due to the way the branches were set up. Branches on their own aren't super useful besides just organizing code. Their strength, however, comes from their interactions with other ARM systems.</p><br/>
+
+            <div class="h-px bg-cs-green my-6"></div><h1 id="cb" class="text-4xl font-extrabold">Conditional Branching</h1><br/>
+            <p class="leading-relaxed text-lg">One of the most powerful tools in all of ARM is a conditional branch. As you might expect, this happens when you put a condition code on a <code class="bg-cs-blue px-1 rounded shadow-lg text-base">B</code> command, such as <code class="bg-cs-blue px-1 rounded shadow-lg text-base">BGT</code> or <code class="bg-cs-blue px-1 rounded shadow-lg text-base">BEQ</code>. Here is an example of one reason to do that:</p><br/>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R0 , #some_number_here
+
+beginning:
+    CMP R0, #0
+    BGT positive
+    BLT negative
+    BEQ end
+
+positive:
+    SUB R0, R0, #1
+    B beginning
+
+negative:
+    ADD R0, R0, #1
+    B beginning
+
+ending:
+    MOV R0, #0
+    MOV R7, #1
+    SVC 0
+</pre><br/>
+
+            <p class="leading-relaxed text-lg">Without going line-by-line, lets follow the program.</p><br/>
+
+            <p class="leading-relaxed text-lg">First, we put some number into R0. Let's say we take that number as input from the terminal, so we don't know what it is by the time we run this code. Then, we go to the next line, marked by <code class="bg-cs-blue px-1 rounded shadow-lg text-base">beginning</code>. We compare a the input number to 0. If it is greater than zero, we jump to the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">positive</code> tag. In the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">positive</code> area, we subtract 1 from R0 and jump back to the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">beginning</code> block, repeating the process. If R0 is less than zero, we jump to the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">negative</code> tag. In there we add 1 to R0 and branch back to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">beginning</code>. If the number is equal to zero, then we branch to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">ending</code>, which terminates the program.</p><br/>
+
+            <p class="leading-relaxed text-lg">So, let's say that R0 starts at the number 7. Take a second to figure out what will happen as the program progresses. Answer: 7 is greater than zero, so we subtract 1 and start over. R0 continues this pattern, becoming 6,5,4,3,2,1, all the way down to 0. Once it hits zero, we branch and end the program.</p><br/>
+
+            <p class="leading-relaxed text-lg">Now try starting at the number -42. What will happen? Answer: We count upwards from -42 up to 0, i.e. -42,-41,-40,...-2,-1,0. Once we hit zero, we jump to the end of the program.</p><br/>
+
+            <p class="leading-relaxed text-lg">Hopefully you can now see how useful conditional branching can be, opening up tons of new doors for program functionality including looping and conditional code blocks.</p><br/>
+
+            <div class="h-px bg-cs-green my-6"></div><h1 id="linking" class="text-4xl font-extrabold">Linking</h1><br/>
+            <p class="leading-relaxed text-lg">One very common way to use branching involves jumping to a block of code, then going right back to where you branched from and continuing on from there. Because this is so common, the inventors of ARM have a built-in way to do so. It is called Linking. How it works is that instead of using <code class="bg-cs-blue px-1 rounded shadow-lg text-base">B</code>, you use <code class="bg-cs-blue px-1 rounded shadow-lg text-base">BL</code> (for Branch and Link). When you do this, the current address plus 4 is placed in a special register called the Link Register (a.k.a LR, you can see it in the debugger when you do <code class="bg-cs-blue px-1 rounded shadow-lg text-base">i r</code>). </p><br/>
+
+            <p class="leading-relaxed text-lg">Then, whenever you want to return to the line after your branch, you just run <code class="bg-cs-blue px-1 rounded shadow-lg text-base">BX LR</code>, which takes you back and clears the Link Register for new use.</p><br/>
+
+            <p class="leading-relaxed text-lg">For example:</p><br/>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R1, #10
+    BL doubleR1
+    ADD R1, R1, #2
+    BL doubleR1
+    BL doubleR1
+    
+end:
+    MOV R0, #0
+    MOV R7, #1
+    SVC 0
+
+
+doubleR1:
+    MUL R1, R1, #2
+    BX LR
+</pre><br/>
+
+            <p class="leading-relaxed text-lg">Take a moment to think through what this program does (note that "MUL" is the ARM command to multiply two numbers). What is the final number in R1 before the program ends? Answer: 88. The program starts with the number 10 in R1, then jumps to the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">doubleR1</code> section, which multiplies the number in R1 by 2 and then jumps back to the branch it just used to get there. R1 is 20 at this point. We then add 2 to get 22 in R1, and then double R1 twice in a row using the same branch as before. At that point, the program ends with 88 in R1.</p><br/>
+
+            <p class="leading-relaxed text-lg">Linking is very useful for creating the same functionality as a "function" in higher level languages like Python or C.</p><br/>
+
+            <div class="h-px bg-cs-green my-6"></div><h1 id="warning" class="text-4xl font-extrabold">A Warning</h1><br/>
+            <p class="leading-relaxed text-lg">Take a second to think about what the following code block will do:</p><br/>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    loophead:
+    MOV R0, #0
+    B loophead
+
+ending:
+    MOV R0, #0
+    MOV R7, #1
+    SVC 0
+</pre><br/>
+
+            <p class="leading-relaxed text-lg">Answer: Starting at the top, we enter the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">loophead</code> block. We put the number 0 into R0, then we branch to the top of the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">loophead</code> block. There, we put the number 0 into R0 and branch to the top of the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">loophead</code> block. There, we put the number 0 into R0...</p><br/>
+
+            <p class="leading-relaxed text-lg">You get the point. Using branches, it is possible to get stuck in an <a class="italic">infinite loop</a>. Always make sure to check for this as a possibility. If it is occuring in your code, whay you will see is that you run <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./executable_name</code> to start your program, then the terminal gives no output and does not give a new shell prompt. This is similar to how it looks when it is waiting for user input. However, no matter what you type in the terminal, nothing will happen. Higher-level languages are smart enough to crash when you go into an infinite loop. ARM is not. It will literally run forever if you let it. How do you stop it? In the terminal, press <code class="bg-cs-blue px-1 rounded shadow-lg text-base">Ctrl+C</code> (for Mac users, this is still control, not command C). This does not mean "copy" in the terminal, it means "cancel" and will immediately terminate any running program. Use it as needed.</p><br/>
+
+            <div class="h-px bg-cs-green my-6"></div><h1 id="patterns" class="text-4xl font-extrabold">Common Patterns</h1><br/>
+            <h2 class="text-2xl text-bold underline text-cs-green">Creating a loop</h2>
+            <p class="leading-relaxed text-lg">To create a loop that runs a block of code for <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x</code> number of times, first, decide on a register to be your index, which will keep track of what loop you are on and start at 0. Then place the code you want to repeat in a tag. At the end of the group in the tag, you want to compare your index to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x</code>. If it is greater than or equal to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x</code>, you will leave the loop and go to the next block of code. If your index is less than <code class="bg-cs-blue px-1 rounded shadow-lg text-base">x</code>, you will add 1 and branch back to the start of the tag marking your loop. Example:</p><br/>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R3, #0      @ This is your index
+    MOV R4, #40     @ This is the total number of loops to do, called x in the previous passage
+
+loophead:           @ Start the loop with a tag of any name, here I chose "loophead"
+
+    @ Whatever code you want to repeat 40 times goes here
+
+    CMP R3, R4      @ If you don't want to use a register to mark the total loops, you can remove R4 and just use CMP R3, #40
+    BGE exit_loop   @ Exit the loop if R3 is >= R4
+    ADD R3, R3, #1  @ Note that you don't actually need to put a condition on these two lines, since if the previous condition
+    B loophead      @ is true, then the next two lines are skipped. A branch with a conditon has an implied NOT of the condition
+                    @ for any lines following it.
+
+exit_loop:
+    MOV R0, #0
+    MOV R7, #1
+    SVC 0
+</pre><br/>
+
+            <h2 class="text-2xl text-bold underline text-cs-green">Blocked Ifs</h2>
+            <p class="leading-relaxed text-lg">If you want an "if-elseif-else statement" with a lot of lines in each part, then you might want to use a system like the following, which executes one of three blocks of code depending on a condition, then makes sure all paths end up back on a main path (<code class="bg-cs-blue px-1 rounded shadow-lg text-base">other_code</code> here):</p><br/>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R0, #some_number_here
+
+    CMP R0, #5
+    BLT number_lessthan_five
+    BGT number_morethan_five
+    BEQ number_is_five          @ note that this line can just be "B number_is_five" becuase of the implied NOT mentioned above.
+                                @ however, it is easier to read and debug if you just include the condition either way.
+
+number_lessthan_five:
+    @ do something here
+    B other_code
+
+number_morethan_five:
+    @ do something else here
+    B other_code
+
+number_is_five:
+    @ do something else else here
+    B other_code
+
+other_code:
+    @ code for the rest of the program
+</pre><br/>
+
+            <h2 class="text-2xl text-bold underline text-cs-green">Functions</h2>
+            <p class="leading-relaxed text-lg">See the Linking section for an example of how to make a function. These don't take any inputs (yet! that's next lab), but can execute the same block multiple times without deviating from your main path of code. They are typically done with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">BL</code> and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">BX LR</code> commands.</p><br/>
+
+            <h2 class="text-2xl text-bold underline text-cs-green">Fall Through Conditions</h2>
+            <p class="leading-relaxed text-lg">One very important thing to note is that, if a conditional branch doesn't execute (because the condition is false), then ARM continues with PC+4 behavior and executes the next line in the program. This can either be very helpful or very problematic.</p><br/>
+
+            <p class="leading-relaxed text-lg">Here is an example of an INCORRECT way to use fall-through conditions:</p><br/>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R0, #5
+    CMP R0, #1
+    BLT number_less_than
+
+number_less_than:
+    @ do something
+
+number_more_than:
+    @ do something else
+</pre><br/>
+
+            <p class="leading-relaxed text-lg">See the issue? When the BLT is run, it will branch to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">number_less_than</code> if the condition is true. But if it is not true, the Branch is skipped, and we run the next line. The next line is in the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">number_less_than</code> section too!! This means that no matter if R0 is more or less than 1, we always go to <code class="bg-cs-blue px-1 rounded shadow-lg text-base">number_less_than</code>, which is obviously not what we intended.</p><br/>
+
+            <p class="leading-relaxed text-lg">Here is an example of a CORRECT and clever way to use fall-through conditions:</p><br/>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R0, #5
+    CMP R0, #1
+    BLT number_less_than
+
+number_more_than:
+    @ do something else
+
+number_less_than:
+    @ do something
+</pre><br/>
+
+            <p class="leading-relaxed text-lg">Subtle difference, right? The ordering of the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">number_less_than</code> and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">number_more_than</code> are different. Now what happens at the BLT? If the number is less than 1, we skip over <code class="bg-cs-blue px-1 rounded shadow-lg text-base">number_more_than</code> and go to the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">number_less_than</code> section, just like we intend. If the number is NOT less than 1, then we ignore the branch and run the next line, which is in the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">number_more_than</code> section. This is exactly where we want to be, and by using a fall-through condition instead of a separate <code class="bg-cs-blue px-1 rounded shadow-lg text-base">BGT number_greater_than</code> line, we have saved a line of code AND reduced the number of branches in our program, which noticeably speeds it up (it's the difference between 0.001 microseconds and 0.0011 microseconds, but still, that compounds over time).</p><br/>
+
+            <p class="leading-relaxed text-lg">Fall-through conditions are very useful if you use them right, but always make sure you are ending a code block with a branch unless you intend to fall-through. Else, you may do so by accident and mess up your program logic.</p><br/>
+
+
+            <div class="h-px bg-cs-green my-6"></div><h1 id="rlc" class="text-4xl font-extrabold">Reference Linux Commands</h1><br/>
+            <h2 class="text-2xl text-bold underline text-cs-green">Take input from the terminal</h2>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R0, #0              @ Command type
+    LDR R1, =yourtaghere    @ Address to recieve to
+    MOV R2, #numberofchars  @ Max input length
+    MOV R7, #3              @ System call type
+    SVC 0                   @ Execute command 
+</pre><br/>
+
+            <p class="leading-relaxed text-lg">Where R1 holds the address where you want to store the input from the terminal and R2 holds the number of characters you want to accept.</p><br/>
+
+            <h2 class="text-2xl text-bold underline text-cs-green">Print text to the terminal</h2>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R0, #1              @ Command type
+    LDR R1, =yourtaghere    @ String to print
+    MOV R2, #numberofchars  @ String length
+    MOV R7, #4              @ System call type
+    SVC 0                   @ Execute command 
+</pre><br/>
+
+            <p class="leading-relaxed text-lg">Where R1 holds the starting address of your message and R2 holds the number of characters you want to output to the terminal.</p><br/>
+
+
+            <div class="h-px bg-cs-green my-6"></div><h1 id="conclusion" class="text-4xl font-extrabold">Conclusion</h1><br/>
+            <p class="leading-relaxed text-lg">Here, you reviewed and learned about braching and linking in ARM, as well as how to tie it with conditional execution. In future labs, you will learn how to nest branches using the stack.</p><br/>
+
+            <p class="leading-relaxed text-lg">It may take a minute to settle into these concepts, but know that there are plenty of resources available to you if you are confused. See either Dr. Camp's office hours or preferably the TA office hours for help with labs, homework, or general questions about the course. All that's left to do now is to write your lab report and submit it via Canvas sometime before your next lab session.</p><br/>
+
+            <div class="h-px bg-cs-green my-6"></div><h1 id="assignment" class="text-4xl font-extrabold">Assignment</h1><br/>
+            <p class="leading-relaxed text-lg">The assignment portion of the lab contains all instructions and requirements for your lab report. Any challenges or questions in the sections above were hypothetical and just for your practice. On your lab report, you only need to respond to the assignments in this section. Remember that you can check out the <a href="lab-guide" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab Report Guide</a> to see the expectations the TAs have of your lab reports.</p><br/>
+
+            <p class="leading-relaxed text-lg">You should perform all these tasks in a new, blank directory on your red pitaya. Feel free to reference previous labs or the <a href="cheat-sheet" class="text-lg text-cs-blue hover:text-blue-700 underline">Cheat Sheet</a> to refresh on old topics. All tasks should only include ARM instructions you have learned up to this point. Working ahead is fine, but you need to keep the tasks in the scope of the lessons. For questions on this (if something applies, etc), ask a TA.</p><br/>
+
+            <h2 class="text-2xl text-bold underline text-cs-green">PICK TWO</h2>
+            <p class="leading-relaxed text-lg">There are three tasks listed for you below. You can pick any two tasks to attempt for this lab. The unchosen one is available for you to practice or review, but is not required. Submitting all three tasks will not grant you extra credit.</p><br/>
+
+            <p class="leading-relaxed text-lg">However, the TAs will still make comments and give feedback on all three tasks, if submitted. If you want to submit a third task for feedback, but do NOT want it to be considered for grading, you must mark it clearly in your lab report with the phrase "DO NOT SCORE." If no task is marked with this phrase, the TAs will roll a random number generator to decide which two tasks to score for your lab grade.</p><br/>
+
+            <p class="leading-relaxed text-lg">Additionally, if you come up with a task that you think is of comparable challenge to the ones listed, you may pitch it to one of the TAs. If accepted, your task (bound by the requirements agreed upon by you and the TA) will count towards one of the PICK TWO tasks. The other tasks may be submitted for feedback following the same protocol listed in the paragraphs above.</p><br/>
+
+            <h2 class="text-2xl text-bold underline text-cs-green">Task 1</h2>
+            <p class="leading-relaxed text-lg">Write a program that prints the numbers 0 to 9 to the terminal.</p><br/>
+
+            <p class="leading-relaxed text-lg">Additional Requirements:</p>
+            <p class="leading-relaxed text-lg">- Each number must be on its own line, formatted nicely.</p>
+            <p class="leading-relaxed text-lg">- You cannot just write the same print statement 10 times. You need to use a branch like a loop.</p><br/>
+
+            <p class="leading-relaxed text-lg">Assumptions:</p>
+            <p class="leading-relaxed text-lg">- Your program will take no input.</p>
+            <p class="leading-relaxed text-lg">- You understand the difference between the number 1 and an ascii "1" (one of them is 0x1, the other is 0x31). Use an ascii table if needed. Output to the terminal must be in ascii format or it won't be displayed correctly.</p><br/>
+
+
+            <p class="leading-relaxed text-lg">Expected Outputs:</p>
+            <p class="leading-relaxed text-lg">- Running your program with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./your_executable_name</code> (not gdb) should print the numbers 0-9 in order, each on its own line. Example:</p>
+            <div class="flex justify-center">
+                <img src="/static/images/featured/ECE1181/Lab6Task1.png" alt="Image not Loading, see TA" class="md:w-4/5 w-1/2 rounded-lg shadow-lg">
+            </div>
+
+
+            <h2 class="text-2xl text-bold underline text-cs-green">Task 2</h2>
+            <p class="leading-relaxed text-lg">Write a program that takes a text input from the terminal and outputs the same text, but all in uppercase.</p><br/>
+
+            <p class="leading-relaxed text-lg">Additional Requirements:</p>
+            <p class="leading-relaxed text-lg">- Numbers, symbols, and already uppercase characters should not be affected.</p>
+            <p class="leading-relaxed text-lg">- In your output, you must include at least one edge case with the characters "@" and "[".</p>
+            <p class="leading-relaxed text-lg">- The output must be formatted nicely.</p><br/>
+
+            <p class="leading-relaxed text-lg">Assumptions:</p>
+            <p class="leading-relaxed text-lg">- The user will input between 1 and 50 characters.</p>
+            <p class="leading-relaxed text-lg">- You can look at an ASCII table to find the relation between upper and lowercaes numbers (they are stored as hex values in the pitaya).</p><br/>
+
+            <p class="leading-relaxed text-lg">Expected Outputs:</p>
+            <p class="leading-relaxed text-lg">- Three screenshots showing you running your program with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./your_executable_name</code> (not gdb), entering a text input, and getting an all-uppercase output. You can include all three tests in the same screenshot if they fit. Example:</p>
+            <div class="flex justify-center">
+                <img src="/static/images/featured/ECE1181/Lab6Task2.png" alt="Image not Loading, see TA" class="md:w-4/5 w-1/2 rounded-lg shadow-lg">
+            </div>
+
+            <h2 class="text-2xl text-bold underline text-cs-green">Task 3</h2>
+            <p class="leading-relaxed text-lg">Write a program that continues to prompt the user "Would you like to quit?" until the user types "y", then says "Goodbye!".</p><br/>
+
+            <p class="leading-relaxed text-lg">Additional Requirements:</p>
+            <p class="leading-relaxed text-lg">- If the user types anything other than "y", the prompt will be displayed again on a new line.</p>
+            <p class="leading-relaxed text-lg">- The user's input must be shown on the same line as the prompt.</p>
+            <p class="leading-relaxed text-lg">- The outputs must be formatted nicely.</p><br/>
+
+            <p class="leading-relaxed text-lg">Assumptions:</p>
+            <p class="leading-relaxed text-lg">- If the user types a phrase longer than 1 character, but it begins with "y", this can be considered a way to end the program.</p>
+            <p class="leading-relaxed text-lg">- The user will input between 0 and 50 characters.</p>
+            <p class="leading-relaxed text-lg">- The program will terminate after "Goodbye!" is displayed.</p><br/>
+
+            <p class="leading-relaxed text-lg">Expected Outputs:</p>
+            <p class="leading-relaxed text-lg">- Three screenshots showing you running your program with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./your_executable_name</code> (not gdb), entering any number of non-"y" characters, then ending with a "y". The three screenshots should include different numbers of non-"y" inputs, with one being at least 5 prompts long. Example with three non-"y" responses and ended with a "y":</p>
+            <div class="flex justify-center">
+                <img src="/static/images/featured/ECE1181/Lab6Task3.png" alt="Image not Loading, see TA" class="md:w-4/5 w-1/2 rounded-lg shadow-lg">
+            </div>
+
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+<!-- Feedback Box -->
+<div id="feedback-box" class="fixed hidden right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 dark:bg-[#444444] border-l-4 border-b-4 border-[#E0E0E0] dark:border-[#3B3B3B] rounded-l-xl shadow-lg w-64 p-4 z-50">
+<h2 class="font-bold text-lg dark:text-white text-gray-800 mb-2 text-center">Feedback</h2>
+<textarea id="feedback-text" class="w-full p-2 border rounded-md dark:bg-[#333333] dark:text-steel text-gray-800" rows="4" placeholder="Feedback, corrections, feature ideas, comments, etc."></textarea>
+<button id="submit-feedback" class="mt-2 w-full bg-cs-blue hover:bg-cs-green text-white py-2 px-4 rounded-md">Submit</button>
+</div>
+
+<!-- Toggle Tab -->
+<button id="feedback-toggle" class="fixed top-1/2 transform -translate-y-1/2 right-0 md:right-64 bg-cs-blue hover:bg-cs-green text-steel rounded-l-md px-1 py-8 shadow-md">
+||
+</button>
+
+<!--
+<body class="flex justify-center items-center h-screen bg-gray-100">
+<div class="bg-white p-6 rounded shadow-lg">
+    <h1 class="text-2xl mb-4">Report a Problem</h1>
+    <form action="/submit_workorder" method="post">
+        <textarea name="issue" required class="border p-2 w-full rounded" placeholder="Describe your issue..."></textarea>
+        <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+    </form>
+</div>
+</body>
+-->
+
+<script>
+const feedbackBox = document.getElementById('feedback-box');
+const feedbackToggle = document.getElementById('feedback-toggle');
+const feedbackText = document.getElementById('feedback-text');
+const submitFeedback = document.getElementById('submit-feedback');
+
+function checkScreenSize() {
+    const isLargerThanMD = window.matchMedia('(min-width: 768px)').matches;
+
+    if (isLargerThanMD) {
+        feedbackBox.classList.remove('hidden');
+        feedbackToggle.classList.remove('right-0');
+        feedbackToggle.classList.add('md:right-64', 'right-64'); // Move next to the feedback box
+    } else {
+        feedbackBox.classList.add('hidden');
+        feedbackToggle.classList.remove('md:right-64', 'right-64');
+        feedbackToggle.classList.add('right-0');
+    }
+}
+
+// Initial check when the page loads
+checkScreenSize();
+
+// Listen for window resize events to detect screen size changes
+window.addEventListener('resize', checkScreenSize);
+
+// Collapse/Expand Feedback Box
+feedbackToggle.addEventListener('click', () => {
+    feedbackBox.classList.toggle('hidden');
+    // Adjust the position of the toggle tab
+    if (feedbackBox.classList.contains('hidden')) {
+        feedbackToggle.classList.remove('md:right-64', 'right-64');
+        feedbackToggle.classList.add('right-0'); // Move to the far right
+        feedbackBox.classList.remove('md:block');
+    } else {
+        feedbackToggle.classList.remove('right-0');
+        feedbackToggle.classList.add('md:right-64', 'right-64'); // Move next to the feedback box
+    }
+});
+
+// Submit Feedback Function
+const submitFeedbackHandler = () => {
+    const feedback = feedbackText.value.trim();
+    if (feedback) {
+        fetch('/submit-feedback', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ feedback, url: "/" + window.location.pathname.split('/').pop() }), // Ensure `feedback` is a valid variable
+    })
+    .then(async response => {
+        if (response.ok) {
+            // Clear the input and thank the user
+            feedbackText.value = ''; // Ensure `feedbackText` is defined
+            submitFeedback.innerText = 'Thank you!'; // Change the button text
+            submitFeedback.classList.remove('bg-cs-blue'); // Remove original color
+            submitFeedback.classList.add('bg-cs-green'); // Add new color (green for success)
+
+            setTimeout(() => {
+                submitFeedback.innerText = 'Submit'; // Revert the button text after 3 seconds
+                submitFeedback.classList.remove('bg-cs-green'); // Remove green color
+                submitFeedback.classList.add('bg-cs-blue');
+            }, 3000); // 3000ms = 3 seconds
+        } else {
+            // Attempt to read the error message from the server
+            const errorData = await response.json();
+            alert(`Error submitting feedback: ${errorData.details || 'Unknown error occurred'}. Please provide these details to Cooper :)`);
+        }
+    })
+    .catch(error => {
+        // Log the error for debugging and notify the user
+        console.error('Submission error:', error);
+        alert('An error occurred. Please try again.');
+    });
+    }
+};
+
+// Submit Feedback on Button Click
+submitFeedback.addEventListener('click', submitFeedbackHandler);
+
+// Submit Feedback on CMD+Enter or CTRL+Enter
+feedbackText.addEventListener('keydown', (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+        submitFeedbackHandler();
+    }
+});
+</script>
+</body>
+{% endblock %}
+
+
+<!--
+        <h2>Blockquote Example</h2>
+        <blockquote class="border-l-4 border-cs-blue italic pl-4 text-cs-green">
+            "This is an example of a blockquote. It's perfect for highlighting important points or quotes."
+        </blockquote>
+
+        <h2>Code Snippet Example</h2>
+        <p>
+            Below is an example of a simple Python function:
+        </p>
+        <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+        
+        </pre>
+def greet(name):
+return f"Hello, {name}!"
+
+print(greet("World"))
+        </pre>
+
+
+<code class="bg-cs-blue px-1 rounded shadow-lg text-base">
+
+</code>
+-->
