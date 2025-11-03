@@ -1,0 +1,439 @@
+{% extends 'base.html' %}
+{% block content %}
+<body class="bg-gray-100 dark:text-steel text-[#222222]">
+    <!-- Blog Post Wrapper -->
+    <div class="max-w-screen-md px-4 py-8 mx-auto">
+        <!-- Thinner Centered Bar -->
+        <div class="dark:bg-[#444444] bg-[#CCCCCC] rounded-3xl shadow-2xl dark:shadow-white p-6 mx-auto">
+            <!-- Title Section -->
+            <div class="text-center">
+                <h1 class="text-6xl font-extrabold leading-tight text-cs-green">
+                    Lab 7: The Stack
+                </h1>
+                <h2 class="text-2xl text-bold leading-tight text-cs-green">
+                    Managing the Stack
+                </h1>
+                 <!-- Separator -->
+                <div class="h-px bg-cs-green my-6"></div>
+                <a href="#overview" class="inline-block bg-cs-blue hover:bg-blue-700  hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Overview
+                </a> >>
+                <a href="#stack" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    The Stack
+                </a> >>
+                <a href="#protocols" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Protocols
+                </a> >>
+                <a href="#linking" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Linking
+                </a> >>
+                <a href="#conclusion" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Conclusion
+                </a> >>
+                <a href="#assignment" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Assignment
+                </a>
+            </div>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Overview</h1><br/>
+<p class="leading-relaxed text-lg">Welcome to Lab 7. Last lab, you learned about branching, linking, and looping. Today, you will learn about the stack, a memory structure that lets you make a checkpoint for your registers.</p><br/>
+
+<p class="leading-relaxed text-lg">All labs require a lab report. For a comprehensive look on what the TAs are looking for, formatting, and scoring, take a look at the <a href="lab-guide" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab Report Guide</a>.</p><br/>
+
+<p class="leading-relaxed text-lg">These lab guides are handmade, and as such may contain errors in logic, spelling, grammar, etc. If you find any issues, please leave a note in the Feedback tab on the right so we can fix it ASAP. This tab can also be used to anonymously submit suggestions, improvements, or complaints about the website. All of these will be reviewed and taken into consideration.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="stack" class="text-4xl font-extrabold">The Stack</h1><br/>
+<p class="leading-relaxed text-lg">In ARM, we have access to a special region in memory called the stack. This area is set aside for a small amount of data that we want to put down and pick back up. Think of it like a desk with a bunch of papers. If you are not currently using one of your papers, you move it to the side of your desk. Any new paper you aren't using (but still want quick access to) get "stacked" on top of that paper. The papers (data) are nearby for when we need them, but a stack of papers has to be relatively small.</p><br/>
+
+<p class="leading-relaxed text-lg">Much like a stack of papers, there are rules to how we interact with the ARM stack. Data can only be placed and taken from the very top of the stack. If you want something from the middle of the stack, you have to take out everything above it first. When you want to put data on the stack, you "push" it to the top. When you want to take data off the stack, you "pop" it off the top.</p><br/>
+
+<p class="leading-relaxed text-lg">A stack is something you will see in Data Structures class, so you're getting a sneak peek in this class.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="wiu" class="text-4xl font-extrabold">Why it's Useful</h1><br/>
+<p class="leading-relaxed text-lg">You have 12 registers available for use in ARM. No more. What happens if you are running a complex piece of code and need more than that? That's where the stack comes in. You can push a bunch of your registers onto the stack, preserving them in time. Then, you do some math with your newly freed registers, and eventually, you pop your old values back into your registers, which restored the state it was in before. Think of it like putting a checkpoint on your registers, and you can go back to that checkpoint whenever you need.</p><br/>
+
+<p class="leading-relaxed text-lg">You also don't need to checkpoint all the registers at the same time. You can just say "save registers 1 and 2", and then restore those later. However, the important thing is that you keep track of what is on the stack and in what order. To do this, we use something called Stack Protocols.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="protocols" class="text-4xl font-extrabold">Stack Protocols</h1><br/>
+<p class="leading-relaxed text-lg">There are 4 stack protocols: Increment After (IA), Incremement Before (IB), Decrement After (DA), and Decrement Before (DB). They each line up with a way to structure your stack: Empty Ascending, Full Ascending, Empty Descending, Full Descending, respectively. Here is what that means. You reference the stack with something called a Stack Pointer (SP). The SP is just an address, and that address is always stored in a free register called "SP" (you can see this if you do <code class="bg-cs-blue px-1 rounded shadow-lg text-base">i r</code> in the debugger). The SP always points to the "top" element of the stack. You get to choose two things: does the stack increase upwards or downwards (increasing memory addresses or decreasing memory addresses), and if the address is of the highest <a class="italic">empty</a> spot on the stack or the highest <a class="italic">full</a> spot.</p><br/>
+
+<p class="leading-relaxed text-lg">If you want to add a register to the stack with IA protocol, the stack is made with increasing addresses and the SP points to the top empty spot on the stack. Thus, to add a new element, you first put your register on the stack in the empty spot, then increase the SP to now point to the next empty spot. This is why it is called "Increment After." The stack pointer incremements after you add the value.</p><br/>
+
+<p class="leading-relaxed text-lg">If you want to add a register to the stack with DB protocol, the stack is made with decreasing addresses and the SP points to the top (lowest address) filled spot on the stack. Thus, to add a new element, you first decrease the SP to point to the next empty spot, then you fill that with your register (so the SP is now pointing to that value). This is why it is called "Decrement Before," because the stack pointer decrements before you add the value.</p><br/>
+
+<p class="leading-relaxed text-lg">Exercise for the reader: What happens in IB and DA protocols?</p><br/>
+
+<p class="leading-relaxed text-lg">Choosing a stack convention is like choosing a starter pokémon. There's really only a few options, but that doesn't mean you won't drastically overthink which one to choose. Here is a quick table with some info (SP stands for Stack Pointer):</p><br/>
+
+<p class="leading-relaxed text-lg"><table>
+    <tr>
+        <td>Name</td>
+        <td>Abbreviation</td>
+        <td>Example</td>
+        <td>Why you should choose it</td>
+    </tr>
+    <tr>
+        <td>Increment Before/<br/>Full Ascending</td>
+        <td>IB</td>
+        <td>0x200b0: Data1<br/>0x200b4: Data2<br/>0x200b8: Data3<br/>0x200bc: Data4 &lt;-- SP</td>
+        <td>Counts upwards and always<br/> points to the last used data.<br/> Best if you like to logically keep<br/> track of where everything is.<br/><br/><br/> </td>
+    </tr>
+    <tr>
+        <td>Increment After/<br/>Empty Ascending</td>
+        <td>IA</td>
+        <td>0x200b0: Data1<br/>0x200b4: Data2<br/>0x200b8: Data3<br/>0x200bc: Empty &lt;-- SP</td>
+        <td>Counts upwards, but conceptually<br/> starts at 0 instead of 1.<br/> Best if you have lots of <br/> programming experience.<br/><br/><br/><br/> </td>
+    </tr>
+    <tr>
+        <td>Decrement Before/<br/>Full Descending</td>
+        <td>DB</td>
+        <td>0x200b0: Data4 &lt;-- SP<br/>0x200b4: Data3<br/>0x200b8: Data1<br/>0x200bc: Data1</td>
+        <td>Counts downwards and always<br/> points to the last used data.<br/> Best for people who like<br/> to visualize the stack<br/> like a stack of papers.<br/><br/><br/><br/> </td>
+    </tr>
+    <tr>
+        <td>Decrement After/<br/>Empty Descending</td>
+        <td>DA</td>
+        <td>0x200b0: Empty &lt;-- SP<br/>0x200b4: Data3<br/>0x200b8: Data1<br/>0x200bc: Data1</td>
+        <td>Counts downwards and always<br/> points to the next avaliable spot.<br/> Best for people who don&#39;t like<br/> any of the other options and<br/>just wants to choose one and<br/>move on.</td>
+    </tr>
+</table></p><br/>
+
+<p class="leading-relaxed text-lg">Now, it's important to note that <a class="font-extrabold">The Store Sets the Protocol</a>. However, <a class="font-extrabold">your load should always use the opposite protocol</a>. I just remember this by flipping each letter in the protocol to the other option during the load. So, if you want to use Increment Before, you will use STMIB and LDRDA. If you were using Decrement After, you will use STMDA and LDRIB, etc.</p><br/>
+
+<p class="leading-relaxed text-lg">You can use ANY STACK PROTOCOL YOU WANT, but you need to make sure it stays consistent throughout your whole program.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="uts" class="text-4xl font-extrabold">Using the Stack</h1><br/>
+<p class="leading-relaxed text-lg">If you want to put something on the stack (a region in memory), you need to use a store command, STR. However, because we can put multiple values on the stack in a single command, there is a bit of a change. Instead of STR, we do STM:</p><br/>
+
+<p class="leading-relaxed text-lg">Instruction: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">STM</code></p>
+<p class="leading-relaxed text-lg">Usage: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">STMxx SP!, {registers}</code></p>
+<p class="leading-relaxed text-lg">Description: Places multiple (STores Multiple) register values on the stack. <code class="bg-cs-blue px-1 rounded shadow-lg text-base">xx</code> is replaced by the stack protocol (IB, IA, DB, or DA), and the registers can be comma separated or hyphenated (<code class="bg-cs-blue px-1 rounded shadow-lg text-base">{R1, R3, R4-R7}</code> places R1, R3, R4, R5, R6, and R7 on the stack).</p>
+<p class="leading-relaxed text-lg">Example:</p>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R0, #12
+    MOV R1, #42
+    MOV R2, #69
+
+    STMIB SP!, {R0-R2}  @ At this point, the stack looks like this (assume it starts at 0x200a0):
+                        @ 0x200a4: 12
+                        @ 0x200a8: 42
+                        @ 0x200ac: 69
+                        @ 0x200b0: empty
+                        @ and the SP value is 0x200ac
+
+    @ ALTERNATIVELY (if the previous line wasn't used)
+    STMDA SP!, {R0-R2} @ At this point, the stack looks like this (assume it starts at 0x200a0):
+                        @ 0x20094: empty
+                        @ 0x20098: 12
+                        @ 0x2009b: 42
+                        @ 0x200a0: 69
+                        @ and the SP value is 0x20094
+</pre>
+
+<p class="leading-relaxed text-lg">IMPORTANT NOTE: When placing multiple registers on the stack, they are always placed in ASCENDING order, even if you are using a descending stack protocol. This means the registers can appear "upside down" when viewing memory. It also means that you should always push and pop blocks of the same size (if you push 4 registers to the stack, the next pop should be 4 registers too).</p><br/>
+
+<p class="leading-relaxed text-lg">To pop registers off the stack, we do the opposite:</p><br/>
+
+<p class="leading-relaxed text-lg">Instruction: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDM</code></p>
+<p class="leading-relaxed text-lg">Usage: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LDMxx SP!, {registers}</code></p>
+<p class="leading-relaxed text-lg">Description: Pops multiple (LoaD Multiple) values off the stack into the listed register. <code class="bg-cs-blue px-1 rounded shadow-lg text-base">xx</code> is replaced by the REVERSED (opposite of STM) stack protocol (IB, IA, DB, or DA), and the registers can be comma separated or hyphenated (<code class="bg-cs-blue px-1 rounded shadow-lg text-base">{R1, R3-R5}</code> puts the top stack value in R1, the next one in R3, then R4 and R5). Note that the registers you load the values into do not have to be the same as the ones they originally came from.</p>
+<p class="leading-relaxed text-lg">Example:</p>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R0, #12
+    MOV R1, #42
+    MOV R2, #69
+    STMIB SP!, {R0-R2}  @ At this point, the stack looks like this (assume it starts at 0x200a0):
+                        @ 0x200a4: 12
+                        @ 0x200a8: 42
+                        @ 0x200ac: 69
+                        @ 0x200b0: empty
+                        @ and the SP value is 0x200ac
+
+    MOV R0, #0
+    MOV R1, #0
+    MOV R2, #0          @ Now all registers are 0
+
+    LDMDA SP!, {R2-R4}  @ At this point, the stack is completely empty (we popped all three values)
+                        @ R2 now holds #12
+                        @ R3 now holds #42
+                        @ R4 now holds #69
+                        @ The SP value is back to 0x200a0
+</pre>
+
+<p class="leading-relaxed text-lg">Notice that you can use STM and LDM together to move values around in registers with little effort. For example, you can swap the values in two registers without needing a third, scratch register by doing this:</p><br/>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    MOV R0, #10
+    MOV R1, #20
+    STMDB SP!, {R0, R1}
+    LDMIA SP!, {R1, R0} @ Here, the values in R0 and R1 were replaced in opposite order
+                        @ R0 now holds #20
+                        @ R1 now holds #10
+
+    @ You can do this on a much larger scale, shifting all 12 registers around at the same time
+</pre>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="linking" class="text-4xl font-extrabold">Linking</h1><br/>
+<p class="leading-relaxed text-lg">The most important use for the stack is used when you do a branch and link (<code class="bg-cs-blue px-1 rounded shadow-lg text-base">BL</code>, remember from last lab?). The link register <code class="bg-cs-blue px-1 rounded shadow-lg text-base">LR</code> holds exactly one number: the place to return to after a branch and link. But what happens if you BL to another place before returning to where you were? You will overwrite the old LR value and won't be able to return. This is where the stack comes in handy. After getting link address from the LR, we put it on the stack. Then, we can branch and link to a new function and do the same thing. When it is time to return, we first pop off the top LR value from the stack, go to that place, then pop off the next LR value and so on. We can nest function calls as much as we like!</p><br/>
+
+<p class="leading-relaxed text-lg">This is also useful when you want to branch to a subroutine without messing up your current registers. Let's say you have a subroutine that prints out text. To use the Linux System Call for printing to the terminal, you need specific values in R0, R1, R2, and R7. What if we have valuable information in those registers we don't want to lose before printing? Push them to the stack before the subroutine, then pop them back afterwards (includes nested funciton calls). I use IA stack protocol, but any will work:</p><br/>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+.global _start
+_start:
+    MOV R0, #69
+    MOV R1, #42
+    MOV R2, #1337       @ These three are very important numbers
+                        @ We don't want them overwritten
+
+    STMIA SP!, {R0-R2}  @ To make a checkpoint, we add these three to the stack
+    BL print            @ Now we go to the "print" tag
+
+                        @ Upon returning, R0, R1, and R2 have all been overwritten
+                        @ But those original values are still on the stack
+    LDMDB SP!, {R0-R2}  @ So we restore from the checkpoint
+
+    B exit              @ End the program
+
+
+print:
+    MOV R0, #0
+    MOV R1, =text_to_print  @ Putting standard print data in the registers
+    
+    STMIA SP!, {R0, R1, LR} @ Saving that data so it isn't overwritten, 
+                            @ as well as the LR that goes back to _start
+    BL calculate_length     @ Go to the calculate_length tag
+
+    LDMDB SP!, {R2}         @ We have returned from calculate_length
+                            @ This line gets the length from the stack (which
+                            @ we put on the stack from R8 in the last function)  
+    LDMDB SP!, {R0, R1, LR} @ Restores R0, R1, and the LR to _start
+
+    MOV R7, #4              
+    SVC 0                   @ more standard print data and execute
+
+    BX LR                   @ Jump back to the branch in _start 
+
+
+calculate_length:
+    @ performs an operation that calculates the length of the string
+    @ Assume the answer is in R8 here
+    STMIA SP!, {R8}         @ Puts the answer on the stack to pass it along
+    BX LR                   @ Return to the LR (in "print")
+
+
+exit:
+    MOV R0, #0
+    MOV R7, #1
+    SVC 0
+
+.data
+text_to_print: .ascii "Hello World!\n"
+</pre>
+
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="conclusion" class="text-4xl font-extrabold">Conclusion</h1><br/>
+<p class="leading-relaxed text-lg">Here, you reviewed and learned about managing the stack in ARM. In future labs, you will learn how to interface the Red Pitaya with a breadboard.</p><br/>
+
+<p class="leading-relaxed text-lg">It may take a minute to settle into these concepts, but know that there are plenty of resources available to you if you are confused. See either Dr. Camp's office hours or preferably the TA office hours for help with labs, homework, or general questions about the course. All that's left to do now is to write your lab report and submit it via Canvas sometime before your next lab session.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="assignment" class="text-4xl font-extrabold">Assignment</h1><br/>
+<p class="leading-relaxed text-lg">The assignment portion of the lab contains all instructions and requirements for your lab report. Any challenges or questions in the sections above were hypothetical and just for your practice. On your lab report, you only need to respond to the assignments in this section. Remember that you can check out the <a href="lab-guide" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab Report Guide</a> to see the expectations the TAs have of your lab reports.</p><br/>
+
+<p class="leading-relaxed text-lg">You should perform all these tasks in a new, blank directory on your red pitaya. Feel free to reference previous labs or the <a href="cheat-sheet" class="text-lg text-cs-blue hover:text-blue-700 underline">Cheat Sheet</a> to refresh on old topics. All tasks should only include ARM instructions you have learned up to this point. Working ahead is fine, but you need to keep the tasks in the scope of the lessons. For questions on this (if something applies, etc), ask a TA.</p><br/>
+
+<h2 class="text-2xl text-bold underline text-cs-green">PICK TWO</h2>
+<p class="leading-relaxed text-lg">There are three tasks listed for you below. You can pick any two tasks to attempt for this lab. The unchosen one is available for you to practice or review, but is not required. Submitting all three tasks will not grant you extra credit.</p><br/>
+
+<p class="leading-relaxed text-lg">However, the TAs will still make comments and give feedback on all three tasks, if submitted. If you want to submit a third task for feedback, but do NOT want it to be considered for grading, you must mark it clearly in your lab report with the phrase "DO NOT SCORE." If no task is marked with this phrase, the TAs will roll a random number generator to decide which two tasks to score for your lab grade.</p><br/>
+
+<p class="leading-relaxed text-lg">Additionally, if you come up with a task that you think is of comparable challenge to the ones listed, you may pitch it to one of the TAs. If accepted, your task (bound by the requirements agreed upon by you and the TA) will count towards one of the PICK TWO tasks. The other tasks may be submitted for feedback following the same protocol listed in the paragraphs above.</p><br/>
+
+<h2 class="text-2xl text-bold underline text-cs-green">Task 1</h2>
+<p class="leading-relaxed text-lg">Write a program that performs calculations without changing the values in your register.</p><br/>
+
+<p class="leading-relaxed text-lg">Additional Requirements:</p>
+<p class="leading-relaxed text-lg">- You must start off by filling all 12 registers with any value. </p>
+<p class="leading-relaxed text-lg">- You then must perform at least 3 operations (ADD, MOV, etc) that actually change values in at least 3 different registers.</p>
+<p class="leading-relaxed text-lg">- You must end with the original 12 values in their original registers.</p><br/>
+
+<p class="leading-relaxed text-lg">Assumptions:</p>
+<p class="leading-relaxed text-lg">- The register values can change between the beginning and end of the program, so long as the program ends with the 12 values you started with.</p>
+<p class="leading-relaxed text-lg">- You can use any stack protocol.</p>
+<p class="leading-relaxed text-lg">- You can perform any operations.</p><br/>
+
+<p class="leading-relaxed text-lg">Expected Outputs:</p>
+<p class="leading-relaxed text-lg">- Running the program with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">gdb</code> should show the registers (with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">i r</code>) at the end of the program containing the 12 initial values.</p><br/>
+
+
+<h2 class="text-2xl text-bold underline text-cs-green">Task 2</h2>
+<p class="leading-relaxed text-lg">- Write a program that uses nested function/subroutine calls.</p><br/>
+
+<p class="leading-relaxed text-lg">Additional Requirements:</p>
+<p class="leading-relaxed text-lg">- You must nest at least three subroutines and return back to the original spot using branches, links, and the stack.</p><br/>
+
+<p class="leading-relaxed text-lg">Assumptions:</p>
+<p class="leading-relaxed text-lg">- Your program can do anything you would like, or nothing at all.</p>
+<p class="leading-relaxed text-lg">- Any stack protocol can be used.</p><br/>
+
+<p class="leading-relaxed text-lg">Expected Outputs:</p>
+<p class="leading-relaxed text-lg">- Running the program with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./executable</code> should not result in any errors. You should also include a sketch of how the PC moves through your program over time.</p><br/>
+
+
+<h2 class="text-2xl text-bold underline text-cs-green">Task 3</h2>
+<p class="leading-relaxed text-lg">Explain in depth what would happen if your STM and LDM protocols do not align (are not complementary).</p><br/>
+
+<p class="leading-relaxed text-lg">Additional Requirements:</p>
+<p class="leading-relaxed text-lg">- You must give a concrete example of what exactly would happen to the address values, registers etc. either written or with a program example. </p>
+<p class="leading-relaxed text-lg">- You must include descriptions of errors for two distinct stack protocol combinations.</p><br/>
+
+<p class="leading-relaxed text-lg">Assumptions:</p>
+<p class="leading-relaxed text-lg">- Any two stack protocol pairs can be used.</p>
+<p class="leading-relaxed text-lg">- You can use as much text or images as needed to fully explain your thought process.</p><br/>
+
+<p class="leading-relaxed text-lg">Expected Outputs:</p>
+<p class="leading-relaxed text-lg">- A written document with optional screenshots showing/explaining the issues that occur when a mismatch between STM and LDM is present.</p><br/>
+
+
+
+</div>
+</div>
+</div>
+<!-- Feedback Box -->
+<div id="feedback-box" class="fixed hidden right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 dark:bg-[#444444] border-l-4 border-b-4 border-[#E0E0E0] dark:border-[#3B3B3B] rounded-l-xl shadow-lg w-64 p-4 z-50">
+<h2 class="font-bold text-lg dark:text-white text-gray-800 mb-2 text-center">Feedback</h2>
+<textarea id="feedback-text" class="w-full p-2 border rounded-md dark:bg-[#333333] dark:text-steel text-gray-800" rows="4" placeholder="Feedback, corrections, feature ideas, comments, etc."></textarea>
+<button id="submit-feedback" class="mt-2 w-full bg-cs-blue hover:bg-cs-green text-white py-2 px-4 rounded-md">Submit</button>
+</div>
+
+<!-- Toggle Tab -->
+<button id="feedback-toggle" class="fixed top-1/2 transform -translate-y-1/2 right-0 md:right-64 bg-cs-blue hover:bg-cs-green text-steel rounded-l-md px-1 py-8 shadow-md">
+||
+</button>
+
+<!--
+<body class="flex justify-center items-center h-screen bg-gray-100">
+<div class="bg-white p-6 rounded shadow-lg">
+<h1 class="text-2xl mb-4">Report a Problem</h1>
+<form action="/submit_workorder" method="post">
+    <textarea name="issue" required class="border p-2 w-full rounded" placeholder="Describe your issue..."></textarea>
+    <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+</form>
+</div>
+</body>
+-->
+
+<script>
+const feedbackBox = document.getElementById('feedback-box');
+const feedbackToggle = document.getElementById('feedback-toggle');
+const feedbackText = document.getElementById('feedback-text');
+const submitFeedback = document.getElementById('submit-feedback');
+
+function checkScreenSize() {
+const isLargerThanMD = window.matchMedia('(min-width: 768px)').matches;
+
+if (isLargerThanMD) {
+    feedbackBox.classList.remove('hidden');
+    feedbackToggle.classList.remove('right-0');
+    feedbackToggle.classList.add('md:right-64', 'right-64'); // Move next to the feedback box
+} else {
+    feedbackBox.classList.add('hidden');
+    feedbackToggle.classList.remove('md:right-64', 'right-64');
+    feedbackToggle.classList.add('right-0');
+}
+}
+
+// Initial check when the page loads
+checkScreenSize();
+
+// Listen for window resize events to detect screen size changes
+window.addEventListener('resize', checkScreenSize);
+
+// Collapse/Expand Feedback Box
+feedbackToggle.addEventListener('click', () => {
+feedbackBox.classList.toggle('hidden');
+// Adjust the position of the toggle tab
+if (feedbackBox.classList.contains('hidden')) {
+    feedbackToggle.classList.remove('md:right-64', 'right-64');
+    feedbackToggle.classList.add('right-0'); // Move to the far right
+    feedbackBox.classList.remove('md:block');
+} else {
+    feedbackToggle.classList.remove('right-0');
+    feedbackToggle.classList.add('md:right-64', 'right-64'); // Move next to the feedback box
+}
+});
+
+// Submit Feedback Function
+const submitFeedbackHandler = () => {
+const feedback = feedbackText.value.trim();
+if (feedback) {
+    fetch('/submit-feedback', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ feedback, url: "/" + window.location.pathname.split('/').pop() }), // Ensure `feedback` is a valid variable
+})
+.then(async response => {
+    if (response.ok) {
+        // Clear the input and thank the user
+        feedbackText.value = ''; // Ensure `feedbackText` is defined
+        submitFeedback.innerText = 'Thank you!'; // Change the button text
+        submitFeedback.classList.remove('bg-cs-blue'); // Remove original color
+        submitFeedback.classList.add('bg-cs-green'); // Add new color (green for success)
+
+        setTimeout(() => {
+            submitFeedback.innerText = 'Submit'; // Revert the button text after 3 seconds
+            submitFeedback.classList.remove('bg-cs-green'); // Remove green color
+            submitFeedback.classList.add('bg-cs-blue');
+        }, 3000); // 3000ms = 3 seconds
+    } else {
+        // Attempt to read the error message from the server
+        const errorData = await response.json();
+        alert(`Error submitting feedback: ${errorData.details || 'Unknown error occurred'}. Please provide these details to Cooper :)`);
+    }
+})
+.catch(error => {
+    // Log the error for debugging and notify the user
+    console.error('Submission error:', error);
+    alert('An error occurred. Please try again.');
+});
+}
+};
+
+// Submit Feedback on Button Click
+submitFeedback.addEventListener('click', submitFeedbackHandler);
+
+// Submit Feedback on CMD+Enter or CTRL+Enter
+feedbackText.addEventListener('keydown', (event) => {
+if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+    submitFeedbackHandler();
+}
+});
+</script>
+</body>
+{% endblock %}
+
+
+<!--
+    <h2>Blockquote Example</h2>
+    <blockquote class="border-l-4 border-cs-blue italic pl-4 text-cs-green">
+        "This is an example of a blockquote. It's perfect for highlighting important points or quotes."
+    </blockquote>
+
+    <h2>Code Snippet Example</h2>
+    <p>
+        Below is an example of a simple Python function:
+    </p>
+    <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    
+    </pre>
+def greet(name):
+return f"Hello, {name}!"
+
+print(greet("World"))
+    </pre>
+
+
+<code class="bg-cs-blue px-1 rounded shadow-lg text-base">
+
+</code>
+-->

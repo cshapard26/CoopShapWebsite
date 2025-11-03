@@ -84,12 +84,19 @@ def ece1181lab5():
 @app.route("/courses/ECE1181/lab-6")
 def ece1181lab6():
     return render_template("courses/ECE1181/Lab6.html", title_extention="Lab 6 - ")
-'''
+
 # Lab7 Page
 @app.route("/courses/ECE1181/lab-7")
 def ece1181lab7():
     return render_template("courses/ECE1181/Lab7.html", title_extention="Lab 7 - ")
+
 '''
+# Lab8 Page
+@app.route("/courses/ECE1181/lab-8")
+def ece1181lab8():
+    return render_template("courses/ECE1181/Lab8.html", title_extention="Lab 8 - ")
+'''
+
 # Terminal Page
 @app.route("/courses/conquering-the-terminal")
 def ctt():
