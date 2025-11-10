@@ -1,0 +1,869 @@
+{% extends 'base.html' %}
+{% block content %}
+<body class="bg-gray-100 dark:text-steel text-[#222222]">
+    <!-- Blog Post Wrapper -->
+    <div class="max-w-screen-md px-4 py-8 mx-auto">
+        <!-- Thinner Centered Bar -->
+        <div class="dark:bg-[#444444] bg-[#CCCCCC] rounded-3xl shadow-2xl dark:shadow-white p-6 mx-auto">
+            <!-- Title Section -->
+            <div class="text-center">
+                <h1 class="text-6xl font-extrabold leading-tight text-cs-green">
+                    Lab 8: GPIOs and Macros
+                </h1>
+                <h2 class="text-2xl text-bold leading-tight text-cs-green">
+                    Modifying GPIO pins using functions
+                </h1>
+                 <!-- Separator -->
+                <div class="h-px bg-cs-green my-6"></div>
+                <a href="#overview" class="inline-block bg-cs-blue hover:bg-blue-700  hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Overview
+                </a> >>
+                <a href="#macros" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Macros
+                </a> >>
+                <a href="#gpio" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    GPIO
+                </a> >>
+                <a href="#conclusion" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Conclusion
+                </a> >>
+                <a href="#assignment" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Assignment
+                </a> >>
+                <a href="#code-given" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Code Given
+                </a>
+            </div>
+
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Overview</h1><br/>
+<p class="leading-relaxed text-lg">Welcome to Lab 8: The Final Lab! Last lab you learned how to use the stack in ARM. Here, you will learn how to interface with the General Purpose Input/Output (GPIO) Pins on your red pitaya with macros. You will receive a breadboard, resistors, LEDs, and jumpers (wires). You will then program your red pitaya to turn on the lights following a certain pattern.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="macros" class="text-4xl font-extrabold">Macros</h1><br/>
+<p class="leading-relaxed text-lg">Here is an example of a macro in ARM code, followed by an explanation of what it does:</p><br/>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+.macro addNumbers num1, num2
+    MOV R0, \num1
+    MOV R1, \num2
+    ADD R2, R0, R1
+.endm
+
+addNumbers 10, 12
+addNumbers 42, 69
+</pre>
+
+<p class="leading-relaxed text-lg">In this code, the first chunk is a macro, which is defined between <code class="bg-cs-blue px-1 rounded shadow-lg text-base">.macro</code> and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">.endm</code> ("END Macro"). The first line contains the name of the macro (<code class="bg-cs-blue px-1 rounded shadow-lg text-base">addNumbers</code>, but this can be anything you want), followed by a list of parameters (these are like function parameters in other programming languages. You can name them whatever you want). The next line, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MOV R0, \num1</code>, moves whatever the input for <code class="bg-cs-blue px-1 rounded shadow-lg text-base">num1</code> is into R0. Same for R1. Then, the macro adds R0 and R1 and places the result in R2. Thus, when you run this macro, it will take the two inputs, add them, and place the result in R2.</p><br/>
+
+<p class="leading-relaxed text-lg">For the first line of code, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">addNumbers 10, 12</code>, you can see how to run the macro in code. You state the macro name, then define the inputs. Here, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">num1</code> gets the value <code class="bg-cs-blue px-1 rounded shadow-lg text-base">10</code>, and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">num2</code> gets the value <code class="bg-cs-blue px-1 rounded shadow-lg text-base">12</code>. Thus, after running this line, you get the result <code class="bg-cs-blue px-1 rounded shadow-lg text-base">22</code> in R2. What will happen when you run the next line? Exercise for the reader.</p><br/>
+
+<p class="leading-relaxed text-lg">In ARM, macros are a lot like subroutines/functions. You define code for your processor to run, then can access that code repeatedly at any point. They both help to reduce repetition in your code, but there are a few key differences. </p><br/>
+
+<p class="leading-relaxed text-lg">The first is that a macro is <a class="italic">physically duplicated for each call</a>. Unlike a subroutine, where you branch your program counter to re-run the same code over and over, if you call a macro multiple times, you are actually adding more lines of code to your program. When you compile (<code class="bg-cs-blue px-1 rounded shadow-lg text-base">make</code>) your program, the processor goes to every instance of your macro and fills that spot with the full code. Thus, macros do not have the issue of pipeline flushing, but do need extra memory to run. You may think you are only running one line of code when you call a macro, but you are just inserting more code later on (running the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">addNumbers</code> macro above actually takes 3 lines to run, even when you only call it in 1 line).</p><br/>
+
+<p class="leading-relaxed text-lg">Another difference is that macros can take direct, hard-coded inputs. As seen in the above code, you can provide multiple numbers to a macro, which will get physically replaced in your code on compile time. This is different from subroutines, which use dynamic arguments given from the code. </p><br/>
+
+<p class="leading-relaxed text-lg">A common reason to use macros is to define a bunch of functions with similar behaviors that all vary with slightly different parameters. A great example of this is managing GPIO pins.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="gpio" class="text-4xl font-extrabold">GPIO</h1><br/>
+<p class="leading-relaxed text-lg">GPIO stands for General Purpose Input and Output. They usually are pins on a device that have no base functionality but can be programmed by the user to perform any action (either reading input from the pin or writing some output to the pin). All microcontrollers have some number of GPIO pins, and that is where you will implement all the functionality that actually effects the real world. You can use the GPIO pins to check when a button is pressed, get heat data from a thermometer, display information on a screen, turn on an led, etc. </p><br/>
+
+<p class="leading-relaxed text-lg">Your pitaya has 32 GPIO pins, but we will only use 3 in this lab. Follow the instructions below to set up your pitaya's GPIO pins in ARM. You will be creating a program that flashes LEDs (an ECE's dream project).</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="su" class="text-4xl font-extrabold">Set Up</h1><br/>
+<h2 class="text-2xl text-bold underline text-cs-green">Step 1</h2>
+<div class="flex justify-center">
+    <img src="/static/images/featured/ECE1181/gpio-diagram.png" alt="Image not Loading, see TA" class="md:w-4/5 w-1/2 rounded-lg shadow-lg">
+</div>
+
+<p class="leading-relaxed text-lg">Wire your breadboard according to the picture above. Note the following:</p><br/>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>The red pitaya has the golden bits facing upwards. This will make the logo on your case "upside-down."</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>The LEDs are diodes, which means you need to make sure you put them in the right way. One of the pins on each LED is longer than the other. *The shorter one should be plugged into the ground line (next to the blue line on your breadboard).</li></ol>
+<ol class="list-decimal ml-12 text-lg space-y-2"><li>You should have 4 wires connecting to the red pitaya. Check to make sure everything is connected.</li></ol>
+
+<p class="leading-relaxed text-lg">If you have questions or need further explanations, ask a TA.</p><br/>
+
+<h2 class="text-2xl text-bold underline text-cs-green">Step 2</h2>
+<p class="leading-relaxed text-lg">Take out the wire connected to GPIO968 and connect it to the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">+5v</code> pin on your red pitaya. This is the bottom right pin on the opposite collection of pins. This should turn on the LED. If it does not, try flipping around the LED. If it still does not, find a TA to check for defective parts. Repeat this process for GPIO969 and GPIO970. All your LEDs should be working before you continue.</p><br/>
+
+<h2 class="text-2xl text-bold underline text-cs-green">Step 3</h2>
+<p class="leading-relaxed text-lg">Run the following command in the terminal to fix a change in the newer versions of the red pitaya: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">overlay.sh classic</code></p><br/>
+
+<p class="leading-relaxed text-lg">To allow your pitaya to interact with the pins, set up the Linux GPIO API by running the following command: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">cat /opt/redpitaya/fpga/classic/fpga.bit > /dev/xdevcfg</code>. (Note to Joseph and Hayden: if this doesn't run, ls and cd through the /opt/redpitaya/fpga library until you find an fpga.bit file. Any of them should work).</p><br/>
+
+<h2 class="text-2xl text-bold underline text-cs-green">Step 4</h2>
+<p class="leading-relaxed text-lg">Run the following commands to activate the lights from your red pitaya. You will need to do this every time you connect to your pitaya:</p><br/>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+echo 968 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio968/direction
+echo 1 > /sys/class/gpio/gpio968/value
+
+echo 969 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio969/direction
+echo 1 > /sys/class/gpio/gpio969/value
+
+echo 970 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio970/direction
+echo 1 > /sys/class/gpio/gpio970/value
+</pre>
+
+<p class="leading-relaxed text-lg">If running these commands do not light up your LEDs, ask a TA for assistance.</p><br/>
+
+<h2 class="text-2xl text-bold underline text-cs-green">Step 5</h2>
+<p class="leading-relaxed text-lg">The following files are listed in the <a href="#code-given" class="text-lg text-cs-blue hover:text-blue-700 underline">code given section</a> of this lab guide. Create files with the specified names (the names must match exactly) and fill each one with their respective code: <code class="bg-cs-blue px-1 rounded shadow-lg text-base">gpiomacros.s</code>, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">main.s</code>, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">fileio.s</code>, and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">unistd.s</code>.</p><br/>
+
+<h2 class="text-2xl text-bold underline text-cs-green">Step 6</h2>
+<p class="leading-relaxed text-lg">Set your makefile to compile <code class="bg-cs-blue px-1 rounded shadow-lg text-base">main</code> as the top file, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">make</code> it, and run <code class="bg-cs-blue px-1 rounded shadow-lg text-base">./main</code> (you may need to enter the password, "root", to run this command). You should see a change in the lights on your board. It may happen very quickly.</p><br/>
+
+<h2 class="text-2xl text-bold underline text-cs-green">Notes</h2>
+<p class="leading-relaxed text-lg">If all these steps worked, you should have code that makes the LEDs flash in succession with 1 second between each flash. All of this behavior is defined in <code class="bg-cs-blue px-1 rounded shadow-lg text-base">main.s</code> and you are encouraged to read through that file to understand how the program works. It makes heavy use of macros that are defined in the other files you created.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="conclusion" class="text-4xl font-extrabold">Conclusion</h1><br/>
+<p class="leading-relaxed text-lg">Here, you learned the basics of macros and working with gpio pins on the pitaya. All that is left in this lab is the final project, and you will have from now until the final lab day to complete it.</p><br/>
+
+<p class="leading-relaxed text-lg">It may take a minute to settle into these concepts, but know that there are plenty of resources available to you if you are confused. See either Dr. Camp's office hours or preferably the TA office hours for help with labs, homework, or general questions about the course. All that's left to do now is to write your lab report and submit it via Canvas sometime before your next lab session.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="assignment" class="text-4xl font-extrabold">Assignment</h1><br/>
+<p class="leading-relaxed text-lg">The assignment portion of the lab contains all instructions and requirements for your lab report. Any challenges or questions in the sections above were hypothetical and just for your practice. On your lab report, you only need to respond to the assignments in this section. Remember that you can check out the <a href="lab-guide" class="text-lg text-cs-blue hover:text-blue-700 underline">Lab Report Guide</a> to see the expectations the TAs have of your lab reports.</p><br/>
+
+<p class="leading-relaxed text-lg">You should perform all these tasks in a new, blank directory on your red pitaya. Feel free to reference previous labs or the <a href="cheat-sheet" class="text-lg text-cs-blue hover:text-blue-700 underline">Cheat Sheet</a> to refresh on old topics. All tasks should only include ARM instructions you have learned up to this point. Working ahead is fine, but you need to keep the tasks in the scope of the lessons. For questions on this (if something applies, etc), ask a TA.</p><br/>
+
+<h2 class="text-2xl text-bold underline text-cs-green">PICK TWO</h2>
+<p class="leading-relaxed text-lg">There are three tasks listed for you below. You can pick any two tasks to attempt for this lab. The unchosen one is available for you to practice or review, but is not required. Submitting all three tasks will not grant you extra credit.</p><br/>
+
+<p class="leading-relaxed text-lg">However, the TAs will still make comments and give feedback on all three tasks, if submitted. If you want to submit a third task for feedback, but do NOT want it to be considered for grading, you must mark it clearly in your lab report with the phrase "DO NOT SCORE." If no task is marked with this phrase, the TAs will roll a random number generator to decide which two tasks to score for your lab grade.</p><br/>
+
+<p class="leading-relaxed text-lg">Additionally, if you come up with a task that you think is of comparable challenge to the ones listed, you may pitch it to one of the TAs. If accepted, your task (bound by the requirements agreed upon by you and the TA) will count towards one of the PICK TWO tasks. The other tasks may be submitted for feedback following the same protocol listed in the paragraphs above.</p><br/>
+
+<h2 class="text-2xl text-bold underline text-cs-green">Task 1</h2>
+<p class="leading-relaxed text-lg">Write code that displays the value of R6 in binary on breadboard LEDs.</p><br/>
+
+<p class="leading-relaxed text-lg">Additional Requirements:</p>
+<p class="leading-relaxed text-lg">- Your code must count down from 7 to 0 to show all numbers working.</p>
+<p class="leading-relaxed text-lg">- A reasonable (between 0.5 and 1.5 second) delay should occur between each number.</p><br/>
+
+<p class="leading-relaxed text-lg">Assumptions:</p>
+<p class="leading-relaxed text-lg">- The value in R6 will always be between 0 and 7 (three binary bits).</p>
+<p class="leading-relaxed text-lg">- You can hardcode the starting number as 7, but your code must count down to show all numbers from 7 to 0.</p><br/>
+
+<p class="leading-relaxed text-lg">Expected Outputs:</p>
+<p class="leading-relaxed text-lg">- A video showing you running your code with the above functionality. Video can be zipped and attached to the lab submission.</p><br/>
+
+
+<h2 class="text-2xl text-bold underline text-cs-green">Task 2</h2>
+<p class="leading-relaxed text-lg">Write code that generates a square wave of a specified frequency and outputs it on a GPIO pin.</p><br/>
+
+<p class="leading-relaxed text-lg">Additional Requirements:</p>
+<p class="leading-relaxed text-lg">- Your program must loop infinitely with this behavior, only stopping when typing <code class="bg-cs-blue px-1 rounded shadow-lg text-base">control+C</code> to cancel the terminal action.</p><br/>
+
+<p class="leading-relaxed text-lg">Assumptions:</p>
+<p class="leading-relaxed text-lg">- The frequency of the signal will only be between 1Hz and 500MHz.</p>
+<p class="leading-relaxed text-lg">- The duty cycle is a fixed 50%.</p>
+<p class="leading-relaxed text-lg">- Any pin can be used for the output.</p>
+<p class="leading-relaxed text-lg">- You are generating a square wave, so a 1 (logic high) for x amount of time, then 0 (logic low) for x amount of time, repeating forever.</p>
+<p class="leading-relaxed text-lg">- The frequency can be hardcoded into your program (either as frequency or period, no calculation is required).</p><br/>
+
+<p class="leading-relaxed text-lg">Hint:</p>
+<p class="leading-relaxed text-lg">- You can modify the nanoSleep macro to take an input argument, which is the amount of time in nanoseconds that the system waits before the next command is run.</p><br/>
+
+<p class="leading-relaxed text-lg">Expected Outputs:</p>
+<p class="leading-relaxed text-lg">- Test the program using a breadboard speaker and a 180 Hz frequency. You should hear a tone. Record a video and zip it for the project submission.</p><br/>
+
+
+<h2 class="text-2xl text-bold underline text-cs-green">Task 3</h2>
+<p class="leading-relaxed text-lg">Write a macro that takes 3 input arguments <code class="bg-cs-blue px-1 rounded shadow-lg text-base">a</code>, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">b</code>, and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">c</code>, and performs the calculation <code class="bg-cs-blue px-1 rounded shadow-lg text-base">(a*b)^c</code>.</p><br/>
+
+<p class="leading-relaxed text-lg">Additional Requirements:</p>
+<p class="leading-relaxed text-lg">- The result must be placed in a register to be shown in the debugger.</p>
+<p class="leading-relaxed text-lg">- You can use the <code class="bg-cs-blue px-1 rounded shadow-lg text-base">MUL</code> ARM command to multiply, but must implement the power operator yourself.</p><br/>
+
+<p class="leading-relaxed text-lg">Assumptions:</p>
+<p class="leading-relaxed text-lg">- The result will be within the 32 bit limit for registers.</p>
+<p class="leading-relaxed text-lg">- Any numbers <code class="bg-cs-blue px-1 rounded shadow-lg text-base">a</code>, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">b</code>, and <code class="bg-cs-blue px-1 rounded shadow-lg text-base">c</code> can be used such that <code class="bg-cs-blue px-1 rounded shadow-lg text-base">(a*b)^c</code> follows the first assumption.</p>
+<p class="leading-relaxed text-lg">- The numbers can be hardcoded into your program, but not into the macro.</p><br/>
+
+<p class="leading-relaxed text-lg">Expected Outputs:</p>
+<p class="leading-relaxed text-lg">- A screenshot of the debugger showing the registers with <code class="bg-cs-blue px-1 rounded shadow-lg text-base">i r</code>, which contains the numbers <code class="bg-cs-blue px-1 rounded shadow-lg text-base">a</code>, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">b</code>, <code class="bg-cs-blue px-1 rounded shadow-lg text-base">c</code>, and the result <code class="bg-cs-blue px-1 rounded shadow-lg text-base">(a*b)^c</code> in any registers. Specify which number is which in your lab report. You should have at least 3 examples of your program running this macro (should do it all at once with multiple macro calls.)</p><br/>
+
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="code-given" class="text-4xl font-extrabold">Code Given</h1><br/>
+<h2 class="text-2xl text-bold underline text-cs-green">gpiomacros.s</h2>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+@ Various macros to access the GPIO pins
+@ on the Raspberry Pi.
+@
+@ R8 - file descriptor.
+@
+.include "fileio.s"
+@ Macro nanoSleep to sleep .1 second
+@ Calls Linux nanosleep service which is funct 162.
+@ Pass a reference to a timespec in both r0 and r1
+@ First is input time to sleep in secs and nanosecs.
+@ Second is time left to sleep if interrupted
+
+.macro nanoSleep
+    ldr r0, =timespecsec
+    ldr r1, =timespecnano
+    mov r7, #sys_nanosleep
+    svc 0
+.endm
+
+.macro GPIOExport pin
+    openFile gpioexp, O_WRONLY
+    mov r8, r0                  @ save the file desc
+    writeFile r8, \pin, #3
+    flushClose r8
+.endm
+
+.macro GPIODirectionOut pin
+    @ copy pin into filename pattern
+    ldr r1, =\pin
+    ldr r2, =gpiopinfile
+    add r2, #20
+    ldrb r3, [r1], #1           @ load pin and post incr
+    strb r3, [r2], #1           @ store to filename and post incr
+    ldrh r3, [r1]
+    strh r3, [r2]
+    openFile gpiopinfile, O_WRONLY
+    mov r8, r0                  @ save the file descriptor
+    writeFile r8, outstr, #3
+    flushClose r8
+.endm
+
+.macro GPIOWrite pin, value
+    @ copy pin into filename pattern
+    ldr r1, =\pin
+    ldr r2, =gpiovaluefile
+    add r2, #20
+    ldrb r3, [r1], #1           @ load pin and post increment
+    strb r3, [r2], #1           @ store to filename and post increment
+    ldrh r3, [r1]
+    strh r3, [r2]
+    openFile gpiovaluefile, O_WRONLY
+    mov r8, r0                  @ save the file descriptor
+    writeFile r8, \value, #1
+    flushClose r8
+.endm
+
+.data
+timespecsec: .word 1
+timespecnano: .word 0
+gpioexp: .asciz "/sys/class/gpio/export"
+gpiopinfile: .asciz "/sys/class/gpio/gpioxxx/direction"
+gpiovaluefile: .asciz "/sys/class/gpio/gpioxxx/value"
+outstr: .asciz "out"
+        .align 2                @ save users of this file having to do this.
+</pre>
+
+<h2 class="text-2xl text-bold underline text-cs-green">main.s</h2>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+@
+@ Assembler program to flash three LEDs connected to
+@ the Raspberry Pi GPIO port.
+@
+@ r6 - loop variable to flash lights 10 times
+@
+.include "gpiomacros.s"
+.global _start @ Provide program starting address to linker
+
+_start: 
+    GPIOExport pin968
+    GPIOExport pin969
+    GPIOExport pin970
+    nanoSleep
+    GPIODirectionOut pin968
+    GPIODirectionOut pin969
+    GPIODirectionOut pin970
+    @ set up a loop counter for 10 iterations
+    mov r6, #10
+
+loop: 
+    GPIOWrite pin968, high
+    nanoSleep
+    GPIOWrite pin968, low
+    GPIOWrite pin969, high
+    nanoSleep
+    GPIOWrite pin969, low
+    GPIOWrite pin970, high
+    nanoSleep
+    GPIOWrite pin970, low
+    @ decrement loop counter and see if we loop
+    @ Subtract 1 from loop register
+    @ setting status register.
+    subs r6, #1
+    @ If we haven't counted down to 0 then loop
+    bne loop
+
+_end: 
+    mov R0, #0 @ Use 0 return code
+    mov R7, #1 @ Command code 1 terminates
+    svc 0 @ Linux command to terminate
+
+.data
+pin970: .asciz "970"
+pin969: .asciz "969"
+pin968: .asciz "968"
+low: .asciz "0"
+high: .asciz "1"
+</pre>
+
+<h2 class="text-2xl text-bold underline text-cs-green">fileio.s</h2>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+@ Various macros to perform file I/O  
+@ The fd parameter needs to be a register.  
+@ Uses R0, R1, R7.  
+@ Return code is in R0. 
+    
+.include "unistd.s" 
+.equ O_RDONLY, 0 
+.equ O_WRONLY, 1 
+.equ O_CREAT, 0100 
+    
+.data 
+    S_RDWR: .word 0666 
+    
+.macro openFile fileName, flags 
+    ldr r0, =\fileName 
+    mov r1, #\flags 
+    ldr r3, =S_RDWR 
+    ldr r2, [r3]                @ RW access rights 
+    mov r7, #sys_open 
+    svc 0 
+.endm 
+
+.macro readFile fd, buffer, length 
+    mov r0, \fd                 @ file descriptor 
+    ldr r1, =\buffer 
+    mov r2, #\length 
+    mov r7, #sys_read 
+    svc 0 
+.endm 
+
+.macro writeFile fd, buffer, length 
+    mov r0, \fd                 @ file descriptor 
+    ldr r1, =\buffer 
+    mov r2, \length 
+    mov r7, #sys_write 
+    svc 0 
+.endm 
+
+.macro flushClose fd 
+                                @fsync syscall 
+    mov r0, \fd 
+    mov r7, #sys_fsync 
+    svc 0 
+                                @close syscall 
+    mov r0, \fd 
+    mov r7, #sys_close 
+    svc 0 
+.endm
+</pre>
+
+<h2 class="text-2xl text-bold underline text-cs-green">unistd.s</h2>
+<pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+@
+@ Defines for the Linux system calls.
+@ This list is from Raspbian Buster
+@
+
+.EQU sys_restart_syscall,		0	@ restart a system call after interruption by a stop signal
+.EQU sys_exit,				1	@ cause normal process termination
+.EQU sys_fork,				2	@ create a child process
+.EQU sys_read,				3	@ read from a file descriptor
+.EQU sys_write,				4	@ write to a file descriptor
+.EQU sys_open,				5	@ open and possibly create a file
+.EQU sys_close,				6	@ close a file descriptor
+.EQU sys_creat,				8	@ create a new file or rewrite an existing one
+.EQU sys_link,				9	@ make a new name for a file
+.EQU sys_unlink,			10	@ delete a name and possibly the file it refers to
+.EQU sys_execve,			11	@ execute program
+.EQU sys_chdir,				12	@ change working directory
+.EQU sys_mknod,				14	@ create a special or ordinary file
+.EQU sys_chmod,				15	@ change file mode bits
+.EQU sys_lchown,			16	@ change the owner and group of a symbolic link
+.EQU sys_lseek,				19	@ reposition read/write file offset
+.EQU sys_getpid,			20	@ get process identification
+.EQU sys_mount,				21	@ mount filesystem
+.EQU sys_setuid,			23	@ set user identity
+.EQU sys_getuid,			24	@ get user identity
+.EQU sys_ptrace,			26	@ process trace
+.EQU sys_pause,				29	@ wait for signal
+.EQU sys_access,			33	@ check user's permissions for a file
+.EQU sys_nice,				34	@ change process priority
+.EQU sys_sync,				36	@ commit filesystem caches to disk
+.EQU sys_kill,				37	@ send signal to a process
+.EQU sys_rename,			38	@ change the name or location of a file
+.EQU sys_mkdir,				39	@ create a directory
+.EQU sys_rmdir,				40	@ delete a directory
+.EQU sys_dup,				41	@ duplicate a file descriptor
+.EQU sys_pipe,				42	@ create pipe
+.EQU sys_times,				43	@ get process times
+.EQU sys_brk,				45	@ change data segment size
+.EQU sys_setgid,			46	@ set group identity
+.EQU sys_getgid,			47	@ get group identity
+.EQU sys_geteuid,			49	@ get user identity
+.EQU sys_getegid,			50	@ get group identity
+.EQU sys_acct,				51	@ switch process accounting on or off
+.EQU sys_umount2,			52	@ unmount filesystem
+.EQU sys_ioctl,				54	@ control device
+.EQU sys_fcntl,				55	@ manipulate file descriptor
+.EQU sys_setpgid,			57	@ set process group
+.EQU sys_umask,				60	@ set file mode creation mask
+.EQU sys_chroot,			61	@ change root directory
+.EQU sys_ustat,				62	@ get filesystem statistics
+.EQU sys_dup2,				63	@ duplicate a file descriptor
+.EQU sys_getppid,			64	@ get the parent process ID
+.EQU sys_getpgrp,			65	@ get process group
+.EQU sys_setsid,			66	@ creates a session and sets the process group ID
+.EQU sys_sigaction,			67	@ examine and change a signal action
+.EQU sys_setreuid,			70	@ set real and/or effective user ID
+.EQU sys_setregid,			71	@ set real and/or effective group ID
+.EQU sys_sigsuspend,			72	@ wait for a signal
+.EQU sys_sigpending,			73	@ examine pending signals
+.EQU sys_sethostname,			74	@ set hostname
+.EQU sys_setrlimit,			75	@ control maximum resource consumption
+.EQU sys_getrusage,			77	@ get resource usage
+.EQU sys_gettimeofday,			78	@ get time
+.EQU sys_settimeofday,			79	@ set time
+.EQU sys_getgroups,			80	@ get list of supplementary group IDs
+.EQU sys_setgroups,			81	@ set list of supplementary group IDs
+.EQU sys_symlink,			83	@ make a new name for a file
+.EQU sys_readlink,			85	@ read value of a symbolic link
+.EQU sys_uselib,			86	@load shared library
+.EQU sys_swapon,			87	@ start swapping to file/device
+.EQU sys_reboot,			88	@ reboot
+.EQU sys_munmap,			91	@ unmap files or devices into memory
+.EQU sys_truncate,			92	@ truncate a file to a specified length
+.EQU sys_ftruncate,			93	@ truncate a file to a specified length
+.EQU sys_fchmod,			94	@ change permissions of a file
+.EQU sys_fchown,			95	@ change ownership of a file
+.EQU sys_getpriority,			96	@ get program scheduling priority
+.EQU sys_setpriority,			97	@ set program scheduling priority
+.EQU sys_statfs,			99	@ get filesystem statistics
+.EQU sys_fstatfs,			100	@ get filesystem statistics
+.EQU sys_syslog,			103	@ read and/or clear kernel message ring buffer; set console_loglevel
+.EQU sys_setitimer,			104	@ set value of an interval timer
+.EQU sys_getitimer,			105	@ get value of an interval timer
+.EQU sys_stat,				106	@ get file status
+.EQU sys_lstat,				107	@ get file status
+.EQU sys_fstat,				108	@ get file status
+.EQU sys_vhangup,			111	@ virtually hangup the current terminal
+.EQU sys_wait4,				114	@ wait for process to change state, BSD style
+.EQU sys_swapoff,			115	@ stop swapping to file/device
+.EQU sys_sysinfo,			116	@ return system information
+.EQU sys_fsync,				118	@ synchronize a file's in-core state with storage
+.EQU sys_sigreturn,			119	@ return  from  signal handler and cleanup stack frame
+.EQU sys_clone,				120	@ create a child process
+.EQU sys_setdomainname,			121	@ set NIS domain name
+.EQU sys_uname,				122	@ get name and information about current kernel
+.EQU sys_adjtimex,			124	@ tune kernel clock
+.EQU sys_mprotect,			125	@ set protection on a region of memory
+.EQU sys_sigprocmask,			126	@ examine and change blocked signals
+.EQU sys_init_module,			128	@ load a kernel module
+.EQU sys_delete_module,			129	@ unload a kernel module
+.EQU sys_quotactl,			131	@ manipulate disk quotas
+.EQU sys_getpgid,			132	@ get process group
+.EQU sys_fchdir,			133	@ change working directory
+.EQU sys_bdflush,			134	@ start, flush, or tune buffer-dirty-flush daemon
+.EQU sys_sysfs,				135	@ get filesystem type information
+.EQU sys_personality,			136	@ set the process execution domain
+.EQU sys_setfsuid,			138	@ set user identity used for filesystem checks
+.EQU sys_setfsgid,			139	@ set group identity used for filesystem checks
+.EQU sys__llseek,			140	@ reposition read/write file offset
+.EQU sys_getdents,			141	@ get directory entries
+.EQU sys__newselect,			142	@ synchronous I/O multiplexing
+.EQU sys_flock,				143	@ apply or remove an advisory lock on an open file
+.EQU sys_msync,				144	@ synchronize a file with a memory map
+.EQU sys_readv,				145	@ read data into multiple buffers
+.EQU sys_writev,			146	@ write data into multiple buffers
+.EQU sys_getsid,			147	@ get session ID
+.EQU sys_fdatasync,			148	@ synchronize a file's in-core state with storage device
+.EQU sys__sysctl,			149	@ read/write system parameters
+.EQU sys_mlock,				150	@ lock memory
+.EQU sys_munlock,			151	@ unlock memory
+.EQU sys_mlockall,			152	@ lock memory
+.EQU sys_munlockall,			153	@ unlock memory
+.EQU sys_sched_setparam,		154	@ set scheduling parameters
+.EQU sys_sched_getparam,		155	@ get scheduling parameters
+.EQU sys_sched_setscheduler,		156	@ set and get scheduling policy/parameters
+.EQU sys_sched_getscheduler,		157	@ set and get scheduling policy/parameters
+.EQU sys_sched_yield,			158	@ yield the processor
+.EQU sys_sched_get_priority_max,	159	@ get static priority max
+.EQU sys_sched_get_priority_min,	160	@ get static priority min
+.EQU sys_sched_rr_get_interval,		161	@ get  the  SCHED_RR  interval  for the named process
+.EQU sys_nanosleep,			162	@ high-resolution sleep
+.EQU sys_mremap,			163	@ remap a virtual memory address
+.EQU sys_setresuid,			164	@ set real, effective and saved user ID
+.EQU sys_getresuid,			165	@ get real, effective and saved user ID
+.EQU sys_poll,				168	@ wait for some event on a file descriptor
+.EQU sys_nfsservctl,			169	@ syscall interface to kernel nfs daemon
+.EQU sys_setresgid,			170	@ set real, effective and saved group ID
+.EQU sys_getresgid,			171	@ get real, effective and saved group ID
+.EQU sys_prctl,				172	@ operations on a process
+.EQU sys_rt_sigreturn,			173	@ return  from  signal handler and cleanup stack frame
+.EQU sys_rt_sigaction,			174	@ examine and change a signal action
+.EQU sys_rt_sigprocmask,		175	@ examine and change blocked signals
+.EQU sys_rt_sigpending,			176	@ examine pending signals
+.EQU sys_rt_sigtimedwait,		177	@ synchronously wait for queued signals
+.EQU sys_rt_sigqueueinfo,		178	@ queue a signal and data
+.EQU sys_rt_sigsuspend,			179	@ wait for a signal
+.EQU sys_pread64,			180	@ read from a file descriptor at a given offset
+.EQU sys_pwrite64,			181	@ write to a file descriptor at a given offset
+.EQU sys_chown,				182	@ change ownership of a file
+.EQU sys_getcwd,			183	@ get current working directory
+.EQU sys_capget,			184	@ get capabilities of thread(s)
+.EQU sys_capset,			185	@ set capabilities of thread(s)
+.EQU sys_sigaltstack,			186	@ set and/or get signal stack context
+.EQU sys_sendfile,			187	@ transfer data between file descriptors
+.EQU sys_vfork,				190	@ create a child process and block parent
+.EQU sys_ugetrlimit,			191	@ get resource limits
+.EQU sys_mmap2,				192	@ map files or devices into memory
+.EQU sys_truncate64,			193	@ truncate a file to a specified length
+.EQU sys_ftruncate64,			194	@ truncate a file to a specified length
+.EQU sys_stat64,			195	@ get file status
+.EQU sys_lstat64,			196	@ get file status
+.EQU sys_fstat64,			197	@ get file status
+.EQU sys_lchown32,			198	@ change ownership of a file
+.EQU sys_getuid32,			199	@ get user identity
+.EQU sys_getgid32,			200	@ get group identity
+.EQU sys_geteuid32,			201	@ get user identity
+.EQU sys_getegid32,			202	@ get group identity
+.EQU sys_setreuid32,			203	@ set real and/or effective user ID
+.EQU sys_setregid32,			204	@ set real and/or effective group ID
+.EQU sys_getgroups32,			205	@ get list of supplementary group IDs
+.EQU sys_setgroups32,			206	@ set list of supplementary group IDs
+.EQU sys_fchown32,			207	@ change ownership of a file
+.EQU sys_setresuid32,			208	@ set real, effective and saved user ID
+.EQU sys_getresuid32,			209	@ get real, effective and saved user ID
+.EQU sys_setresgid32,			210	@ set real, effective and saved group ID
+.EQU sys_getresgid32,			211	@ get real, effective and saved group ID
+.EQU sys_chown32,			212	@ change ownership of a file
+.EQU sys_setuid32,			213	@ set user identity
+.EQU sys_setgid32,			214	@ set group identity
+.EQU sys_setfsuid32,			215	@ set user identity used for filesystem checks
+.EQU sys_setfsgid32,			216	@ set group identity used for filesystem checks
+.EQU sys_getdents64,			217	@ get directory entries
+.EQU sys_pivot_root,			218	@ change the root filesystem
+.EQU sys_mincore,			219	@ determine whether pages are resident in memory
+.EQU sys_madvise,			220	@ give advice about use of memory
+.EQU sys_fcntl64,			221	@ manipulate file descriptor
+.EQU sys_gettid,			224	@ get thread identification
+.EQU sys_readahead,			225	@ initiate file readahead into page cache
+.EQU sys_setxattr,			226	@ set an extended attribute value
+.EQU sys_lsetxattr,			227	@ set an extended attribute value
+.EQU sys_fsetxattr,			228	@ set an extended attribute value
+.EQU sys_getxattr,			229	@ retrieve an extended attribute value
+.EQU sys_lgetxattr,			230	@ retrieve an extended attribute value
+.EQU sys_fgetxattr,			231	@ retrieve an extended attribute value
+.EQU sys_listxattr,			232	@ list extended attribute names
+.EQU sys_llistxattr,			233	@ list extended attribute names
+.EQU sys_flistxattr,			234	@ list extended attribute names
+.EQU sys_removexattr,			235	@ remove  an  extended attribute
+.EQU sys_lremovexattr,			236	@ remove  an  extended attribute
+.EQU sys_fremovexattr,			237	@ remove  an  extended attribute
+.EQU sys_tkill,				238	@ send a signal to a thread
+.EQU sys_sendfile64,			239	@ transfer data between file descriptors
+.EQU sys_futex,				240	@ fast user-space locking
+.EQU sys_sched_setaffinity,		241	@ set a thread's CPU affinity mask
+.EQU sys_sched_getaffinity,		242	@ get a thread's CPU affinity mask
+.EQU sys_io_setup,			243	@ create an asynchronous I/O context
+.EQU sys_io_destroy,			244	@ destroy an asynchronous I/O context
+.EQU sys_io_getevents,			245	@ read asynchronous I/O events from the completion queue
+.EQU sys_io_submit,			246	@ submit asynchronous I/O blocks for processing
+.EQU sys_io_cancel,			247	@ cancel an outstanding asynchronous I/O operation
+.EQU sys_exit_group,			248	@ exit all threads in a process
+.EQU sys_lookup_dcookie,		249	@ return a directory entry's path
+.EQU sys_epoll_create,			250	@ open an epoll file descriptor
+.EQU sys_epoll_ctl,			251	@ control interface for an epoll file descriptor
+.EQU sys_epoll_wait,			252	@ wait  for  an I/O event on an epoll file descriptor
+.EQU sys_remap_file_pages,		253	@ create a nonlinear file mapping
+.EQU sys_set_tid_address,		256	@ set pointer to thread ID
+.EQU sys_timer_create,			257	@ create a POSIX per-process timer
+.EQU sys_timer_settime,			258	@arm/disarm state of POSIX per-process timer
+.EQU sys_timer_gettime,			259	@ fetch state of POSIX per-process timer
+.EQU sys_timer_getoverrun,		260	@ get overrun count for a POSIX per-process timer
+.EQU sys_timer_delete,			261	@ delete a POSIX per-process timer
+.EQU sys_clock_settime,			262	@ clock and timer functions
+.EQU sys_clock_gettime,			263	@ clock and timer functions
+.EQU sys_clock_getres,			264	@ clock and timer functions
+.EQU sys_clock_nanosleep,		265	@ high-resolution sleep with specifiable clock
+.EQU sys_statfs64,			266	@ get filesystem statistics
+.EQU sys_fstatfs64,			267	@ get filesystem statistics
+.EQU sys_tgkill,			268	@ send a signal to a thread
+.EQU sys_utimes,			269	@ change file last access and modification times
+.EQU sys_arm_fadvise64_64,		270	@ predeclare an access pattern for file data
+.EQU sys_pciconfig_iobase,		271	@ pci device information handling
+.EQU sys_pciconfig_read,		272	@ pci device information handling
+.EQU sys_pciconfig_write,		273	@ pci device information handling
+.EQU sys_mq_open,			274	@ open a message queue
+.EQU sys_mq_unlink,			275	@ remove a message queue
+.EQU sys_mq_timedsend,			276	@ send a message to a message queue
+.EQU sys_mq_timedreceive,		277	@ receive a message from a message queue
+.EQU sys_mq_notify,			278	@ register for notification when a message is available
+.EQU sys_mq_getsetattr,			279	@ get/set message queue attributes
+.EQU sys_waitid,			280	@ wait for a child process to change state
+.EQU sys_socket,			281	@ create an endpoint for communication
+.EQU sys_bind,				282	@ bind a name to a socket
+.EQU sys_connect,			283	@ initiate a connection on a socket
+.EQU sys_listen,			284	@ listen for connections on a socket
+.EQU sys_accept,			285	@ accept a connection on a socket
+.EQU sys_getsockname,			286	@ get socket name
+.EQU sys_getpeername,			287	@ get name of connected peer socket
+.EQU sys_socketpair,			288	@ create a pair of connected sockets
+.EQU sys_send,				289	@ send a message on a socket
+.EQU sys_sendto,			290	@ send a message on a socket
+.EQU sys_recv,				291	@ receive a message from a socket
+.EQU sys_recvfrom,			292	@ receive a message from a socket
+.EQU sys_shutdown,			293	@ shut down part of a full-duplex connection
+.EQU sys_setsockopt,			294	@ set options on sockets
+.EQU sys_getsockopt,			295	@ get options on sockets
+.EQU sys_sendmsg,			296	@ send a message on a socket using a message structure
+.EQU sys_recvmsg,			297	@ receive a message from a socket
+.EQU sys_semop,				298	@ System V semaphore operations
+.EQU sys_semget,			299	@ get a System V semaphore set identifier
+.EQU sys_semctl,			300	@ System V semaphore control operations
+.EQU sys_msgsnd,			301	@ XSI message send operation
+.EQU sys_msgrcv,			302	@ XSI message receive operation
+.EQU sys_msgget,			303	@ get a System V message queue identifier
+.EQU sys_msgctl,			304	@ System V message control operations
+.EQU sys_shmat,				305	@ XSI shared memory attach operation
+.EQU sys_shmdt,				306	@ XSI shared memory detach operation
+.EQU sys_shmget,			307	@ allocates a System V shared memory segment
+.EQU sys_shmctl,			308	@ System V shared memory control
+.EQU sys_add_key,			309	@ add a key to the kernel's key management facility
+.EQU sys_request_key,			310	@ request a key from the kernel's key management facility
+.EQU sys_keyctl,			311	@ manipulate the kernel's key management facility
+.EQU sys_semtimedop,			312	@ System V semaphore operations
+.EQU sys_vserver,			313	@ Unimplemented
+.EQU sys_ioprio_set,			314	@ set I/O scheduling class and priority
+.EQU sys_ioprio_get,			315	@ get I/O scheduling class and priority
+.EQU sys_inotify_init,			316	@ initialize an inotify instance
+.EQU sys_inotify_add_watch,		317	@ add a watch to an initialized inotify instance
+.EQU sys_inotify_rm_watch,		318	@ remove an existing watch from an inotify instance
+.EQU sys_mbind,				319	@ set memory policy for a memory range
+.EQU sys_get_mempolicy,			320	@ retrieve NUMA memory policy for a thread
+.EQU sys_set_mempolicy,			321	@ set default NUMA memory policy for a thread and its children
+.EQU sys_openat,			322	@ open file relative to directory file descriptor
+.EQU sys_mkdirat,			323	@ create a directory
+.EQU sys_mknodat,			324	@ create a special or ordinary file
+.EQU sys_fchownat,			325	@ change owner and group of a file relative to directory file descriptor
+.EQU sys_futimesat,			326	@ change timestamps of a file relative to a directory file descriptor
+.EQU sys_fstatat64,			327	@ get file status
+.EQU sys_unlinkat,			328	@ delete a name and possibly the file it refers to
+.EQU sys_renameat,			329	@ change the name or location of a file
+.EQU sys_linkat,			330	@ make a new name for a file
+.EQU sys_symlinkat,			331	@ make a new name for a file
+.EQU sys_readlinkat,			332	@ read value of a symbolic link
+.EQU sys_fchmodat,			333	@ change permissions of a file
+.EQU sys_faccessat,			334	@ determine accessibility of a file relative to directory file descriptor
+.EQU sys_pselect6,			335	@ synchronous I/O multiplexing
+.EQU sys_ppoll,				336	@ wait for some event on a file descriptor
+.EQU sys_unshare,			337	@ run program with some namespaces unshared from parent
+.EQU sys_set_robust_list,		338	@ set list of robust futexes
+.EQU sys_get_robust_list,		339	@ get list of robust futexes
+.EQU sys_splice,			340	@ splice data to/from a pipe
+.EQU sys_arm_sync_file_range,		341	@ sync a file segment with disk
+.EQU sys_tee,				342	@ duplicating pipe content
+.EQU sys_vmsplice,			343	@ splice user pages to/from a pipe
+.EQU sys_move_pages,			344	@ move individual pages of a process to another node
+.EQU sys_getcpu,			345	@ determine CPU and NUMA node on which the calling thread is running
+.EQU sys_epoll_pwait,			346	@ wait  for  an I/O event on an epoll file descriptor
+.EQU sys_kexec_load,			347	@ load a new kernel for later execution
+.EQU sys_utimensat,			348	@ change file timestamps with nanosecond precision
+.EQU sys_signalfd,			349	@ create a file descriptor for accepting signals
+.EQU sys_timerfd_create,		350	@ timers that notify via file descriptors
+.EQU sys_eventfd,			351	@ create a file descriptor for event notification
+.EQU sys_fallocate,			352	@ manipulate file space
+.EQU sys_timerfd_settime,		353	@ timers that notify via file descriptors
+.EQU sys_timerfd_gettime,		354	@ timers that notify via file descriptors
+.EQU sys_signalfd4,			355	@ create a file descriptor for accepting signals
+.EQU sys_eventfd2,			356	@ create a file descriptor for event notification
+.EQU sys_epoll_create1,			357	@ open an epoll file descriptor
+.EQU sys_dup3,				358	@ duplicate a file descriptor
+.EQU sys_pipe2,				359	@ create pipe
+.EQU sys_inotify_init1,			360	@ initialize an inotify instance
+.EQU sys_preadv,			361	@ read data into multiple buffers
+.EQU sys_pwritev,			362	@ write data into multiple buffers
+.EQU sys_rt_tgsigqueueinfo,		363	@ queue a signal and data
+.EQU sys_perf_event_open,		364	@ set up performance monitoring
+.EQU sys_recvmmsg,			365	@ receive multiple messages on a socket
+.EQU sys_accept4,			366	@ accept a connection on a socket
+.EQU sys_fanotify_init,			367	@ create and initialize fanotify group
+.EQU sys_fanotify_mark,			368	@ add, remove, or modify an fanotify mark on a filesystem object
+.EQU sys_prlimit64,			369	@ get/set resource limits
+.EQU sys_name_to_handle_at,		370	@ obtain handle for a pathname
+.EQU sys_open_by_handle_at,		371	@ open file via a handle
+.EQU sys_clock_adjtime,			372	@ tune kernel clock
+.EQU sys_syncfs,			373	@ commit filesystem caches to disk
+.EQU sys_sendmmsg,			374	@ send multiple messages on a socket
+.EQU sys_setns,				375	@ reassociate thread with a namespace
+.EQU sys_process_vm_readv,		376	@ transfer data between process address spaces
+.EQU sys_process_vm_writev,		377	@ transfer data between process address spaces
+.EQU sys_kcmp,				378	@ compare  two  processes  to determine if they share a kernel resource
+.EQU sys_finit_module,			379	@ load a kernel module
+.EQU sys_sched_setattr,			380	@ set scheduling policy and attributes
+.EQU sys_sched_getattr,			381	@ get scheduling policy and attributes
+.EQU sys_renameat2,			382	@ change the name or location of a file
+.EQU sys_seccomp,			383	@ operate on Secure Computing state of the process
+.EQU sys_getrandom,			384	@ obtain a series of random bytes
+.EQU sys_memfd_create,			385	@ create an anonymous file
+.EQU sys_bpf,				386	@ perform a command on an extended BPF map or program
+.EQU sys_execveat,			387	@ execute program relative to a directory file descriptor
+.EQU sys_userfaultfd,			388	@ create  a file descriptor for handling page faults in user space
+.EQU sys_membarrier,			389	@ issue memory barriers on a set of threads
+.EQU sys_mlock2,			390	@ lock memory
+.EQU sys_copy_file_range,		391	@ Copy a range of data from one file to another
+.EQU sys_preadv2,			392	@ read data into multiple buffers
+.EQU sys_pwritev2,			393	@ write data into multiple buffers
+.EQU sys_pkey_mprotect,			394	@ set protection on a region of memory
+.EQU sys_pkey_alloc,			395	@ allocate a protection key
+.EQU sys_pkey_free,			396	@ free a protection key
+.EQU sys_statx,				397	@ get file status (extended)
+.EQU sys_rseq,				398	@ restartable sequences
+</pre>
+
+
+
+
+</div>
+</div>
+</div>
+<!-- Feedback Box -->
+<div id="feedback-box" class="fixed hidden right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 dark:bg-[#444444] border-l-4 border-b-4 border-[#E0E0E0] dark:border-[#3B3B3B] rounded-l-xl shadow-lg w-64 p-4 z-50">
+<h2 class="font-bold text-lg dark:text-white text-gray-800 mb-2 text-center">Feedback</h2>
+<textarea id="feedback-text" class="w-full p-2 border rounded-md dark:bg-[#333333] dark:text-steel text-gray-800" rows="4" placeholder="Feedback, corrections, feature ideas, comments, etc."></textarea>
+<button id="submit-feedback" class="mt-2 w-full bg-cs-blue hover:bg-cs-green text-white py-2 px-4 rounded-md">Submit</button>
+</div>
+
+<!-- Toggle Tab -->
+<button id="feedback-toggle" class="fixed top-1/2 transform -translate-y-1/2 right-0 md:right-64 bg-cs-blue hover:bg-cs-green text-steel rounded-l-md px-1 py-8 shadow-md">
+||
+</button>
+
+<!--
+<body class="flex justify-center items-center h-screen bg-gray-100">
+<div class="bg-white p-6 rounded shadow-lg">
+<h1 class="text-2xl mb-4">Report a Problem</h1>
+<form action="/submit_workorder" method="post">
+    <textarea name="issue" required class="border p-2 w-full rounded" placeholder="Describe your issue..."></textarea>
+    <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+</form>
+</div>
+</body>
+-->
+
+<script>
+const feedbackBox = document.getElementById('feedback-box');
+const feedbackToggle = document.getElementById('feedback-toggle');
+const feedbackText = document.getElementById('feedback-text');
+const submitFeedback = document.getElementById('submit-feedback');
+
+function checkScreenSize() {
+const isLargerThanMD = window.matchMedia('(min-width: 768px)').matches;
+
+if (isLargerThanMD) {
+    feedbackBox.classList.remove('hidden');
+    feedbackToggle.classList.remove('right-0');
+    feedbackToggle.classList.add('md:right-64', 'right-64'); // Move next to the feedback box
+} else {
+    feedbackBox.classList.add('hidden');
+    feedbackToggle.classList.remove('md:right-64', 'right-64');
+    feedbackToggle.classList.add('right-0');
+}
+}
+
+// Initial check when the page loads
+checkScreenSize();
+
+// Listen for window resize events to detect screen size changes
+window.addEventListener('resize', checkScreenSize);
+
+// Collapse/Expand Feedback Box
+feedbackToggle.addEventListener('click', () => {
+feedbackBox.classList.toggle('hidden');
+// Adjust the position of the toggle tab
+if (feedbackBox.classList.contains('hidden')) {
+    feedbackToggle.classList.remove('md:right-64', 'right-64');
+    feedbackToggle.classList.add('right-0'); // Move to the far right
+    feedbackBox.classList.remove('md:block');
+} else {
+    feedbackToggle.classList.remove('right-0');
+    feedbackToggle.classList.add('md:right-64', 'right-64'); // Move next to the feedback box
+}
+});
+
+// Submit Feedback Function
+const submitFeedbackHandler = () => {
+const feedback = feedbackText.value.trim();
+if (feedback) {
+    fetch('/submit-feedback', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ feedback, url: "/" + window.location.pathname.split('/').pop() }), // Ensure `feedback` is a valid variable
+})
+.then(async response => {
+    if (response.ok) {
+        // Clear the input and thank the user
+        feedbackText.value = ''; // Ensure `feedbackText` is defined
+        submitFeedback.innerText = 'Thank you!'; // Change the button text
+        submitFeedback.classList.remove('bg-cs-blue'); // Remove original color
+        submitFeedback.classList.add('bg-cs-green'); // Add new color (green for success)
+
+        setTimeout(() => {
+            submitFeedback.innerText = 'Submit'; // Revert the button text after 3 seconds
+            submitFeedback.classList.remove('bg-cs-green'); // Remove green color
+            submitFeedback.classList.add('bg-cs-blue');
+        }, 3000); // 3000ms = 3 seconds
+    } else {
+        // Attempt to read the error message from the server
+        const errorData = await response.json();
+        alert(`Error submitting feedback: ${errorData.details || 'Unknown error occurred'}. Please provide these details to Cooper :)`);
+    }
+})
+.catch(error => {
+    // Log the error for debugging and notify the user
+    console.error('Submission error:', error);
+    alert('An error occurred. Please try again.');
+});
+}
+};
+
+// Submit Feedback on Button Click
+submitFeedback.addEventListener('click', submitFeedbackHandler);
+
+// Submit Feedback on CMD+Enter or CTRL+Enter
+feedbackText.addEventListener('keydown', (event) => {
+if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+    submitFeedbackHandler();
+}
+});
+</script>
+</body>
+{% endblock %}
+
+
+<!--
+    <h2>Blockquote Example</h2>
+    <blockquote class="border-l-4 border-cs-blue italic pl-4 text-cs-green">
+        "This is an example of a blockquote. It's perfect for highlighting important points or quotes."
+    </blockquote>
+
+    <h2>Code Snippet Example</h2>
+    <p>
+        Below is an example of a simple Python function:
+    </p>
+    <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+    
+    </pre>
+def greet(name):
+return f"Hello, {name}!"
+
+print(greet("World"))
+    </pre>
+
+
+<code class="bg-cs-blue px-1 rounded shadow-lg text-base">
+
+</code>
+-->
