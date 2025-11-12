@@ -95,8 +95,11 @@ def ece1181lab7():
 @app.route("/courses/ECE1181/lab-8")
 def ece1181lab8():
     return render_template("courses/ECE1181/Lab8.html", title_extention="Lab 8 - ")
-'''
-'''
+
+# Project Page
+@app.route("/courses/ECE1181/final-project")
+def ece1181project():
+    return render_template("courses/ECE1181/FinalProject.html", title_extention="Project - ")
 
 # Terminal Page
 @app.route("/courses/conquering-the-terminal")
