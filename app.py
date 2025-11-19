@@ -35,6 +35,18 @@ def courses():
 def ece1181():
     return render_template("courses/ECE1181/index.html", title_extention="ECE1181 - ")
 
+# ECE1181 Page
+@app.route("/courses/ECE2170")
+def ece2170():
+    return render_template("courses/ECE2170/index.html", title_extention="ECE1181 - ")
+
+# Lab0 Page
+@app.route("/courses/ECE2170/revised-lab")
+def ece2170labnew():
+    return render_template("courses/ECE2170/LabNew.html", title_extention="Lab - ")
+
+
+
 # Previous Labs
 @app.route("/courses/ECE1181/previous-labs")
 def ece1181previouslabs():
@@ -100,6 +112,8 @@ def ece1181lab8():
 @app.route("/courses/ECE1181/final-project")
 def ece1181project():
     return render_template("courses/ECE1181/FinalProject.html", title_extention="Project - ")
+
+
 
 # Terminal Page
 @app.route("/courses/conquering-the-terminal")
