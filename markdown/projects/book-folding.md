@@ -1,0 +1,8 @@
+# What is it?
+Book folding is the art of cutting and folding each page of a book in order to bring out a three-dimensional image. It is incredibly time consuming, but the result always looks so beautiful that it's worth every second. They say a picture is worth a thousand words, so I turn a thousand words into a picture.
+
+# Commissions
+Most of the works I do are given as gifts to those important to me. However, I have been known to take commissions. If you are interested in my art, please reach out to me at coopershapard(at)duck.com for more information. Because of how long it takes, the finished product is not cheap and heavily depends on both the number of pages in the book and the complexity of the design. I'm happy to give a quote if you have a design in mind.
+
+#  Photos
+Here are some photos of my previous work. Note that because of how the pages line up, it is very hard to take a photo without the fore and background blending together around the middle of the POV.

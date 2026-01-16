@@ -115,6 +115,26 @@ def ece1181project():
 
 
 
+# Ethics Essay Page
+@app.route("/projects/ethics-essay")
+def ethics():
+    return render_template("projects/ethics-essay.html", title_extention="Ethics Essay - ")
+
+# Membrane Page
+@app.route("/projects/membrane")
+def membrane():
+    return render_template("projects/membrane.html", title_extention="Membrane - ")
+
+# Book Folding Page
+@app.route("/projects/ethics-essay")
+def bookfolding():
+    return render_template("projects/bookm-folding.html", title_extention="Book Folding - ")
+
+# Steno Recap Page
+@app.route("/projects/one-year-steno")
+def oys():
+    return render_template("projects/one-year-steno.html", title_extention="Steno - ")
+
 # Terminal Page
 @app.route("/courses/conquering-the-terminal")
 def ctt():
