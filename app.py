@@ -126,9 +126,9 @@ def membrane():
     return render_template("projects/membrane.html", title_extention="Membrane - ")
 
 # Book Folding Page
-@app.route("/projects/ethics-essay")
+@app.route("/projects/book-folding")
 def bookfolding():
-    return render_template("projects/bookm-folding.html", title_extention="Book Folding - ")
+    return render_template("projects/book-folding.html", title_extention="Book Folding - ")
 
 # Steno Recap Page
 @app.route("/projects/one-year-steno")

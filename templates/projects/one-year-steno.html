@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+{% block content %}
+<body class="bg-gray-100 dark:text-steel text-[#222222]">
+    <!-- Blog Post Wrapper -->
+    <div class="max-w-screen-md px-4 py-8 mx-auto">
+        <!-- Thinner Centered Bar -->
+        <div class="dark:bg-[#444444] bg-[#CCCCCC] rounded-3xl shadow-2xl dark:shadow-white p-6 mx-auto">
+            <!-- Title Section -->
+            <div class="text-center">
+                <h1 class="text-6xl font-extrabold leading-tight text-cs-green">
+                    One Year of Stenography Data
+                </h1>
+                <h2 class="text-2xl text-bold leading-tight text-cs-green">
+                    Tracking my speed-typing progress, one year ago vs. now
+                </h1>
+                 <!-- Separator -->
+                <div class="h-px bg-cs-green my-6"></div>
+                <a href="#overview" class="inline-block bg-cs-blue hover:bg-blue-700  hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Overview
+                </a> >>
+                <a href="#imp" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Improvements
+                </a> >>
+                <a href="#ana" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    Data Analysis
+                </a> >>
+                <a href="#next" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    What's Next
+                </a> 
+            </div>
+
+            <div class="h-px bg-cs-green my-6"></div><h1 id="overview" class="text-4xl font-extrabold">Overview</h1><br/>
+<p class="leading-relaxed text-lg">October 21st, 2024 is a special day for me, because it marks the one year anniversary of tracking my progress of typing using a stenograph. While I started learning the system in January of 2023, I never recorded more than an occasional “new record” speed until October. Every day, I practice stenography (steno) for 1 hour, recording the best speeds I achieves across multiple typing categories. Tracking this data has been one of the most beneficial practices for improving my typing speed and has allowed for some very cool representations of my progress.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="imp" class="text-4xl font-extrabold">Improvements</h1><br/>
+<p class="leading-relaxed text-lg">Over this past year, my typing speed has improved as follows:</p><br/>
+
+<p class="leading-relaxed text-lg"><table>
+    <tr>
+        <td><code class="bg-cs-blue px-1 rounded shadow-lg text-base">Month/Year</code></td>
+        <td><code class="bg-cs-blue px-1 rounded shadow-lg text-base">Common Words (>75%)</code></td>
+        <td><code class="bg-cs-blue px-1 rounded shadow-lg text-base">Uncommon Words (>95%)</code></td>
+        <td><code class="bg-cs-blue px-1 rounded shadow-lg text-base">Natural Language</code></td>
+    </tr>
+    <tr>
+        <td>Oct. 2023</td>
+        <td>135 WPM</td>
+        <td>40 WPM</td>
+        <td>105 WPM<br/> </td>
+    </tr>
+    <tr>
+        <td>Oct. 2024</td>
+        <td>175 WPM</td>
+        <td>85 WPM</td>
+        <td>155 WPM<br/> </td>
+    </tr>
+</table></p><br/>
+
+<p class="leading-relaxed text-lg">Overall, I am very happy with my improvements and plan to continue this trend throughout the next year. I spent the first third of this year focusing on getting Common Words above 150 WPM and the next two thirds trying to get Uncommon Words above 100 WPM. There was no time limit for any of these goals, and the second was especially ambitious, as it required a <a class="font-extrabold">150%</a> increase in my typing speed. That is an insane goal for any typing system, but I need to get used to it, as my overall stenography goal is 240 WPM with Natural Language.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="ana" class="text-4xl font-extrabold">Data Analyses</h1><br/>
+<p class="leading-relaxed text-lg">Collecting this data also set up some very cool visualizations for my typing speed over time. For example, I assumed linear growth and assigned a trendline to each category of typing. The slope of this line tells me the average amount my typing speed improved each day: 0.095 WPM/day for Common Words and 0.14 WPM/day for Uncommon words. This may not seem like a lot, but that equates to about 1 WPM improvement per week, which stacks up very quickly.</p><br/>
+
+<p class="leading-relaxed text-lg">I also created a pivot table to see what time of day I type fastest. Excluding edge cases (the one time I did my stenography practice at 3:00 AM, etc.), I type fastest at 6:00 PM and slowest at 12:00 PM (with about a 10-15 WPM difference in all categories). I also found that my cooldown speed was consistently higher than my warmup speed by about 5 WPM. The peaks and vallies of the graphs also consistently lined up, supporting the idea of having “good days” and “bad days” where I type faster or slower in all categories without any apparent cause.</p><br/>
+
+<p class="leading-relaxed text-lg">There was also weak or zero correlation between the keyboard I used and my typing speed. I recorded my current location for each stenography practice session and noted that I use my travel keyboard instead of my regular keyboard when away from my living space. There was about a 2 WPM difference in each category between the keyboard types, but this difference can also be attributed to the fact that I practiced on my regular keyboard more often near the end of the year, which natrually would have a higher typing speed due to normal improvement. My travel keyboard also uses 20g springs, compared to my regular keyboard’s 35g springs, supporting a surprising and controversial argument that lighter springs do not actually improve stenography typing speed.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="next" class="text-4xl font-extrabold">Next Steps</h1><br/>
+<p class="leading-relaxed text-lg">What’s next? Keep practicing. Keep improving. Keep pushing myself beyond what I thought was possible just one year ago. I’m still on my journey to 240 WPM and am a hair’s width away from hitting 200 WPM for common words. I’m staying in the “chapter” of practice centered around uncommon words until I can consistently reach my goal of 100 WPM, and I plan to work on natural language briefs for the next section.</p><br/>
+
+        </div>
+    </div>        
+</div>
+    <!-- Feedback Box -->
+    <div id="feedback-box" class="fixed hidden right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 dark:bg-[#444444] border-l-4 border-b-4 border-[#E0E0E0] dark:border-[#3B3B3B] rounded-l-xl shadow-lg w-64 p-4 z-50">
+        <h2 class="font-bold text-lg dark:text-white text-gray-800 mb-2 text-center">Feedback</h2>
+        <textarea id="feedback-text" class="w-full p-2 border rounded-md dark:bg-[#333333] dark:text-steel text-gray-800" rows="4" placeholder="Feedback, corrections, feature ideas, comments, etc."></textarea>
+        <button id="submit-feedback" class="mt-2 w-full bg-cs-blue hover:bg-cs-green text-white py-2 px-4 rounded-md">Submit</button>
+    </div>
+
+    <!-- Toggle Tab -->
+    <button id="feedback-toggle" class="fixed top-1/2 transform -translate-y-1/2 right-0 md:right-64 bg-cs-blue hover:bg-cs-green text-steel rounded-l-md px-1 py-8 shadow-md">
+        ||
+    </button>
+
+    <!--
+    <body class="flex justify-center items-center h-screen bg-gray-100">
+        <div class="bg-white p-6 rounded shadow-lg">
+            <h1 class="text-2xl mb-4">Report a Problem</h1>
+            <form action="/submit_workorder" method="post">
+                <textarea name="issue" required class="border p-2 w-full rounded" placeholder="Describe your issue..."></textarea>
+                <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+            </form>
+        </div>
+    </body>
+    -->
+
+    <script>
+        const feedbackBox = document.getElementById('feedback-box');
+        const feedbackToggle = document.getElementById('feedback-toggle');
+        const feedbackText = document.getElementById('feedback-text');
+        const submitFeedback = document.getElementById('submit-feedback');
+        
+        function checkScreenSize() {
+            const isLargerThanMD = window.matchMedia('(min-width: 768px)').matches;
+
+            if (isLargerThanMD) {
+                feedbackBox.classList.remove('hidden');
+                feedbackToggle.classList.remove('right-0');
+                feedbackToggle.classList.add('md:right-64', 'right-64'); // Move next to the feedback box
+            } else {
+                feedbackBox.classList.add('hidden');
+                feedbackToggle.classList.remove('md:right-64', 'right-64');
+                feedbackToggle.classList.add('right-0');
+            }
+        }
+
+        // Initial check when the page loads
+        checkScreenSize();
+
+        // Listen for window resize events to detect screen size changes
+        window.addEventListener('resize', checkScreenSize);
+
+        // Collapse/Expand Feedback Box
+        feedbackToggle.addEventListener('click', () => {
+            feedbackBox.classList.toggle('hidden');
+            // Adjust the position of the toggle tab
+            if (feedbackBox.classList.contains('hidden')) {
+                feedbackToggle.classList.remove('md:right-64', 'right-64');
+                feedbackToggle.classList.add('right-0'); // Move to the far right
+                feedbackBox.classList.remove('md:block');
+            } else {
+                feedbackToggle.classList.remove('right-0');
+                feedbackToggle.classList.add('md:right-64', 'right-64'); // Move next to the feedback box
+            }
+        });
+
+        // Submit Feedback Function
+        const submitFeedbackHandler = () => {
+            const feedback = feedbackText.value.trim();
+            if (feedback) {
+                fetch('/submit-feedback', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ feedback, url: "/" + window.location.pathname.split('/').pop() }), // Ensure `feedback` is a valid variable
+            })
+            .then(async response => {
+                if (response.ok) {
+                    // Clear the input and thank the user
+                    feedbackText.value = ''; // Ensure `feedbackText` is defined
+                    submitFeedback.innerText = 'Thank you!'; // Change the button text
+                    submitFeedback.classList.remove('bg-cs-blue'); // Remove original color
+                    submitFeedback.classList.add('bg-cs-green'); // Add new color (green for success)
+
+                    setTimeout(() => {
+                        submitFeedback.innerText = 'Submit'; // Revert the button text after 3 seconds
+                        submitFeedback.classList.remove('bg-cs-green'); // Remove green color
+                        submitFeedback.classList.add('bg-cs-blue');
+                    }, 3000); // 3000ms = 3 seconds
+                } else {
+                    // Attempt to read the error message from the server
+                    const errorData = await response.json();
+                    alert(`Error submitting feedback: ${errorData.details || 'Unknown error occurred'}. Please provide these details to Cooper :)`);
+                }
+            })
+            .catch(error => {
+                // Log the error for debugging and notify the user
+                console.error('Submission error:', error);
+                alert('An error occurred. Please try again.');
+            });
+            }
+        };
+
+        // Submit Feedback on Button Click
+        submitFeedback.addEventListener('click', submitFeedbackHandler);
+
+        // Submit Feedback on CMD+Enter or CTRL+Enter
+        feedbackText.addEventListener('keydown', (event) => {
+            if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+                submitFeedbackHandler();
+            }
+        });
+    </script>
+</body>
+{% endblock %}
+
+
+<!--
+                <h2>Blockquote Example</h2>
+                <blockquote class="border-l-4 border-cs-blue italic pl-4 text-cs-green">
+                    "This is an example of a blockquote. It's perfect for highlighting important points or quotes."
+                </blockquote>
+
+                <h2>Code Snippet Example</h2>
+                <p>
+                    Below is an example of a simple Python function:
+                </p>
+                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+def greet(name):
+    return f"Hello, {name}!"
+
+print(greet("World"))
+                </pre>
+
+
+<code class="bg-cs-blue px-1 rounded shadow-lg text-base">
+
+</code>
+-->
+

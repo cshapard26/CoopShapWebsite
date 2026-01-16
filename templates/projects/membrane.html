@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% block content %}
+<body class="bg-gray-100 dark:text-steel text-[#222222]">
+    <!-- Blog Post Wrapper -->
+    <div class="max-w-screen-md px-4 py-8 mx-auto">
+        <!-- Thinner Centered Bar -->
+        <div class="dark:bg-[#444444] bg-[#CCCCCC] rounded-3xl shadow-2xl dark:shadow-white p-6 mx-auto">
+            <!-- Title Section -->
+            <div class="text-center">
+                <h1 class="text-6xl font-extrabold leading-tight text-cs-green">
+                    Membrane
+                </h1>
+                <h2 class="text-2xl text-bold leading-tight text-cs-green">
+                    A hardware hack supporting data privacy in wireless crowdsourcing efforts
+                </h1>
+                 <!-- Separator -->
+                <div class="h-px bg-cs-green my-6"></div>
+                <a href="#what" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    What is it?
+                </a> >>
+                <a href="#story" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    The Story
+                </a> >>
+                <a href="#code" class="inline-block bg-cs-blue hover:bg-blue-700 hover:underline px-4 py-1 rounded-lg font-medium transition-all duration-300 border-[#333333] border">
+                    The Code
+                </a>
+            </div>
+            <div class="h-px bg-cs-green my-6"></div><h1 id="what" class="text-4xl font-extrabold">What is it?</h1><br/>
+<p class="leading-relaxed text-lg">Membrane is the name of one of my first big coding projects, something I completed in a Hackathon during my freshman year of university. It is a blockchain smart contract that arbitrates the exchange of data between two parties with the main use case being universities sharing research data with built-in accountability.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="story" class="text-4xl font-extrabold">The Story</h1><br/>
+<p class="leading-relaxed text-lg">During my first year of college, I had an electrical engineering course with a lab section. The lab was hosted by one of the ECE PhD students, and he quickly noted me as someone who could code at a level above what was expected of a freshman. When March came around, he invited me to work with a team of his fellow PhD students in a hackathon hosted at SMU called HackTheChains, which was focused on blockchain technology. I had no experience or interest in blockchain, but accepted with the knowledge that a hackathon is primarily meant to be a learning experience.</p><br/>
+
+<p class="leading-relaxed text-lg">Soon, the event day came around. It was a 36-hour hackathon that spanned over a long weekend. Though sleeping was allowed, if you wanted a chance to win, you had to use the whole time allotted. After some discussion on what we wanted to do, we decided on making a smart contract that lets one party share sensitive data with the other without worrying about having that data stolen or miscredited. The primary use was for universities sharing data with each other and making sure their contributions were acknowledged on any paper it was used in (something that makes a lot of sense for our group considering it was a bunch of PhD students and me). Another use was for crowdsourcing data from a bunch of people without being able to use it for malicious purposes.</p><br/>
+
+<p class="leading-relaxed text-lg">I was in charge of coding the whole smart contract, a huge task for someone in their first hackathon. One of the PhD students worked on the theoretical logic for parts like a zero-knowledge-proof, and the other worked on building a hardware demonstration using two raspberry pi's communicating wirelessly. There was one more person in the group who was placed in arbitrarily to get us to four members, but unfortunately he was a leech that didn't contribute to the team.</p><br/>
+
+<p class="leading-relaxed text-lg">There was one big problem: I hadn't coded in Solidity before, which is the language most often used for coding on the blockchain. So, on top of actually writing the logic, I had to learn the language syntax and quirks from scratch. I'll save the boring bits with the coding, but after about thirty hours, I had finished the contract in entirety and built multiple test cases and demos to show it off. It was a huge learning experience for me, as I had never worked on a coding project of that scale before (I went into college with almost no programming experience, and became "legendary," as one of my peers put it, within my first semester). And the best part: it felt really good to see a project through end to end. That alone was enough to satisfy me. But the competition wasn't over. There was still The Presentation.</p><br/>
+
+<p class="leading-relaxed text-lg">At the end of the thirty-six hours, all groups presented their work in a science-fair like presentation room where the judges walked around and took notes. The judges were actual employees from blockchain companies like Cartesi, ETHglobal, and Oracle. It's a lot of pressure to be evaluated by someone who knows what their doing when I walked into the competition knowing nothing, but after all the judges got through, we received the news: our team was one of the four finalists. To decide who will win the grand prize, all the finalists were to give a ten minute oral presentation on their hack on stage.</p><br/>
+
+<p class="leading-relaxed text-lg">Luckily, presentations and public speaking are one of my talents. Unluckily, I hadn't slept in almost 48 hours at that point and was nodding in and out of consciousness. However, we put together our pitch, gathered some data for slides, and went up on stage. It went well, and I was able to stay awake for the whole speech (my only goal at the time). After all the groups finished up, the winners with announced, and we won first prize! That meant that all four members of our group walked home with a new PlayStation 5 console.</p><br/>
+
+<p class="leading-relaxed text-lg">After the hackathon concluded, the two PhD students and I decided to continue Membrane with the goal of making a marketable product. We even got some more help from a post-doc student at SMU working specifically with blockchain technology. However, as PhD students, they were more focused on getting publications from our work. With the slow process of research publications and me being the only entrepreneurial one on the team, the project eventually stagnated and was abandoned.</p><br/>
+
+<p class="leading-relaxed text-lg">In the end, it was a fun project to kick off my college coding experience which taught me a lot about making end to end software and netted me a Playstation, but it wasn't a long term commitment I was passionate enough about to push forward. All of our work is now open sourced, so feel free to check out more about it below.</p><br/>
+
+<div class="h-px bg-cs-green my-6"></div><h1 id="code" class="text-4xl font-extrabold">The Code</h1><br/>
+<p class="leading-relaxed text-lg">Interested in how the project works? <a href="https://github.com/cshapard26/Membrane" class="text-lg text-cs-blue hover:text-blue-700 underline">Check out the GitHub repo here</a>! The README shows the sequence diagram of how the system works. The run down is that is a managed PKE transfer that uses commit-reveal protocol to confirm intention and stores all receipts publicly on the blockchain. My contributions are under <code class="bg-cs-blue px-1 rounded shadow-lg text-base">Membrane/remix/</code> (remix is the name of the web IDE used for solidity programming).</p><br/>
+
+
+
+
+        </div>
+    </div>        
+</div>
+    <!-- Feedback Box -->
+    <div id="feedback-box" class="fixed hidden right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 dark:bg-[#444444] border-l-4 border-b-4 border-[#E0E0E0] dark:border-[#3B3B3B] rounded-l-xl shadow-lg w-64 p-4 z-50">
+        <h2 class="font-bold text-lg dark:text-white text-gray-800 mb-2 text-center">Feedback</h2>
+        <textarea id="feedback-text" class="w-full p-2 border rounded-md dark:bg-[#333333] dark:text-steel text-gray-800" rows="4" placeholder="Feedback, corrections, feature ideas, comments, etc."></textarea>
+        <button id="submit-feedback" class="mt-2 w-full bg-cs-blue hover:bg-cs-green text-white py-2 px-4 rounded-md">Submit</button>
+    </div>
+
+    <!-- Toggle Tab -->
+    <button id="feedback-toggle" class="fixed top-1/2 transform -translate-y-1/2 right-0 md:right-64 bg-cs-blue hover:bg-cs-green text-steel rounded-l-md px-1 py-8 shadow-md">
+        ||
+    </button>
+
+    <!--
+    <body class="flex justify-center items-center h-screen bg-gray-100">
+        <div class="bg-white p-6 rounded shadow-lg">
+            <h1 class="text-2xl mb-4">Report a Problem</h1>
+            <form action="/submit_workorder" method="post">
+                <textarea name="issue" required class="border p-2 w-full rounded" placeholder="Describe your issue..."></textarea>
+                <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+            </form>
+        </div>
+    </body>
+    -->
+
+    <script>
+        const feedbackBox = document.getElementById('feedback-box');
+        const feedbackToggle = document.getElementById('feedback-toggle');
+        const feedbackText = document.getElementById('feedback-text');
+        const submitFeedback = document.getElementById('submit-feedback');
+        
+        function checkScreenSize() {
+            const isLargerThanMD = window.matchMedia('(min-width: 768px)').matches;
+
+            if (isLargerThanMD) {
+                feedbackBox.classList.remove('hidden');
+                feedbackToggle.classList.remove('right-0');
+                feedbackToggle.classList.add('md:right-64', 'right-64'); // Move next to the feedback box
+            } else {
+                feedbackBox.classList.add('hidden');
+                feedbackToggle.classList.remove('md:right-64', 'right-64');
+                feedbackToggle.classList.add('right-0');
+            }
+        }
+
+        // Initial check when the page loads
+        checkScreenSize();
+
+        // Listen for window resize events to detect screen size changes
+        window.addEventListener('resize', checkScreenSize);
+
+        // Collapse/Expand Feedback Box
+        feedbackToggle.addEventListener('click', () => {
+            feedbackBox.classList.toggle('hidden');
+            // Adjust the position of the toggle tab
+            if (feedbackBox.classList.contains('hidden')) {
+                feedbackToggle.classList.remove('md:right-64', 'right-64');
+                feedbackToggle.classList.add('right-0'); // Move to the far right
+                feedbackBox.classList.remove('md:block');
+            } else {
+                feedbackToggle.classList.remove('right-0');
+                feedbackToggle.classList.add('md:right-64', 'right-64'); // Move next to the feedback box
+            }
+        });
+
+        // Submit Feedback Function
+        const submitFeedbackHandler = () => {
+            const feedback = feedbackText.value.trim();
+            if (feedback) {
+                fetch('/submit-feedback', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ feedback, url: "/" + window.location.pathname.split('/').pop() }), // Ensure `feedback` is a valid variable
+            })
+            .then(async response => {
+                if (response.ok) {
+                    // Clear the input and thank the user
+                    feedbackText.value = ''; // Ensure `feedbackText` is defined
+                    submitFeedback.innerText = 'Thank you!'; // Change the button text
+                    submitFeedback.classList.remove('bg-cs-blue'); // Remove original color
+                    submitFeedback.classList.add('bg-cs-green'); // Add new color (green for success)
+
+                    setTimeout(() => {
+                        submitFeedback.innerText = 'Submit'; // Revert the button text after 3 seconds
+                        submitFeedback.classList.remove('bg-cs-green'); // Remove green color
+                        submitFeedback.classList.add('bg-cs-blue');
+                    }, 3000); // 3000ms = 3 seconds
+                } else {
+                    // Attempt to read the error message from the server
+                    const errorData = await response.json();
+                    alert(`Error submitting feedback: ${errorData.details || 'Unknown error occurred'}. Please provide these details to Cooper :)`);
+                }
+            })
+            .catch(error => {
+                // Log the error for debugging and notify the user
+                console.error('Submission error:', error);
+                alert('An error occurred. Please try again.');
+            });
+            }
+        };
+
+        // Submit Feedback on Button Click
+        submitFeedback.addEventListener('click', submitFeedbackHandler);
+
+        // Submit Feedback on CMD+Enter or CTRL+Enter
+        feedbackText.addEventListener('keydown', (event) => {
+            if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+                submitFeedbackHandler();
+            }
+        });
+    </script>
+</body>
+{% endblock %}
+
+
+<!--
+                <h2>Blockquote Example</h2>
+                <blockquote class="border-l-4 border-cs-blue italic pl-4 text-cs-green">
+                    "This is an example of a blockquote. It's perfect for highlighting important points or quotes."
+                </blockquote>
+
+                <h2>Code Snippet Example</h2>
+                <p>
+                    Below is an example of a simple Python function:
+                </p>
+                <pre class="dark:bg-gray-600 bg-gray-400 rounded-lg p-4 shadow-2xl overflow-auto">
+def greet(name):
+    return f"Hello, {name}!"
+
+print(greet("World"))
+                </pre>
+
+
+<code class="bg-cs-blue px-1 rounded shadow-lg text-base">
+
+</code>
+-->
+
