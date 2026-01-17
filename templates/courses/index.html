@@ -1,5 +1,56 @@
 {% extends 'base.html' %}
 {% block content %}
-Page not made yet :)
+<section class="text-steel">
+    <body class="bg-gray-100 text-steel">
+        <!-- Title Section -->
+        <section class="text-center py-8 bg-gradient-to-t from-cs-blue to-[#576769]">
+            <div class="max-w-screen-xl px-4 mx-auto">
+                <h1 class="text-5xl sm:text-7xl font-extrabold leading-tight text-gray-900 dark:text-steel mb-4">
+                    Courses by CoopShap
+                </h1>
+            </div>
+        </section>
 
+        <!-- Divider -->
+        <div class="ublueclearseperator"></div>
+
+        <section class="py-12">
+            <div class="max-w-screen-xl px-4 mx-auto">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <!-- Post 1 -->
+                    <a href="/courses/ECE1181" class="relative rounded-3xl shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-tr from-cs-blue to-cs-green border-l-4 border-b-4 border-[#444444] overflow-hidden">
+                        <img src="/static/images/featured/ECE1181/red-pitaya.png" alt="Q&A" class="w-full h-52 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-center dark:text-steel">ECE1181: Microcontrollers</h3>
+                            <hr class="my-4 border-gray-600">
+                            <p class="text-center text-sm dark:text-steel">Computer architecture, assembly language, and basic microcontroller interfacing.</p>
+                        </div>
+                    </a>
+
+                    <!-- Post 2 -->
+                    <a href="/courses/ECE2170" class="relative rounded-3xl shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-tr from-cs-blue to-cs-green border-l-4 border-b-4 border-[#444444] overflow-hidden">
+                        <img src="/static/images/featured/ECE2170/signals-pic.png" alt="Q&A" class="w-full h-52 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-center dark:text-steel">ECE2170: Signals and Systems</h3>
+                            <hr class="my-4 border-gray-600">
+                            <p class="text-center text-sm dark:text-steel">Waveforms, filtering, Fourier Transform, and mixing.</p>
+                        </div>
+                    </a>
+
+                    <!-- Post 3 -->
+                    <a href="/courses/conquering-the-terminal" class="relative rounded-3xl shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-tr from-cs-blue to-cs-green border-l-4 border-b-4 border-[#444444] overflow-hidden">
+                        <img src="/static/images/featured/commandline.jpg" alt="Q&A" class="w-full h-52 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-center dark:text-steel">Conquering the Terminal</h3>
+                            <hr class="my-4 border-gray-600">
+                            <p class="text-center text-sm dark:text-steel">Introduction to the command line and your basic toolkit.</p>
+                        </div>
+                    </a>
+
+
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
 {% endblock %}
