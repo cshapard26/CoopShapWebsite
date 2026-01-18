@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="text-steel">
+    <body class="bg-gray-100 text-steel">
+        <!-- Title Section -->
+        <section class="text-center py-8">
+            <div class="max-w-screen-xl px-4 mx-auto">
+                <h1 class="text-5xl sm:text-7xl font-extrabold leading-tight text-gray-900 dark:text-steel mb-4">
+                    Previous ECE2170 Labs
+                </h1>
+            </div>
+        </section>
+	<!-- Divider -->
+        <div class="blueclearseperator"></div>
+
+        <section class="bg-cs-blue py-12">
+            <div class="max-w-screen-xl px-4 mx-auto">
+                <section class="pt-1 pb-12 px-8">
+                    <div class="max-w-screen-xl mx-auto px-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 text-gray-900">
+                            
+                           <!-- Button 1 --> 
+                            <a href="/courses/ECE2170/lab-1" class="relative rounded-3xl shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-b from-[#666666] to-[#555555] border-l-4 border-b-4 border-[#444444] overflow-hidden">
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-center text-steel">Lab 1: Intro to MATLAB</h3>
+                                    <hr class="my-4 border-gray-600">
+                                    <p class="text-lg text-center font-medium mt-2 text-steel">How to use it, what it is for, and best practices.</p>
+                                </div>
+                            </a>
+
+                            <!-- Button 2 
+                            <a href="/courses/ECE1181/lab-1" class="relative rounded-3xl shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-b from-[#666666] to-[#555555] border-l-4 border-b-4 border-[#444444] overflow-hidden">
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-center text-steel">Lab 1: Intro to ARM</h3>
+                                    <hr class="my-4 border-gray-600">
+                                    <p class="text-lg text-center font-medium mt-2 text-steel">Red Pitaya setup, Linux commands, and file management</p>
+                                </div>
+                            </a>
+
+                            <!-- Button 3 
+                            <a href="/courses/ECE1181/lab-2" class="relative rounded-3xl shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-b from-[#666666] to-[#555555] border-l-4 border-b-4 border-[#444444] overflow-hidden">
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-center text-steel">Lab 2: MOV and ADD</h3>
+                                    <hr class="my-4 border-gray-600">
+                                    <p class="text-lg text-center font-medium mt-2 text-steel">Moving, Adding, Shifting, and the Debugger</p>
+                                </div>
+                            </a>
+
+                            <!-- Button 4 
+                            <a href="/courses/ECE1181/lab-3" class="relative rounded-3xl shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-b from-[#666666] to-[#555555] border-l-4 border-b-4 border-[#444444] overflow-hidden">
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-center text-steel">Lab 3: Memory</h3>
+                                    <hr class="my-4 border-gray-600">
+                                    <p class="text-lg text-center font-medium mt-2 text-steel">Loading, Storing, Endianness, and Indexing</p>
+                                </div>
+                            </a>
+
+                            <!-- Button 5
+                            <a href="/courses/ECE1181/lab-4" class="relative rounded-3xl shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-b from-[#666666] to-[#555555] border-l-4 border-b-4 border-[#444444] overflow-hidden">
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-center text-steel">Lab 4: CPSR and Literal Pools</h3>
+                                    <hr class="my-4 border-gray-600">
+                                    <p class="text-lg text-center font-medium mt-2 text-steel">Title says it all</p>
+                                </div>
+                            </a>
+
+                            <!-- Button 6 
+                            <a href="/courses/ECE1181/lab-5" class="relative rounded-3xl shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-b from-[#666666] to-[#555555] border-l-4 border-b-4 border-[#444444] overflow-hidden">
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-center text-steel">Lab 5: Logic</h3>
+                                    <hr class="my-4 border-gray-600">
+                                    <p class="text-lg text-center font-medium mt-2 text-steel">Conditional Execution in ARM</p>
+                                </div>
+                            </a>
+
+                            <!-- Button 7 
+                            <a href="/courses/ECE1181/lab-6" class="relative rounded-3xl shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-b from-[#666666] to-[#555555] border-l-4 border-b-4 border-[#444444] overflow-hidden">
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-center text-steel">Lab 6: Branching</h3>
+                                    <hr class="my-4 border-gray-600">
+                                    <p class="text-lg text-center font-medium mt-2 text-steel">Loops, Linking, and Functions</p>
+                                </div>
+                            </a>
+
+                            <!-- Button 8 
+                            <a href="/courses/ECE1181/lab-7" class="relative rounded-3xl shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-b from-[#666666] to-[#555555] border-l-4 border-b-4 border-[#444444] overflow-hidden">
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-center text-steel">Lab 7: The Stack</h3>
+                                    <hr class="my-4 border-gray-600">
+                                    <p class="text-lg text-center font-medium mt-2 text-steel">Managing the stack</p>
+                                </div>
+                            </a>
+
+                            
+                            <a href="/courses/ECE1181/lab-8" class="relative rounded-3xl shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-b from-[#666666] to-[#555555] border-l-4 border-b-4 border-[#444444] overflow-hidden">
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-center text-steel">Lab 8: GPIO and Macros</h3>
+                                    <hr class="my-4 border-gray-600">
+                                    <p class="text-lg text-center font-medium mt-2 text-steel">Modifying GPIO pins using functions</p>
+                                </div>
+                            </a>
+
+                            <a href="/courses/ECE1181/final-project" class="relative rounded-3xl shadow-lg transform hover:scale-105 transition duration-300 bg-gradient-to-b from-[#666666] to-[#555555] border-l-4 border-b-4 border-[#444444] overflow-hidden">
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-bold text-center text-steel">Final Project</h3>
+                                    <hr class="my-4 border-gray-600">
+                                    <p class="text-lg text-center font-medium mt-2 text-steel">Tying it all together</p>
+                                </div>
+                            </a> --->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+	<!-- Divider -->
+        <div class="ublueclearseperator"></div>
+
+
+
+        <div class="max-w-screen-xl px-4 py-[10vh]"></div>
+    </body>
+</section>
+
+{% endblock %}

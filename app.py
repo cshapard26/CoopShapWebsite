@@ -45,7 +45,15 @@ def ece2170():
 def ece2170labnew():
     return render_template("courses/ECE2170/LabNew.html", title_extention="Lab - ")
 
+# Previous Labs
+@app.route("/courses/ECE2170/previous-labs")
+def ece2170previouslabs():
+    return render_template("courses/ECE2170/previouslabs.html", title_extention="ECE2170 - ")
 
+# Lab Guide Page
+@app.route("/courses/ECE2170/lab-guide")
+def ece2170labguide():
+    return render_template("courses/ECE2170/labguide.html", title_extention="ECE2170 - ")
 
 # Previous Labs
 @app.route("/courses/ECE1181/previous-labs")
