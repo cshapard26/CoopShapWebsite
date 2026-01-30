@@ -97,7 +97,7 @@ _start:
 
 <p class="leading-relaxed text-lg">Here are the correct answers: R3=16, R6=0, R7=0x13 or 19 in decimal, R8=0. You may have been caught off guard by the last one. Note that this is a valid instruction in ARM, and it is just moving a register's content into itself, which makes no change. It may seem useless, and in this example it is, but later it will become a powerful tool.</p><br/>
 
-<p class="leading-relaxed text-lg">IMPORTANT: If the "number" parameter is an actual number (e.x. #12) and not a register (e.x. R2), the the number MUST be one byte or less in length (0xFF in hex or 255 in decimal). The compiler will throw an error if you try a larger number.</p><br/>
+<p class="leading-relaxed text-lg">IMPORTANT: If the "number" parameter is an actual number (e.x. #12) and not a register (e.x. R2), the number MUST be one byte or less in length (0xFF in hex or 255 in decimal). The compiler will throw an error if you try a larger number.</p><br/>
 
 <div class="h-px bg-cs-green my-6"></div><h1 id="add" class="text-4xl font-extrabold">The ADD Instruction</h1><br/>
 <p class="leading-relaxed text-lg">As you might have guessed, the ADD instruction adds two numbers. It is one of the few raw commands on the microcontroller, and many other commands stem from it (multiplication is just repeated addition, etc). Here is how you use it:</p><br/>
