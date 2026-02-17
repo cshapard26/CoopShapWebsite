@@ -41,9 +41,9 @@ def ece2170():
     return render_template("courses/ECE2170/index.html", title_extention="ECE1181 - ")
 
 # Lab0 Page
-@app.route("/courses/ECE2170/revised-lab")
-def ece2170labnew():
-    return render_template("courses/ECE2170/LabNew.html", title_extention="Lab - ")
+@app.route("/courses/ECE2170/lab-2")
+def ece2170lab2():
+    return render_template("courses/ECE2170/Lab2.html", title_extention="Lab 2 - ")
 
 # Previous Labs
 @app.route("/courses/ECE2170/previous-labs")
